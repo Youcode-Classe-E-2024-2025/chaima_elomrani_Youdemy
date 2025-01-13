@@ -56,8 +56,8 @@
                 </ul>
             </nav>
             <div class="hidden md:flex space-x-4">
-                <a href="#" class="bg-primary text-white px-4 py-2 rounded-full hover:bg-indigo-600 transition transform hover:scale-105">Sign In</a>
-                <a href="#" class="bg-secondary text-white px-4 py-2 rounded-full hover:bg-green-600 transition transform hover:scale-105">Sign Up</a>
+                <a href="#community" class="bg-primary text-white px-4 py-2 rounded-full hover:bg-indigo-600 transition transform hover:scale-105">Sign up   </a>
+                <a href="?view=login" class="bg-secondary text-white px-4 py-2 rounded-full hover:bg-green-600 transition transform hover:scale-105">log in</a>
             </div>
             <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden text-gray-600 focus:outline-none">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -90,7 +90,7 @@
                     <a href="#courses" class="bg-primary text-white text-lg px-8 py-3 rounded-full hover:bg-indigo-600 transition transform hover:scale-105 inline-block">Explore Courses</a>
                 </div>
                 <div class="md:w-1/2">
-                    <img src="https://via.placeholder.com/600x400" alt="Learning Illustration" class="rounded-lg shadow-2xl float">
+                    <img src="./images/first.png" alt="Learning Illustration" class="  ">
                 </div>
             </div>
         </section>
@@ -106,7 +106,7 @@
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <div x-show="activeTab === 'all' || activeTab === 'web'" class="bg-white rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:shadow-2xl transform hover:-translate-y-2">
-                        <img src="https://via.placeholder.com/400x225" alt="Web Development" class="w-full h-48 object-cover">
+                        <img src="./images/programming.jpg" alt="Web Development" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="text-xl font-semibold mb-2 text-gray-900">Web Development Masterclass</h3>
                             <p class="text-gray-600 mb-4">Learn the latest web technologies and build responsive websites.</p>
@@ -117,7 +117,7 @@
                         </div>
                     </div>
                     <div x-show="activeTab === 'all' || activeTab === 'data'" class="bg-white rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:shadow-2xl transform hover:-translate-y-2">
-                        <img src="https://via.placeholder.com/400x225" alt="Data Science" class="w-full h-48 object-cover">
+                        <img src="./images/dataScience.png" alt="Data Science" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="text-xl font-semibold mb-2 text-gray-900">Data Science Fundamentals</h3>
                             <p class="text-gray-600 mb-4">Dive into the world of data analysis and machine learning.</p>
@@ -128,7 +128,7 @@
                         </div>
                     </div>
                     <div x-show="activeTab === 'all' || activeTab === 'marketing'" class="bg-white rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:shadow-2xl transform hover:-translate-y-2">
-                        <img src="https://via.placeholder.com/400x225" alt="Digital Marketing" class="w-full h-48 object-cover">
+                        <img src="./images/marcketing.jpg" alt="Digital Marketing" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="text-xl font-semibold mb-2 text-gray-900">Digital Marketing Strategies</h3>
                             <p class="text-gray-600 mb-4">Master the art of online marketing and grow your business.</p>
@@ -167,13 +167,13 @@
                         </ul>
                     </div>
                     <div class="w-full lg:w-1/2">
-                        <img src="https://via.placeholder.com/600x400" alt="Why Choose Youdemy" class="rounded-lg shadow-2xl">
+                        <img src="./images/second.png" alt="Why Choose Youdemy" class="">
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="community" class="py-20">
+        <section id="community" class="py-60">
             <div class="container mx-auto px-4 text-center">
                 <h2 class="text-3xl font-bold mb-12 text-gray-900">Join Our Learning Community</h2>
                 <div class="flex flex-wrap justify-center gap-8">
@@ -187,7 +187,7 @@
                         <svg class="w-16 h-16 text-secondary mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>
                         <h3 class="text-xl font-semibold mb-4 text-gray-900">For Teachers</h3>
                         <p class="text-gray-600 mb-6">Share your expertise and reach students worldwide.</p>
-                        <a href="#" class="bg-secondary text-white px-6 py-2 rounded-full hover:bg-green-600 transition transform hover:scale-105 inline-block">Start Teaching</a>
+                        <a href="?view=signup" class="bg-secondary text-white px-6 py-2 rounded-full hover:bg-green-600 transition transform hover:scale-105 inline-block">Start Teaching</a>
                     </div>
                 </div>
             </div>
