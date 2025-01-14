@@ -1,3 +1,5 @@
+<?php require_once './controllers/loginController.php';
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,14 +46,14 @@
            
                <div class="form-container"> 
                 <h1><span class="gradient-text">Log in</span></h1>
-                    <form id="login-form">
+                    <form id="login-form" action="" method="POST">
                         <div class="form-group">
                             <label for="login-email">Email</label>
-                            <input type="email" id="login-email" required>
+                            <input name="email" type="email" id="login-email" required>
                         </div>
                         <div class="form-group">
                             <label for="login-password">Password</label>
-                            <input type="password" id="login-password" required>
+                            <input name="password" type="password" id="login-password" required>
                         </div>
                         <button type="submit" class="btn">Login</button>
                     </form>
@@ -62,25 +64,7 @@
             </div>
 
 
-            <div id="courses-page" class="page" style="display: none;">
-                <h1>Course Catalog</h1>
-                <div class="filters">
-                    <div class="search-bar">
-                        <input type="text" id="search-input" placeholder="Search courses...">
-                    </div>
-                    <div class="sort-options">
-                        <select id="sort-select">
-                            <option value="popular">Most Popular</option>
-                            <option value="newest">Newest</option>
-                            <option value="price-low">Price: Low to High</option>
-                            <option value="price-high">Price: High to Low</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="course-grid" id="course-grid"></div>
-                <div class="pagination" id="pagination"></div>
-            </div>
-        </div>
+        
     </main>
 
     <footer class="bg-gray-100 py-10">

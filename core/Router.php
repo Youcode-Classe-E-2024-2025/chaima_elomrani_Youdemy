@@ -1,4 +1,5 @@
 <?php
+require_once('./config/connexion.php');
 
 class Router {
 
@@ -75,14 +76,14 @@ class Router {
           
         // Check if the controller file and method exist
         if (class_exists($className, true)) {
-            require_once $actionFile;
-            if (method_exists($className, $action[1])) {
-                // Instantiate the controller and call the method
-                $controller = new $className();
-                return call_user_func([$controller, $action[1]]);
-            }
-        } else {
-            echo 'dcedf';
+                require_once $actionFile;
+                if (method_exists($className, $action[1])) {
+                    // Instantiate the controller and call the method
+                    $controller = new $className();
+                    return call_user_func([$controller, $action[1]]);
+                }
+            } else {
+            echo 'error';
         }
     }
 }
