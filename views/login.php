@@ -56,7 +56,7 @@
                         <button type="submit" class="btn">Login</button>
                     </form>
                     <div class="form-footer">
-                        <p>Don't have an account? <a href="?view=signup" class="signup-link">Sign up</a></p>
+                        <p>Don't have an account? <a href="?view=signup-choice" class="signup-link">Sign up</a></p>
                     </div>
                 </div>
             </div>
