@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,13 +12,14 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: {"50":"#eff6ff","100":"#dbeafe","200":"#bfdbfe","300":"#93c5fd","400":"#60a5fa","500":"#3b82f6","600":"#2563eb","700":"#1d4ed8","800":"#1e40af","900":"#1e3a8a","950":"#172554"}
+                        primary: { "50": "#eff6ff", "100": "#dbeafe", "200": "#bfdbfe", "300": "#93c5fd", "400": "#60a5fa", "500": "#3b82f6", "600": "#2563eb", "700": "#1d4ed8", "800": "#1e40af", "900": "#1e3a8a", "950": "#172554" }
                     }
                 }
             }
         }
     </script>
 </head>
+
 <body class="bg-gray-100">
     <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-50 text-gray-800">
         <div class="fixed flex flex-col top-0 left-0 w-64 bg-white h-full border-r">
@@ -32,7 +34,8 @@
                         </div>
                     </li>
                     <li>
-                        <a href="?view=users" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-primary-500 pr-6">
+                        <a href="?view=users"
+                            class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-primary-500 pr-6">
                             <span class="inline-flex justify-center items-center ml-4">
                                 <i class="fas fa-users"></i>
                             </span>
@@ -40,7 +43,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="?view=category" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-primary-500 pr-6">
+                        <a href="?view=category"
+                            class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-primary-500 pr-6">
                             <span class="inline-flex justify-center items-center ml-4">
                                 <i class="fas fa-th-large"></i>
                             </span>
@@ -48,7 +52,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="?view=tag" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-primary-500 pr-6">
+                        <a href="?view=tag"
+                            class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-primary-500 pr-6">
                             <span class="inline-flex justify-center items-center ml-4">
                                 <i class="fas fa-tags text-primary-500"></i>
                             </span>
@@ -56,7 +61,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="?view=course" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-primary-500 pr-6">
+                        <a href="?view=course"
+                            class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-primary-500 pr-6">
                             <span class="inline-flex justify-center items-center ml-4">
                                 <i class="fas fa-book"></i>
                             </span>
@@ -71,7 +77,8 @@
                 <h1 class="text-2xl font-semibold text-gray-800">Manage Tags</h1>
                 <div class="flex items-center space-x-4">
                     <span class="text-gray-600">Welcome, Admin</span>
-                    <button class="bg-primary-500 hover:bg-primary-600 text-white py-2 px-4 rounded-lg transition duration-200">
+                    <button
+                        class="bg-primary-500 hover:bg-primary-600 text-white py-2 px-4 rounded-lg transition duration-200">
                         Logout
                     </button>
                 </div>
@@ -80,7 +87,8 @@
                 <div class="bg-white rounded-lg shadow-md p-6">
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="text-xl font-semibold text-gray-800">Tag List</h2>
-                        <button class="bg-primary-500 hover:bg-primary-600 text-white py-2 px-4 rounded-lg transition duration-200">
+                        <button id="addbtn"
+                            class="bg-primary-500 hover:bg-primary-600 text-white py-2 px-4 rounded-lg transition duration-200">
                             Add New Tag
                         </button>
                     </div>
@@ -116,7 +124,6 @@
                                         <button class="text-red-500 hover:text-red-700">Delete</button>
                                     </td>
                                 </tr>
-                                <!-- Add more tag rows here -->
                             </tbody>
                         </table>
                     </div>
@@ -125,13 +132,41 @@
                             <span class="text-gray-600">Showing 1 to 10 of 30 entries</span>
                         </div>
                         <div class="flex space-x-2">
-                            <button class="bg-gray-200 hover:bg-gray-300 text-gray-600 font-semibold py-2 px-4 rounded-lg">Previous</button>
-                            <button class="bg-primary-500 hover:bg-primary-600 text-white font-semibold py-2 px-4 rounded-lg">Next</button>
+                            <button
+                                class="bg-gray-200 hover:bg-gray-300 text-gray-600 font-semibold py-2 px-4 rounded-lg">Previous</button>
+                            <button
+                                class="bg-primary-500 hover:bg-primary-600 text-white font-semibold py-2 px-4 rounded-lg">Next</button>
                         </div>
                     </div>
                 </div>
             </main>
+            <!-- *********************************add tags form ************************** -->
+            <div class="absolute top-0 left-[0] z-50 bg-black/25 w-full flex items-center justify-center min-h-screen">
+                <div class="bg-white rounded-lg shadow-md p-6 w-96">
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-6">Add Tags</h2>
+                    <form id="TagForm" class="space-y-4">
+                        <div>
+                            <label for="TagName" class="block text-sm font-medium text-gray-700">Tag
+                                Name</label>
+                            <input type="text" id="TagName" name="TagName" required
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring focus:ring-primary-500 focus:ring-opacity-50">
+                        </div>
+                        <div class="flex items-center justify-end space-x-3">
+                            <button type="button" id="cancelbtn"
+                                class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded-lg transition duration-200">
+                                Cancel
+                            </button>
+                            <button type="submit"
+                                class="bg-primary-500 hover:bg-primary-600 text-white py-2 px-4 rounded-lg transition duration-200">
+                                Save Tag
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+
+            </div>
         </div>
-    </div>
 </body>
+
 </html>
