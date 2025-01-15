@@ -34,7 +34,7 @@
                         </div>
                     </li>
                     <li>
-                        <a href="?view=users"
+                        <a href="views/users.php"
                             class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-primary-500 pr-6">
                             <span class="inline-flex justify-center items-center ml-4">
                                 <i class="fas fa-users"></i>
@@ -43,7 +43,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="?view=category"
+                        <a href="views/category.php"
                             class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-primary-500 pr-6">
                             <span class="inline-flex justify-center items-center ml-4">
                                 <i class="fas fa-th-large"></i>
@@ -52,7 +52,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="?view=tag"
+                        <a href="views/tag.php"
                             class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-primary-500 pr-6">
                             <span class="inline-flex justify-center items-center ml-4">
                                 <i class="fas fa-tags"></i>
@@ -61,7 +61,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="?view=course"
+                        <a href="views/course.php"
                             class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-primary-500 pr-6">
                             <span class="inline-flex justify-center items-center ml-4">
                                 <i class="fas fa-book text-primary-500"></i>

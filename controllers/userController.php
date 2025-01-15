@@ -36,6 +36,10 @@ class UserController{
                     $loginResult = $this->usermodel->login($email, $password);
                         if ($loginResult) {
                             require_once "views/catalogue.php";
+                            session_start();
+                            $_SESSION["user_id"] = $loginResult["id"];
+                            $_SESSION["user_role"] = $loginResult["role"];
+                            $_SESSION["user_status"] = $loginResult["status"];
                             exit();
                         } else {
                             require_once "views/404.php";

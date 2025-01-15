@@ -1,11 +1,13 @@
 <?php
-require_once('./config/connexion.php');
+require_once __DIR__ . '/../config/connexion.php';
+
 
 class Tag
 {
     private $pdo;
 
-    public function __construct(){
+    public function __construct()
+    {
         $pdo = new Connexion();
         $this->pdo = $pdo->getconnexion();
     }
@@ -17,10 +19,19 @@ class Tag
         return $tags;
     }
 
-    public function deletetag(){
-        $stmt = $this->pdo->prepare('DELETE FROM tags WHERE id = ?');
-        $stmt->execute();
-        
-    }
+    public function deletetag($id)
+    {
+        $sql ="DELETE FROM tag  WHERE  id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(["id"=>$id]);
 
+    }   
+
+
+    public function addtag($name){
+        $sql= "INSERT INTO tag (title) values (:title)";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['title'=>$name]);
+    }
 }
+

@@ -1,7 +1,8 @@
-<?php
-require_once('./models/Tag.php');
-$tags = (new Tag())->displaytags(); 
-?>
+<?php 
+require_once('../models/Tag.php');
+$taf = new Tag();
+$tags = $taf->displaytags();
+ ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -39,7 +40,7 @@ $tags = (new Tag())->displaytags();
                         </div>
                     </li>
                     <li>
-                        <a href="?view=users"
+                        <a href="views/users.php"
                             class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-primary-500 pr-6">
                             <span class="inline-flex justify-center items-center ml-4">
                                 <i class="fas fa-users"></i>
@@ -48,7 +49,7 @@ $tags = (new Tag())->displaytags();
                         </a>
                     </li>
                     <li>
-                        <a href="?view=category"
+                        <a href="views/category.php"
                             class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-primary-500 pr-6">
                             <span class="inline-flex justify-center items-center ml-4">
                                 <i class="fas fa-th-large"></i>
@@ -57,7 +58,7 @@ $tags = (new Tag())->displaytags();
                         </a>
                     </li>
                     <li>
-                        <a href="?view=tag"
+                        <a href="views/tag.php"
                             class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-primary-500 pr-6">
                             <span class="inline-flex justify-center items-center ml-4">
                                 <i class="fas fa-tags text-primary-500"></i>
@@ -66,7 +67,7 @@ $tags = (new Tag())->displaytags();
                         </a>
                     </li>
                     <li>
-                        <a href="?view=course"
+                        <a href="views/course.php"
                             class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-primary-500 pr-6">
                             <span class="inline-flex justify-center items-center ml-4">
                                 <i class="fas fa-book"></i>
@@ -108,42 +109,25 @@ $tags = (new Tag())->displaytags();
                             </thead>
                             <tbody class="divide-y divide-gray-200">
                                 <?php 
-                                
                                 foreach ($tags as $tag){
                                  ?>
                                 <tr>
                                     <td class="py-3 px-4"><?=$tag['id']?></td>
                                     <td class="py-3 px-4"><?=$tag['title']?></td>
                                     <td class="py-3 px-4">
-                                        <button class="text-blue-500 hover:text-blue-700 mr-2">Edit</button>
-                                        <form method="POST" action="index.php?action=deleteTag">
+                                        <form method="POST" action="http://localhost/index.php?action=deleteTag">
                                         <input type="hidden" name="id" value="<?=$tag['id']?>">
                                         <button  class="text-red-500 hover:text-red-700">Delete</button>
                                         </form>
                                     </td>
                                 </tr>
                                 <?php }?>
-                                <!-- <tr>
-                                    <td class="py-3 px-4">2</td>
-                                    <td class="py-3 px-4">Python</td>
-                                    <td class="py-3 px-4">
-                                        <button class="text-blue-500 hover:text-blue-700 mr-2">Edit</button>
-                                        <button class="text-red-500 hover:text-red-700">Delete</button>
-                                    </td>
-                                </tr> -->
+                              
                             </tbody>
                         </table>
                     </div>
                     <div class="mt-4 flex justify-between items-center">
-                        <div>
-                            <span class="text-gray-600">Showing 1 to 10 of 30 entries</span>
-                        </div>
-                        <div class="flex space-x-2">
-                            <button
-                                class="bg-gray-200 hover:bg-gray-300 text-gray-600 font-semibold py-2 px-4 rounded-lg">Previous</button>
-                            <button
-                                class="bg-primary-500 hover:bg-primary-600 text-white font-semibold py-2 px-4 rounded-lg">Next</button>
-                        </div>
+                        
                     </div>
                 </div>
             </main>
@@ -151,11 +135,11 @@ $tags = (new Tag())->displaytags();
             <div id="TagForm"  class="fixed top-0 left-0 z-50 bg-black/25 w-full  min-h-screen flex items-center justify-center  ">
                 <div class=" absolute top-[40%] left-[40%] items-center justify-center bg-white rounded-lg shadow-md p-6 w-96">
                     <h2 class="text-2xl font-semibold text-gray-800 mb-6">Add Tags</h2>
-                    <form class="space-y-4">
+                    <form method="POST" action="http://localhost/index.php?action=addtag" class="space-y-4">
                         <div>
                             <label for="TagName" class="block text-sm font-medium text-gray-700">Tag
                                 Name</label>
-                            <input type="text" id="TagName" name="TagName" required
+                            <input type="text" id="TagName" name="name" required placeholder="Enter tag name"
                                 class="mt-1 block w-full rounded-md border-black shadow-sm focus:border-primary-500 focus:ring focus:ring-primary-500 focus:ring-opacity-50">
                         </div>
                         <div class="flex items-center justify-end space-x-3">
