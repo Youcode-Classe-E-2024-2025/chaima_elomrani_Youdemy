@@ -40,7 +40,7 @@ $tags = $taf->displaytags();
                         </div>
                     </li>
                     <li>
-                        <a href="views/users.php"
+                        <a href="users.php"
                             class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-primary-500 pr-6">
                             <span class="inline-flex justify-center items-center ml-4">
                                 <i class="fas fa-users"></i>
@@ -49,7 +49,7 @@ $tags = $taf->displaytags();
                         </a>
                     </li>
                     <li>
-                        <a href="views/category.php"
+                        <a href="category.php"
                             class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-primary-500 pr-6">
                             <span class="inline-flex justify-center items-center ml-4">
                                 <i class="fas fa-th-large"></i>
@@ -58,7 +58,7 @@ $tags = $taf->displaytags();
                         </a>
                     </li>
                     <li>
-                        <a href="views/tag.php"
+                        <a href="tag.php"
                             class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-primary-500 pr-6">
                             <span class="inline-flex justify-center items-center ml-4">
                                 <i class="fas fa-tags text-primary-500"></i>
@@ -67,7 +67,7 @@ $tags = $taf->displaytags();
                         </a>
                     </li>
                     <li>
-                        <a href="views/course.php"
+                        <a href="course.php"
                             class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-primary-500 pr-6">
                             <span class="inline-flex justify-center items-center ml-4">
                                 <i class="fas fa-book"></i>

@@ -32,7 +32,7 @@
                         </div>
                     </li>
                     <li>
-                        <a href="views/users.php" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-primary-500 pr-6">
+                        <a href="users.php" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-primary-500 pr-6">
                             <span class="inline-flex justify-center items-center ml-4">
                                 <i class="fas fa-users"></i>
                             </span>
@@ -40,7 +40,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="views/category.php" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-primary-500 pr-6">
+                        <a href="category.php" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-primary-500 pr-6">
                             <span class="inline-flex justify-center items-center ml-4">
                                 <i class="fas fa-th-large text-primary-500"></i>
                             </span>
@@ -48,7 +48,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="views/tag.php" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-primary-500 pr-6">
+                        <a href="tag.php" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-primary-500 pr-6">
                             <span class="inline-flex justify-center items-center ml-4">
                                 <i class="fas fa-tags"></i>
                             </span>
@@ -56,7 +56,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="views/course.php" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-primary-500 pr-6">
+                        <a href="course.php" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-primary-500 pr-6">
                             <span class="inline-flex justify-center items-center ml-4">
                                 <i class="fas fa-book"></i>
                             </span>
