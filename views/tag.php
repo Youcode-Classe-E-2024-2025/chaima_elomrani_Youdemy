@@ -1,3 +1,8 @@
+<?php
+require_once('./models/Tag.php');
+$tags = (new Tag())->displaytags(); 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -98,32 +103,34 @@
                                 <tr>
                                     <th class="py-3 px-4 text-left">ID</th>
                                     <th class="py-3 px-4 text-left">Name</th>
-                                    <th class="py-3 px-4 text-left">Slug</th>
-                                    <th class="py-3 px-4 text-left">Count</th>
                                     <th class="py-3 px-4 text-left">Actions</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200">
+                                <?php 
+                                
+                                foreach ($tags as $tag){
+                                 ?>
                                 <tr>
-                                    <td class="py-3 px-4">1</td>
-                                    <td class="py-3 px-4">JavaScript</td>
-                                    <td class="py-3 px-4">javascript</td>
-                                    <td class="py-3 px-4">15</td>
+                                    <td class="py-3 px-4"><?=$tag['id']?></td>
+                                    <td class="py-3 px-4"><?=$tag['title']?></td>
                                     <td class="py-3 px-4">
                                         <button class="text-blue-500 hover:text-blue-700 mr-2">Edit</button>
-                                        <button class="text-red-500 hover:text-red-700">Delete</button>
+                                        <form method="POST" action="index.php?action=deleteTag">
+                                        <input type="hidden" name="id" value="<?=$tag['id']?>">
+                                        <button  class="text-red-500 hover:text-red-700">Delete</button>
+                                        </form>
                                     </td>
                                 </tr>
-                                <tr>
+                                <?php }?>
+                                <!-- <tr>
                                     <td class="py-3 px-4">2</td>
                                     <td class="py-3 px-4">Python</td>
-                                    <td class="py-3 px-4">python</td>
-                                    <td class="py-3 px-4">12</td>
                                     <td class="py-3 px-4">
                                         <button class="text-blue-500 hover:text-blue-700 mr-2">Edit</button>
                                         <button class="text-red-500 hover:text-red-700">Delete</button>
                                     </td>
-                                </tr>
+                                </tr> -->
                             </tbody>
                         </table>
                     </div>
@@ -141,15 +148,15 @@
                 </div>
             </main>
             <!-- *********************************add tags form ************************** -->
-            <div class="absolute top-0 left-[0] z-50 bg-black/25 w-full flex items-center justify-center min-h-screen">
-                <div class="bg-white rounded-lg shadow-md p-6 w-96">
+            <div id="TagForm"  class="fixed top-0 left-0 z-50 bg-black/25 w-full  min-h-screen flex items-center justify-center  ">
+                <div class=" absolute top-[40%] left-[40%] items-center justify-center bg-white rounded-lg shadow-md p-6 w-96">
                     <h2 class="text-2xl font-semibold text-gray-800 mb-6">Add Tags</h2>
-                    <form id="TagForm" class="space-y-4">
+                    <form class="space-y-4">
                         <div>
                             <label for="TagName" class="block text-sm font-medium text-gray-700">Tag
                                 Name</label>
                             <input type="text" id="TagName" name="TagName" required
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring focus:ring-primary-500 focus:ring-opacity-50">
+                                class="mt-1 block w-full rounded-md border-black shadow-sm focus:border-primary-500 focus:ring focus:ring-primary-500 focus:ring-opacity-50">
                         </div>
                         <div class="flex items-center justify-end space-x-3">
                             <button type="button" id="cancelbtn"
@@ -167,6 +174,21 @@
 
             </div>
         </div>
+
+        <script>
+            const addbtn = document.getElementById('addbtn');
+            const cancelbtn = document.getElementById('cancelbtn');
+            const TagForm = document.getElementById('TagForm');
+
+            TagForm.style.display = "none"
+            addbtn.addEventListener('click', () => {
+                TagForm.style.display = "block"
+            });
+
+            cancelbtn.addEventListener('click', () => {
+                TagForm.style.display = 'none';
+            });
+        </script>
 </body>
 
 </html>

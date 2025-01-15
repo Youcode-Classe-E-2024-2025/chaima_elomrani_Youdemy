@@ -1,12 +1,34 @@
 <?php
 
 include_once "config/helper.php";
-// include_once "controllers/UserController.php";
+include_once "controllers/userController.php";
 include_once "config/connexion.php";
 require_once "core/Router.php";
 
-$router = new Router();
+$action = $_GET['action'] ?? 'home';
 
-$router->action();
-$router->view();
+// $router = new Router();
+
+$userController = new UserController();
+
+// $router->action();
+// $router->view();
+
+switch ($action){
+    case 'home' :
+        require_once "views/home.php"; 
+        break;
+    case 'SignupForm' : 
+        require_once "views/signup.php"; 
+        break;
+    case "SignUp":
+        $userController->register();
+    break;
+    case "loginForm" : 
+        require_once "views/login.php"; 
+        break;
+    case "login" : 
+        $userController->loginCheck();
+        break;
+}
 

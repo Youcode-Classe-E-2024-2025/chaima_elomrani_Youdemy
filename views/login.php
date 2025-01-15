@@ -1,5 +1,4 @@
-<?php require_once './controllers/loginController.php';
- ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -46,7 +45,7 @@
            
                <div class="form-container"> 
                 <h1><span class="gradient-text">Log in</span></h1>
-                    <form id="login-form" action="" method="POST">
+                    <form id="login-form" action="?action=login" method="POST">
                         <div class="form-group">
                             <label for="login-email">Email</label>
                             <input name="email" type="email" id="login-email" required>

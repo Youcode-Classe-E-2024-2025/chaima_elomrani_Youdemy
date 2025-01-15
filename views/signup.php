@@ -35,7 +35,7 @@ require_once('./config/connexion.php');
     <main>
         <div class="form-container">
             <h1><span class="gradient-text">Sign Up</span></h1>
-            <form action="" method="POST">
+            <form action="?action=SignUp" method="POST">
                 <div class="form-group">
                     <label for="name">Full Name</label>
                     <input type="text" id="name" name="name" placeholder="Enter your name" required>

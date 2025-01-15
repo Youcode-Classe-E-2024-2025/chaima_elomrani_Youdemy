@@ -1,23 +1,21 @@
 <?php
 require_once('./config/connexion.php');
-class User
+class Usermodel
 {
 
-    private int $id;
-    private string $name;
-    private string $email;
-    private string $password;
-    private string $role;
+    private  $id;
+    private  $name;
+    private  $email;
+    private  $password;
+    private  $role;
+    private $connexion;
+    
 
-    public function __construct(string $name, string $email, string $role, string $password, $id = null)
-    {
-        //  the ?? is used to check if their is no id prvides then the id of that user get's the default value which is 0, it's usefull when 
-        // we creat a database and the id will be set from the database it self 
-        $this->name = $name;
-        $this->email = $email;
-        $this->password = $password;
-        $this->role = $role;
-        $this->id = $id ?? 0;
+    public function __construct()
+    { 
+        $pdo = new Connexion();
+        $this->connexion = $pdo->getconnexion();
+     
     }
 
     public function getId(): int
@@ -65,36 +63,34 @@ class User
 
 
 
-    public function InsertUser()
+    public function InsertUser($name,$email,$password,$role)
     {
 
 
 
         // verifying the connexion with the data base 
-        $pdo = new Connexion();
-        $pdo = $pdo->getconnexion();
-
-        if (!$pdo) {
+        
+        if (!$this->connexion) {
             error_log("Échec de la connexion à la base de données");
             return false;
         }
 
         // cheking if the email already exists in the database or not 
-        $checkemail = $pdo->prepare('SELECT * FROM users WHERE email = ?'); // ? is a placeholder of the email that wikk be entred by the user 
-        $checkemail->execute([$this->email]);    // executing the prepared query with replacing the ? with the amail of the user entered 
+        $checkemail = $this->connexion->prepare('SELECT * FROM users WHERE email = ?'); // ? is a placeholder of the email that wikk be entred by the user 
+        $checkemail->execute([$email]);    // executing the prepared query with replacing the ? with the amail of the user entered 
         $emailCount = $checkemail->fetch();  // retreiving all the users with that email if no one has the same email the variable emailcount with return 
 
 
         if ($emailCount) {
             echo 'mail already exists';
-            return;
+            return false;
         }
 
         // inserting the user into the database 
 
-        $stmt = $pdo->prepare('INSERT INTO users (name , email, password , role) VALUES (?,?,?,?)');
-        $hashedpassword = password_hash($this->password, PASSWORD_DEFAULT);
-        $result = $stmt->execute([$this->name, $this->email, $hashedpassword, $this->role]);
+        $stmt = $this->connexion->prepare('INSERT INTO users (name , email, password , role) VALUES (?,?,?,?)');
+        $hashedpassword = password_hash($password, PASSWORD_DEFAULT);
+        $result = $stmt->execute([$name, $email, $hashedpassword, $role]);
         if ($result) {
             echo "User saved successfully!";
         } else {
@@ -103,24 +99,22 @@ class User
         }
         
 
-        $this->id = $pdo->lastInsertId();
+        // $this->id = $this->connexion->lastInsertId();
         return true;
     }
 
 
 
     public function login(string $email , string $password){
-        $pdo = new Connexion();
-        $pdo = $pdo->getconnexion();
 
-        $stmt =$pdo->prepare("SELECT * FROM users WHERE email = ?");
+
+        $stmt =$this->connexion->prepare("SELECT * FROM users WHERE email = ?");
         $stmt->execute([$email]);
         $verifyUser = $stmt->fetch( PDO::FETCH_ASSOC);   // fetching the data and stock in a a variable called verifyuser
 
         if($verifyUser && password_verify($password,$verifyUser['password'])){
             // verifying the data of the user
-            $user = new User($verifyUser['name'], $verifyUser['email'], $password, $verifyUser['role'], $verifyUser['id']);
-            return $user ;
+            return $verifyUser ;
         }else{
             return null ;
         }
