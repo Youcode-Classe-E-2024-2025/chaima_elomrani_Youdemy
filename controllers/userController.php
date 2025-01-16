@@ -83,6 +83,15 @@ class UserController
     }
 
 
+    
+    public function logout()
+    {
+       $this->usermodel->Logout();
+        header('Location: index.php?action=loginForm');
+
+    }
+
+
 
 
 

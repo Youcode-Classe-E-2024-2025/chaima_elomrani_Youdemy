@@ -82,10 +82,11 @@ $users = $users->displayUsers();
                 <h1 class="text-2xl font-semibold text-gray-800">Manage Users</h1>
                 <div class="flex items-center space-x-4">
                     <span class="text-gray-600">Welcome, Admin</span>
-                    <button
-                        class="bg-primary-500 hover:bg-primary-600 text-white py-2 px-4 rounded-lg transition duration-200">
-                        Logout
-                    </button>
+
+                    <form method="POST" action="http://localhost/index.php?action=logout">
+                        <input type="hidden" name="log" value="">
+                    <button class="bg-primary-500 hover:bg-primary-600 text-white py-2 px-4 rounded-lg transition duration-200">Logout</button>
+                    </form>
                 </div>
             </header>
             <main class="p-6">
@@ -119,18 +120,21 @@ $users = $users->displayUsers();
                                                 class="bg-green-100 text-green-800 py-1 px-2 rounded-full text-sm"><?= $user['status'] ?></span>
                                         </td>
                                         <!-- <td class="py-3 px-[50px] gap-[10px] flex flex-row">    -->
-                                        <td class="px-4 py-4 whitespace-nowrap text-sm font-medium px-[50px] gap-[20px] flex flex-row">
+                                        <td
+                                            class="px-4 py-4 whitespace-nowrap text-sm font-medium px-[50px] gap-[20px] flex flex-row">
 
 
                                             <?php if ($user['status'] !== 'active') { ?>
-                                                <form action="http://localhost/index.php?action=aproveUser" method="POST">
+                                                <form action="http://<?= $_SERVER['HTTP_HOST'] ?>/index.php?action=aproveUser"
+                                                    method="POST">
                                                     <input type="hidden" name="id" value="<?= $user['id'] ?>">
                                                     <button class="text-green-500 hover:text-green-700">Approve</button>
                                                 </form>
                                             <?php } ?>
 
                                             <?php if ($user['status'] == 'active') { ?>
-                                                <form action="http://localhost/index.php?action=SuspendUser" method="POST">
+                                                <form action="http://<?= $_SERVER['HTTP_HOST'] ?>/index.php?action=SuspendUser"
+                                                    method="POST">
                                                     <input type="hidden" name="id" value="<?= $user['id'] ?>">
                                                     <button class="text-orange-500 hover:text-orange-700">Suspend</button>
                                                 </form>
@@ -144,8 +148,8 @@ $users = $users->displayUsers();
 
                                         </td>
                                     </tr>
-                                  
-                               <?php } ?>
+
+                                <?php } ?>
                             </tbody>
                         </table>
                     </div>

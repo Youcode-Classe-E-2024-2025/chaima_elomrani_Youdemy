@@ -72,5 +72,11 @@ switch ($action){
         $userController->suspendUser($id);
         break;
 
+
+    case "logout" :
+        $logout = $_POST['log'];
+        $userController->logout();
+        break;    
+
 }
 

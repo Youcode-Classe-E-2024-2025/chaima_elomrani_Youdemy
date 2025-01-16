@@ -127,41 +127,51 @@ class Usermodel
     }
 
 
-    public function displayUsers(){
+    public function displayUsers()
+    {
         $sql = "SELECT*FROM users";
         $stmt = $this->connexion->prepare($sql);
         $stmt->execute();
-        $users=$stmt->fetchAll(PDO::FETCH_ASSOC);
+        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $users;
     }
 
 
-    public function deleteUser($id){
-       $sql="DELETE FROM users WHERE id = :id";
-       $stmt=$this->connexion->prepare($sql);
-       $stmt->execute(["id"=>$id]);
+    public function deleteUser($id)
+    {
+        $sql = "DELETE FROM users WHERE id = :id";
+        $stmt = $this->connexion->prepare($sql);
+        $stmt->execute(["id" => $id]);
     }
+
+
+    public function aproveUser($id)
+    {
+        $sql = "UPDATE users SET status = :status WHERE id = :id";
+        $stmt = $this->connexion->prepare($sql);
+        $stmt->execute([
+            'status' => 'active',
+            'id' => $id
+        ]);
+    }
+
+
+    public function suspendUser($id)
+    {
+        $sql = "UPDATE users SET status = :status WHERE id = :id";
+        $stmt = $this->connexion->prepare($sql);
+        $stmt->execute([
+            'status' => 'suspended',
+            'id' => $id
+        ]);
+    }
+
     
-
-    public function aproveUser($id){
-        $sql="UPDATE users SET status = :status WHERE id = :id";
-        $stmt=$this->connexion->prepare($sql);
-        $stmt->execute([
-            'status'=>'active',
-            'id'=>$id
-        ]);
+    public function Logout(){
+        // session_start();
+        session_unset();
+        session_destroy();
     }
-
-
-    public function suspendUser($id){
-        $sql="UPDATE users SET status = :status WHERE id = :id";
-        $stmt=$this->connexion->prepare($sql);
-        $stmt->execute([
-            'status'=>'suspended',
-            'id'=>$id
-        ]);
-    }
-
 
 
 
