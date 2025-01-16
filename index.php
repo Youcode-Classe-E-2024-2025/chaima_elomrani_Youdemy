@@ -2,6 +2,7 @@
 
 include_once "config/helper.php";
 include_once "controllers/userController.php";
+include_once "controllers/CategoryController.php";
 include_once "config/connexion.php";
 include_once "controllers/TagController.php";
 // require_once "core/Router.php";
@@ -12,6 +13,7 @@ $action = $_GET['action'] ?? 'home';
 
 $userController = new UserController();
 $tagController = new TagController();
+$categoryController = new CategoryController();
 
 // $router->action();
 // $router->view();
@@ -45,8 +47,18 @@ switch ($action){
     // case "diplaytags" : 
     //     $tagController->DisplayTag();
     //     break;
+     
+    case "deleteCategory" :
+        $id = $_POST['id'];
+        $categoryController->DeleteCategory($id);
+        break;
 
+    case "addCategory" :
+        $categoryController->addcategory() ;
+        break; 
+       
         
+    
 
 
 }

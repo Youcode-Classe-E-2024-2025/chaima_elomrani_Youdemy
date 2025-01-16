@@ -7,7 +7,7 @@ class TagController
 {
 
     private $tagmodel;
-    // private $name ;
+  
 
     public function __construct()
     {

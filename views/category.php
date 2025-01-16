@@ -1,3 +1,8 @@
+<?php 
+require_once __DIR__ . '/../models/Category.php';
+$categori = new Category();
+$categories = $categori->displayCategory(); 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -80,7 +85,7 @@
                 <div class="bg-white rounded-lg shadow-md p-6">
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="text-xl font-semibold text-gray-800">Category List</h2>
-                        <button class="bg-primary-500 hover:bg-primary-600 text-white py-2 px-4 rounded-lg transition duration-200">
+                        <button id="addbtn" class="bg-primary-500 hover:bg-primary-600 text-white py-2 px-4 rounded-lg transition duration-200">
                             Add New Category
                         </button>
                     </div>
@@ -90,57 +95,42 @@
                                 <tr>
                                     <th class="py-3 px-4 text-left">ID</th>
                                     <th class="py-3 px-4 text-left">Name</th>
-                                    <th class="py-3 px-4 text-left">Slug</th>
-                                    <th class="py-3 px-4 text-left">Description</th>
                                     <th class="py-3 px-4 text-left">Actions</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200">
+                                <?php 
+                                foreach($categories as $category){
+                                ?>
                                 <tr>
-                                    <td class="py-3 px-4">1</td>
-                                    <td class="py-3 px-4">Web Development</td>
-                                    <td class="py-3 px-4">web-development</td>
-                                    <td class="py-3 px-4">Courses related to web development</td>
+                                    <td class="py-3 px-4"><?= $category['id']?></td>
+                                    <td class="py-3 px-4"><?= $category['name']?></td>
                                     <td class="py-3 px-4">
-                                        <button class="text-blue-500 hover:text-blue-700 mr-2">Edit</button>
-                                        <button class="text-red-500 hover:text-red-700">Delete</button>
+                                        <form method="POST" action="http://localhost/index.php?action=deleteCategory">
+                                        <input type="hidden" name="id" value="<?=$category['id']?>">
+                                        <button  class="text-red-500 hover:text-red-700">Delete</button>
+                                        </form>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="py-3 px-4">2</td>
-                                    <td class="py-3 px-4">Data Science</td>
-                                    <td class="py-3 px-4">data-science</td>
-                                    <td class="py-3 px-4">Courses related to data science and analytics</td>
-                                    <td class="py-3 px-4">
-                                        <button class="text-blue-500 hover:text-blue-700 mr-2">Edit</button>
-                                        <button class="text-red-500 hover:text-red-700">Delete</button>
-                                    </td>
-                                </tr>
+                                <?php 
+                                }
+                                ?>
                             </tbody>
                         </table>
-                    </div>
-                    <div class="mt-4 flex justify-between items-center">
-                        <div>
-                            <span class="text-gray-600">Showing 1 to 10 of 50 entries</span>
-                        </div>
-                        <div class="flex space-x-2">
-                            <button class="bg-gray-200 hover:bg-gray-300 text-gray-600 font-semibold py-2 px-4 rounded-lg">Previous</button>
-                            <button class="bg-primary-500 hover:bg-primary-600 text-white font-semibold py-2 px-4 rounded-lg">Next</button>
-                        </div>
-                    </div>
+                   
                 </div>
             </main>
               <!-- *******************add form *********************** -->
-    <!-- <div class="absolute top-0 left-[0] z-50 bg-black/25 w-full flex items-center justify-center min-h-screen">
-    <div class="bg-white rounded-lg shadow-md p-6 w-96">
-        <h2 class="text-2xl font-semibold text-gray-800 mb-6">Add/Edit Category</h2>
-        <form id="categoryForm" class="space-y-4">
+    <div id="categoryForm" class="fixed top-0 left-0 z-50 bg-black/25 w-full flex items-center justify-center min-h-screen">
+    <div class="absolute top-[40%] left-[40%] items-center justify-center bg-white rounded-lg shadow-md p-6 w-96">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-6">Add Category</h2>
+        <form method="POST" action="http://localhost/index.php?action=addCategory" class="space-y-4">
             <div>
                 <label for="categoryName" class="block text-sm font-medium text-gray-700">Category Name</label>
-                <input type="text" id="categoryName" name="categoryName" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring focus:ring-primary-500 focus:ring-opacity-50">
+                <input type="text" id="categoryName" placeholder="Enter category" name="name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring focus:ring-primary-500 focus:ring-opacity-50">
             </div>
             <div class="flex items-center justify-end space-x-3">
-                <button type="button" class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded-lg transition duration-200">
+                <button type="button" id="cancelbtn" class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded-lg transition duration-200">
                     Cancel
                 </button>
                 <button type="submit" class="bg-primary-500 hover:bg-primary-600 text-white py-2 px-4 rounded-lg transition duration-200">
@@ -148,11 +138,24 @@
                 </button>
             </div>
         </form>
-    </div> -->
+    </div>
         </div>
         
     </div>
 
-  
+    <script>
+           const addbtn = document.getElementById('addbtn');
+            const cancelbtn = document.getElementById('cancelbtn');
+            const categoryForm = document.getElementById('categoryForm');
+
+            categoryForm.style.display = "none"
+            addbtn.addEventListener('click', () => {
+                categoryForm.style.display = "block"
+            });
+
+            cancelbtn.addEventListener('click', () => {
+                categoryForm.style.display = 'none';
+            });
+    </script>
 </body>
 </html>
