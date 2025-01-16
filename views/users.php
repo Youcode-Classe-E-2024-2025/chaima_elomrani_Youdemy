@@ -134,8 +134,6 @@ $users = $users->displayUsers();
                                                     <input type="hidden" name="id" value="<?= $user['id'] ?>">
                                                     <button class="text-orange-500 hover:text-orange-700">Suspend</button>
                                                 </form>
-
-
                                             <?php } ?>
 
 

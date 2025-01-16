@@ -69,7 +69,7 @@ switch ($action){
 
     case "SuspendUser" :
         $id = $_POST['id'];
-        $userController->SuspendUser($id);
+        $userController->suspendUser($id);
         break;
 
 }

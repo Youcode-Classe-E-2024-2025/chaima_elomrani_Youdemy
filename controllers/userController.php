@@ -78,7 +78,7 @@ class UserController
 
 
     public function SuspendUser($id){
-        $this->usermodel->aproveUser($id);
+        $this->usermodel->suspendUser($id);
         header("Location: ./views/users.php");
     }
 
