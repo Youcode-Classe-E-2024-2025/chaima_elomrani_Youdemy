@@ -118,16 +118,36 @@ $users = $users->displayUsers();
                                         <td class="py-3 px-4"><span
                                                 class="bg-green-100 text-green-800 py-1 px-2 rounded-full text-sm"><?= $user['status'] ?></span>
                                         </td>
-                                        <td class="py-3 px-4">
+                                        <!-- <td class="py-3 px-[50px] gap-[10px] flex flex-row">    -->
+                                        <td class="px-4 py-4 whitespace-nowrap text-sm font-medium px-[50px] gap-[20px] flex flex-row">
+
+
+                                            <?php if ($user['status'] !== 'active') { ?>
+                                                <form action="http://localhost/index.php?action=aproveUser" method="POST">
+                                                    <input type="hidden" name="id" value="<?= $user['id'] ?>">
+                                                    <button class="text-green-500 hover:text-green-700">Approve</button>
+                                                </form>
+                                            <?php } ?>
+
+                                            <?php if ($user['status'] == 'active') { ?>
+                                                <form action="http://localhost/index.php?action=SuspendUser" method="POST">
+                                                    <input type="hidden" name="id" value="<?= $user['id'] ?>">
+                                                    <button class="text-orange-500 hover:text-orange-700">Suspend</button>
+                                                </form>
+
+
+                                            <?php } ?>
+
+
                                             <form method="POST" action="http://localhost/index.php?action=deleteUser">
                                                 <input type="hidden" name="id" value="<?= $user['id'] ?>">
                                                 <button class="text-red-500 hover:text-red-700">Delete</button>
                                             </form>
+
                                         </td>
                                     </tr>
-                                    <?php
-                                }
-                                ?>
+                                  
+                               <?php } ?>
                             </tbody>
                         </table>
                     </div>

@@ -62,7 +62,15 @@ switch ($action){
         $userController->DeleteUser($id);
         break;
     
+    case "aproveUser" :
+        $id = $_POST['id'];
+        $userController->AproveUser($id);
+        break;
 
+    case "SuspendUser" :
+        $id = $_POST['id'];
+        $userController->SuspendUser($id);
+        break;
 
 }
 

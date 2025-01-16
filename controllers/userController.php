@@ -46,7 +46,7 @@ class UserController
                     $_SESSION["user_role"] = $loginResult["role"];
                     $_SESSION["user_status"] = $loginResult["status"];
 
-                    if ( $loginResult["status"] === 'suspended') {
+                    if ($loginResult["status"] === 'suspended') {
                         header('Location: ./views/pended_page.php');
                     } else {
                         header('Location: ./views/catalogue.php');
@@ -63,13 +63,35 @@ class UserController
     }
 
 
-
-
-    public function DeleteUser($id){
-      $this->usermodel->deleteUser($id);
-      header('Location: ./views/users.php');
+    public function DeleteUser($id)
+    {
+        $this->usermodel->deleteUser($id);
+        header('Location: ./views/users.php');
 
     }
+
+
+    public function AproveUser($id){
+        $this->usermodel->aproveUser($id);
+        header("Location: ./views/users.php");
+    }
+
+
+    public function SuspendUser($id){
+        $this->usermodel->aproveUser($id);
+        header("Location: ./views/users.php");
+    }
+
+
+
+
+
+
+
+
+
+
+
 }
 
 

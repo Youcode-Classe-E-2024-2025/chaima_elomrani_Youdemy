@@ -141,7 +141,26 @@ class Usermodel
        $stmt=$this->connexion->prepare($sql);
        $stmt->execute(["id"=>$id]);
     }
+    
 
+    public function aproveUser($id){
+        $sql="UPDATE users SET status = :status WHERE id = :id";
+        $stmt=$this->connexion->prepare($sql);
+        $stmt->execute([
+            'status'=>'active',
+            'id'=>$id
+        ]);
+    }
+
+
+    public function suspendUser($id){
+        $sql="UPDATE users SET status = :status WHERE id = :id";
+        $stmt=$this->connexion->prepare($sql);
+        $stmt->execute([
+            'status'=>'suspended',
+            'id'=>$id
+        ]);
+    }
 
 
 
