@@ -88,9 +88,14 @@ class Usermodel
 
         // inserting the user into the database 
 
-        $stmt = $this->connexion->prepare('INSERT INTO users (name , email, password , role) VALUES (?,?,?,?)');
+        $stmt = $this->connexion->prepare('INSERT INTO users (name , email, password , role,status) VALUES (?,?,?,?,?)');
         $hashedpassword = password_hash($password, PASSWORD_DEFAULT);
-        $result = $stmt->execute([$name, $email, $hashedpassword, $role]);
+        if($role === 'Teacher'){
+        $result = $stmt->execute([$name, $email, $hashedpassword, $role,"suspended"]);
+        }else{
+            $result = $stmt->execute([$name, $email, $hashedpassword, $role,"active"]);
+
+        }
         if ($result) {
             echo "User saved successfully!";
         } else {

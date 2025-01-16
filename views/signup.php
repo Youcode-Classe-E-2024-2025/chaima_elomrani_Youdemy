@@ -1,5 +1,5 @@
 <?php 
-require_once('./controllers/signupController.php');
+require_once('./controllers/userController.php');
 require_once('./config/connexion.php');
  ?>
 

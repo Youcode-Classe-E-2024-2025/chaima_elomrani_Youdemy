@@ -76,6 +76,7 @@ INSERT INTO Users (name, email, password, role) VALUES
 ('David Wilson', 'david@you.com', 'password123', 'Student'),
 ('Emma Brown', 'emma@you.com', 'password123', 'Teacher');
 
+
 INSERT INTO Course (title, description, image_path, video_path, category_id) VALUES
 ('Intro to Web Development', 'Learn the basics of HTML, CSS, and JavaScript to build your first website.', 'web_dev_image.jpg', 'web_dev_video.mp4', 1),
 ('Data Science for Beginners', 'Get started with data analysis and visualization using Python and Jupyter notebooks.', 'data_sci_image.jpg', 'data_sci_video.mp4', 2),
