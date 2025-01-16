@@ -94,7 +94,7 @@
                     </h1>
                     <p class="text-xl mb-10 text-gray-600">Discover a world of interactive and personalized courses
                         tailored for both students and teachers.</p>
-                    <a href="./views/catalogue.php"
+                    <a href="./view/catalogue.php"
                         class="bg-primary text-white text-lg px-8 py-3 rounded-full hover:bg-indigo-600 transition transform hover:scale-105 inline-block">Explore
                         Courses</a>
                 </div>

@@ -44,12 +44,12 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" x-data="{ courses: [
-            {id: 1, title: 'Introduction to Web Development', instructor: 'John Doe', price: 49.99, image: './images/image1.jpg'},
-            {id: 2, title: 'Advanced JavaScript Concepts', instructor: 'Jane Smith', price: 69.99, image: './images/image2.jpg'},
-            {id: 3, title: 'Python for Data Science', instructor: 'Mike Johnson', price: 79.99, image: './images/image6.jpg'},
-            {id: 4, title: 'Machine Learning Fundamentals', instructor: 'Emily Brown', price: 89.99, image: './images/image3.jpg'},
-            {id: 5, title: 'UI/UX Design Principles', instructor: 'David Wilson', price: 59.99, image: './images/image4.jpg'},
-            {id: 6, title: 'Mobile App Development with React Native', instructor: 'Sarah Lee', price: 74.99, image: './images/image5.jpg'},
+            {id: 1, title: 'Introduction to Web Development', instructor: 'John Doe', price: 49.99, image: '../images/image1.jpg'},
+            {id: 2, title: 'Advanced JavaScript Concepts', instructor: 'Jane Smith', price: 69.99, image: '../images/image2.jpg'},
+            {id: 3, title: 'Python for Data Science', instructor: 'Mike Johnson', price: 79.99, image: '../images/image6.jpg'},
+            {id: 4, title: 'Machine Learning Fundamentals', instructor: 'Emily Brown', price: 89.99, image: '../images/image3.jpg'},
+            {id: 5, title: 'UI/UX Design Principles', instructor: 'David Wilson', price: 59.99, image: '../images/image4.jpg'},
+            {id: 6, title: 'Mobile App Development with React Native', instructor: 'Sarah Lee', price: 74.99, image: '../images/image5.jpg'},
         ]}">
             <template x-for="course in courses" :key="course.id">
                 <div class="bg-white rounded-lg shadow-md overflow-hidden">

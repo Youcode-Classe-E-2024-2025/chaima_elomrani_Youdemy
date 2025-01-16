@@ -37,7 +37,7 @@
             </button>
             
             <button class="w-full py-3 px-4 rounded-xl font-medium text-white bg-home hover:opacity-90 transition-opacity">
-                Return Home
+                <a href="home.php">Return Home</a>
             </button>
         </div>
     </div>

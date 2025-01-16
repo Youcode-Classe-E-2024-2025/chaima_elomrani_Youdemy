@@ -40,14 +40,14 @@ class UserController
             try {
                 $loginResult = $this->usermodel->login($email, $password);
                 if ($loginResult) {
-                    require_once "./views/catalogue.php";
+                    // require_once "./views/catalogue.php";
                     session_start();
                     $_SESSION["user_id"] = $loginResult["id"];
                     $_SESSION["user_role"] = $loginResult["role"];
                     $_SESSION["user_status"] = $loginResult["status"];
 
                     if ( $loginResult["status"] === 'suspended') {
-                        header('Location: ./view/pended_page.php');
+                        header('Location: ./views/pended_page.php');
                     } else {
                         header('Location: ./views/catalogue.php');
                     }

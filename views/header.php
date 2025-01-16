@@ -13,10 +13,10 @@
                 </ul>
             </nav>
             <div class="hidden md:flex space-x-4">
-                <a href="?view=signup   "
+                <a href="signup.php"
                     class="bg-primary text-white px-4 py-2 rounded-full hover:bg-indigo-600 transition transform hover:scale-105">Sign
                     up </a>
-                <a href="?view=login"
+                <a href="login.php"
                     class="bg-secondary text-white px-4 py-2 rounded-full hover:bg-green-600 transition transform hover:scale-105">log
                     in</a>
             </div>
