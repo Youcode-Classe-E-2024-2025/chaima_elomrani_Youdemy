@@ -61,68 +61,16 @@ class UserController
             }
         }
     }
+
+
+
+
+    public function DeleteUser($id){
+      $this->usermodel->deleteUser($id);
+      header('Location: ./views/users.php');
+
+    }
 }
-
-
-
-
-
-
-// $error = '';
-
-// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-//     $email = $_POST['email'];
-//     $password = $_POST['password'];
-
-//     try {
-//         $loginResult = $userController->login($email, $password);
-
-//         if ($loginResult['success']) {
-//             if ($loginResult) {
-//                 header('Location: ?view=catalogue');
-//                 exit();
-//             } else {
-//                 header('Location: ?view=404');
-//                 exit();
-//             }
-//         } else {
-//             $error = $loginResult['message'];
-//         }
-//     } catch (Exception $e) {
-//         $error = $e->getMessage();
-//     }
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

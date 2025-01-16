@@ -57,7 +57,10 @@ switch ($action){
         $categoryController->addcategory() ;
         break; 
        
-        
+    case "deleteUser" :
+        $id = $_POST['id'];
+        $userController->DeleteUser($id);
+        break;
     
 
 

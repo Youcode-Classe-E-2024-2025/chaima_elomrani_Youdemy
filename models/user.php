@@ -1,21 +1,21 @@
 <?php
-require_once('./config/connexion.php');
+require_once __DIR__ . '/../config/connexion.php';
 class Usermodel
 {
 
-    private  $id;
-    private  $name;
-    private  $email;
-    private  $password;
-    private  $role;
+    private $id;
+    private $name;
+    private $email;
+    private $password;
+    private $role;
     private $connexion;
-    
+
 
     public function __construct()
-    { 
+    {
         $pdo = new Connexion();
         $this->connexion = $pdo->getconnexion();
-     
+
     }
 
     public function getId(): int
@@ -63,13 +63,13 @@ class Usermodel
 
 
 
-    public function InsertUser($name,$email,$password,$role)
+    public function InsertUser($name, $email, $password, $role)
     {
 
 
 
         // verifying the connexion with the data base 
-        
+
         if (!$this->connexion) {
             error_log("Échec de la connexion à la base de données");
             return false;
@@ -90,10 +90,10 @@ class Usermodel
 
         $stmt = $this->connexion->prepare('INSERT INTO users (name , email, password , role,status) VALUES (?,?,?,?,?)');
         $hashedpassword = password_hash($password, PASSWORD_DEFAULT);
-        if($role === 'Teacher'){
-        $result = $stmt->execute([$name, $email, $hashedpassword, $role,"suspended"]);
-        }else{
-            $result = $stmt->execute([$name, $email, $hashedpassword, $role,"active"]);
+        if ($role === 'Teacher') {
+            $result = $stmt->execute([$name, $email, $hashedpassword, $role, "suspended"]);
+        } else {
+            $result = $stmt->execute([$name, $email, $hashedpassword, $role, "active"]);
 
         }
         if ($result) {
@@ -102,7 +102,7 @@ class Usermodel
             echo "Failed to save user.";
             return false;
         }
-        
+
 
         // $this->id = $this->connexion->lastInsertId();
         return true;
@@ -110,20 +110,49 @@ class Usermodel
 
 
 
-    public function login(string $email , string $password){
+    public function login(string $email, string $password)
+    {
 
 
-        $stmt =$this->connexion->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt = $this->connexion->prepare("SELECT * FROM users WHERE email = ?");
         $stmt->execute([$email]);
-        $verifyUser = $stmt->fetch( PDO::FETCH_ASSOC);   // fetching the data and stock in a a variable called verifyuser
+        $verifyUser = $stmt->fetch(PDO::FETCH_ASSOC);   // fetching the data and stock in a a variable called verifyuser
 
-        if($verifyUser && password_verify($password,$verifyUser['password'])){
+        if ($verifyUser && password_verify($password, $verifyUser['password'])) {
             // verifying the data of the user
-            return $verifyUser ;
-        }else{
-            return null ;
+            return $verifyUser;
+        } else {
+            return null;
         }
-        
     }
+
+
+    public function displayUsers(){
+        $sql = "SELECT*FROM users";
+        $stmt = $this->connexion->prepare($sql);
+        $stmt->execute();
+        $users=$stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $users;
+    }
+
+
+    public function deleteUser($id){
+       $sql="DELETE FROM users WHERE id = :id";
+       $stmt=$this->connexion->prepare($sql);
+       $stmt->execute(["id"=>$id]);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
