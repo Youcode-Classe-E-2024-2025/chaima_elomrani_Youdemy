@@ -1,7 +1,7 @@
 CREATE DATABASE IF NOT EXISTS youdemy ;
 USE youdemy;
 
-CREATE TABLE Users (
+CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY ,
     name VARCHAR(255),
     email VARCHAR(255),
@@ -15,8 +15,11 @@ CREATE TABLE Course(
     description TEXT,
     image_path TEXT,
     video_path TEXT,
-    category_id INT,
+    price VARCHAR(200),
+    category_id INT,    
+    Teacher INT ,
     FOREIGN KEY (category_id) REFERENCES Category(id) 
+    FOREIGN KEY (teacher_id) REFERENCES users(id) ; 
 );
 
 CREATE TABLE Category(
@@ -94,7 +97,6 @@ INSERT INTO Tag_to_course (course_id, tag_id) VALUES
 (5, 7), 
 (5, 9); 
 
--- Inserting data into 'Inscription'
 INSERT INTO Inscription (inscription_date, student_id, course_id) VALUES
 ('2025-01-01', 1, 1), 
 ('2025-01-02', 4, 2), 
@@ -104,5 +106,14 @@ INSERT INTO Inscription (inscription_date, student_id, course_id) VALUES
 
 
 
+INSERT INTO course (price)
+VALUES
+(100), 
+(150), 
+(200), 
+(250), 
+(300);
 
 
+ALTER TABLE course
+ADD status VARCHAR(200);

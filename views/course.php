@@ -1,3 +1,9 @@
+<?php 
+require_once __DIR__ . '/../models/Courses.php';
+$cours = new Courses();
+$courses = $cours->displayCourse();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -98,42 +104,35 @@
                                 <tr>
                                     <th class="py-3 px-4 text-left">ID</th>
                                     <th class="py-3 px-4 text-left">Title</th>
-                                    <th class="py-3 px-4 text-left">Instructor</th>
+                                    <th class="py-3 px-4 text-left">Description</th>
+                                    <th class="py-3 px-4 text-left">Course Teacher</th>
                                     <th class="py-3 px-4 text-left">Category</th>
                                     <th class="py-3 px-4 text-left">Price</th>
-                                    <th class="py-3 px-4 text-left">Status</th>
                                     <th class="py-3 px-4 text-left">Actions</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200">
+                                <?php
+                                foreach($courses as $course){
+                                ?>
                                 <tr>
-                                    <td class="py-3 px-4">1</td>
-                                    <td class="py-3 px-4">Introduction to JavaScript</td>
-                                    <td class="py-3 px-4">John Doe</td>
-                                    <td class="py-3 px-4">Web Development</td>
-                                    <td class="py-3 px-4">$49.99</td>
-                                    <td class="py-3 px-4"><span
+                                    <td class="py-3 px-4"><?=$course['id'] ?></td>
+                                    <td class="py-3 px-4"><?=$course['name'] ?></td>
+                                    <td class="py-3 px-4"><?=$course['description']?></td>
+                                    <td class="py-3 px-4"><?=$course['Teacher']?></td>
+                                    <td class="py-3 px-4"><?=$course['category_id']?></td>
+                                    <td class="py-3 px-4"><?=$course['price']?></td>
+                                    <!-- <td class="py-3 px-4"><span
                                             class="bg-green-100 text-green-800 py-1 px-2 rounded-full text-sm">Published</span>
-                                    </td>
+                                    </td> -->
                                     <td class="py-3 px-4">
                                         <button class="text-blue-500 hover:text-blue-700 mr-2">Edit</button>
                                         <button class="text-red-500 hover:text-red-700">Delete</button>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="py-3 px-4">2</td>
-                                    <td class="py-3 px-4">Python for Data Science</td>
-                                    <td class="py-3 px-4">Jane Smith</td>
-                                    <td class="py-3 px-4">Data Science</td>
-                                    <td class="py-3 px-4">$69.99</td>
-                                    <td class="py-3 px-4"><span
-                                            class="bg-yellow-100 text-yellow-800 py-1 px-2 rounded-full text-sm">Draft</span>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <button class="text-blue-500 hover:text-blue-700 mr-2">Edit</button>
-                                        <button class="text-red-500 hover:text-red-700">Delete</button>
-                                    </td>
-                                </tr>
+                                <?php
+                                }
+                                ?>
                             </tbody>
                         </table>
                     </div>

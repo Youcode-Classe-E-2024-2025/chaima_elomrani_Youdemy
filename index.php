@@ -78,5 +78,7 @@ switch ($action){
         $userController->logout();
         break;    
 
+        
+
 }
 
