@@ -105,7 +105,7 @@ $courses = $cours->displayCourse();
                                     <th class="py-3 px-4 text-left">ID</th>
                                     <th class="py-3 px-4 text-left">Title</th>
                                     <th class="py-3 px-4 text-left">Description</th>
-                                    <th class="py-3 px-4 text-left">Course Teacher</th>
+                                    <th class="py-3 px-4 text-left"> Teacher</th>
                                     <th class="py-3 px-4 text-left">Category</th>
                                     <th class="py-3 px-4 text-left">Price</th>
                                     <th class="py-3 px-4 text-left">Actions</th>
@@ -117,14 +117,11 @@ $courses = $cours->displayCourse();
                                 ?>
                                 <tr>
                                     <td class="py-3 px-4"><?=$course['id'] ?></td>
-                                    <td class="py-3 px-4"><?=$course['name'] ?></td>
+                                    <td class="py-3 px-4"><?=$course['title'] ?></td>
                                     <td class="py-3 px-4"><?=$course['description']?></td>
                                     <td class="py-3 px-4"><?=$course['Teacher']?></td>
                                     <td class="py-3 px-4"><?=$course['category_id']?></td>
                                     <td class="py-3 px-4"><?=$course['price']?></td>
-                                    <!-- <td class="py-3 px-4"><span
-                                            class="bg-green-100 text-green-800 py-1 px-2 rounded-full text-sm">Published</span>
-                                    </td> -->
                                     <td class="py-3 px-4">
                                         <button class="text-blue-500 hover:text-blue-700 mr-2">Edit</button>
                                         <button class="text-red-500 hover:text-red-700">Delete</button>
@@ -136,18 +133,7 @@ $courses = $cours->displayCourse();
                             </tbody>
                         </table>
                     </div>
-                    <div class="mt-4 flex justify-between items-center">
-
-                        <div>
-                            <span class="text-gray-600">Showing 1 to 10 of 50 entries</span>
-                        </div>
-                        <div class="flex space-x-2">
-                            <button
-                                class="bg-gray-200 hover:bg-gray-300 text-gray-600 font-semibold py-2 px-4 rounded-lg">Previous</button>
-                            <button
-                                class="bg-primary-500 hover:bg-primary-600 text-white font-semibold py-2 px-4 rounded-lg">Next</button>
-                        </div>
-                    </div>
+                 
                 </div>
             </main>
         </div>
