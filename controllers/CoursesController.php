@@ -20,11 +20,11 @@ class CoursesController{
 
 
 
-    // public function DeleteCourse($id)
-    // {
-    //     $this->CoursesController->deleteCourse($id);
-    //     header("location: views/tag.php");
-    // }
+    public function DeleteCourse($id)
+    {
+        $this->CoursesController->deleteCourse($id);
+        header("location: views/tag.php");
+    }
 
 
 

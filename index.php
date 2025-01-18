@@ -5,6 +5,7 @@ include_once "controllers/userController.php";
 include_once "controllers/CategoryController.php";
 include_once "config/connexion.php";
 include_once "controllers/TagController.php";
+include_once "controllers/CoursesController.php";
 // require_once "core/Router.php";
 
 $action = $_GET['action'] ?? 'home';
@@ -14,6 +15,7 @@ $action = $_GET['action'] ?? 'home';
 $userController = new UserController();
 $tagController = new TagController();
 $categoryController = new CategoryController();
+$courseController = new CoursesController();
 
 // $router->action();
 // $router->view();
@@ -78,7 +80,10 @@ switch ($action){
         $userController->logout();
         break;    
 
-        
+    case "deleteCourse" :
+        $id = $_POST['id'];
+        $courseController->DeleteCourse($id);
+        break; 
 
 }
 

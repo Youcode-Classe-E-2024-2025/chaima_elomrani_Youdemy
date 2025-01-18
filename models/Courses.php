@@ -16,7 +16,7 @@ class Courses{
     public function displayCourse(){
         $stmt = $this->pdo->prepare(
             "SELECT course.* , category.name,  users.name 
-                    FROM course LEFT JOIN category ON course.category_id = category.id
+                    FROM course LEFT JOIN category ON course.category = category.id
                     LEFT JOIN users ON course.Teacher = users.id;
                     ");
         $stmt->execute();
@@ -25,13 +25,13 @@ class Courses{
     }
     
 
-    // public function deleteCourse($id)
-    // {
-    //     $sql ="DELETE FROM course  WHERE  id = :id";
-    //     $stmt = $this->pdo->prepare($sql);
-    //     $stmt->execute(["id"=>$id]);
+    public function deleteCourse($id)
+    {
+        $sql ="DELETE FROM course  WHERE  id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(["id"=>$id]);
 
-    // }   
+    }   
 
 
 

@@ -120,11 +120,14 @@ $courses = $cours->displayCourse();
                                     <td class="py-3 px-4"><?=$course['title'] ?></td>
                                     <td class="py-3 px-4"><?=$course['description']?></td>
                                     <td class="py-3 px-4"><?=$course['Teacher']?></td>
-                                    <td class="py-3 px-4"><?=$course['category_id']?></td>
+                                    <td class="py-3 px-4"><?=$course['category']?></td>
                                     <td class="py-3 px-4"><?=$course['price']?></td>
                                     <td class="py-3 px-4">
                                         <button class="text-blue-500 hover:text-blue-700 mr-2">Edit</button>
-                                        <button class="text-red-500 hover:text-red-700">Delete</button>
+                                        <form method="POST" action="http://localhost/index.php?action=deleteCourse">
+                                        <input type="hidden" name="id" value="<?=$course['id']?>">
+                                        <button  class="text-red-500 hover:text-red-700">Delete</button>
+                                        </form>
                                     </td>
                                 </tr>
                                 <?php
