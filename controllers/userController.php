@@ -49,7 +49,7 @@ class UserController
                     if ($loginResult["status"] === 'suspended') {
                         header('Location: ./views/pended_page.php');
                     } else {
-                        header('Location: ./views/catalogue.php');
+                        header('Location:  index.php?action=student');
                     }
                     exit();
                 } else {

@@ -9,14 +9,14 @@
                     <li><a href="?view=home" class="hover:text-primary transition">Home</a></li>
                     <li><a href="?view=catalogue" class="hover:text-primary transition">Courses</a></li>
                     <li><a href="?view=aboutus" class="hover:text-primary transition">aboutus</a></li>
-                    <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/index.php?action=catalogue" class="hover:text-primary transition">Courses</a></li>
+                    <li><a href="?view=Help" class="hover:text-primary transition">Help</a></li>
                 </ul>
             </nav>
             <div class="hidden md:flex space-x-4">
-                <a href="signup.php"
+                <a href="index.php?action=SignupForm"
                     class="bg-primary text-white px-4 py-2 rounded-full hover:bg-indigo-600 transition transform hover:scale-105">Sign
                     up </a>
-                <a href="login.php"
+                <a href="index.php?action=loginForm"
                     class="bg-secondary text-white px-4 py-2 rounded-full hover:bg-green-600 transition transform hover:scale-105">log
                     in</a>
             </div>

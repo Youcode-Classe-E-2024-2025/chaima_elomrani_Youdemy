@@ -28,6 +28,10 @@ switch ($action){
     case 'catalogue' :
         require_once "views/catalogue.php"  ;
         break;
+    
+    case 'student' :
+        require_once "views/studentFirst_page.php";
+        break;
         
     case 'SignupForm' : 
         require_once "views/signup.php"; 

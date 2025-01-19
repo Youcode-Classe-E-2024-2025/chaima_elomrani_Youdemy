@@ -1,5 +1,12 @@
+<?php
+require_once __DIR__ . '/../models/Courses.php';
+$cours = new Courses();
+$courses = $cours->displayCourse();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,7 +25,7 @@
             }
         }
     </script>
-     <script>
+    <script>
         tailwind.config = {
             theme: {
                 extend: {
@@ -36,41 +43,81 @@
             },
         }
     </script>
-   
+
 </head>
+
 <body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
-    <!-- Navbar -->
     <?php require_once('header.php') ?>
 
-    <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        
+        <div class="mb-8">
+            <input type="text" placeholder="Search courses..."
+                class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary">
+        </div>
 
-        <!-- Course Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <!-- Course Card 1 -->
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-xl transition-all duration-300">
-                <div class="relative aspect-video overflow-hidden">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-BF3QTKFplhMeTNqly5rbVUIPEwM18c.png" alt="Course" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent"></div>
-                </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Qui veniam nostrud</h3>
-                    <p class="text-gray-600 mb-4">Hic magna consequatu</p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-sm font-medium">#mingo</span>
-                    </div>
-                    <div class="flex items-center mb-4">
-                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-BF3QTKFplhMeTNqly5rbVUIPEwM18c.png" alt="Author" class="w-8 h-8 rounded-full mr-3">
-                        <span class="text-sm text-gray-600">Lacey Gilbert</span>
-                    </div>
-                    
+     
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="courseGrid">
+    <?php foreach ($courses as $course): ?>
+    <div class="group bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-all duration-200">
+        <div class="relative">
+            <img src="<?= htmlspecialchars($course['image_path']) ?>" alt="<?= htmlspecialchars($course['title']) ?> thumbnail" class="w-full h-48 object-cover rounded-t-xl">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-t-xl"></div>
+            <div class="absolute bottom-4 left-4 right-4">
+                <div class="flex items-center gap-2">
+                    <span class="px-2 py-1 text-xs font-medium bg-green-500/20 text-green-500 rounded-full">Active</span>
+                    <?php if (isset($course['featured']) && $course['featured']): ?>
+                    <span class="px-2 py-1 text-xs font-medium bg-blue-500/20 text-blue-500 rounded-full">Featured</span>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
+        <div class="p-6">
+            <div class="flex items-start justify-between">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white"><?= htmlspecialchars($course['title']) ?></h3>
+                <div class="relative group">
+                    <button class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">
+                        <i class="fas fa-ellipsis-v text-gray-500 dark:text-gray-400"></i>
+                    </button>
+              
+                </div>
+            </div>
+            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400"><?= htmlspecialchars($course['description'] ?? 'No description available.') ?></p>
+            <div class="mt-4 flex flex-wrap gap-2">
+                <span class="px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full"><?= htmlspecialchars($course['category']) ?></span>
+                <?php
+                $tags = explode(',', $course['tags'] ?? '');
+                foreach ($tags as $tag):
+                    if (trim($tag) !== ''):
+                ?>
+                <span class="px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full"><?= htmlspecialchars(trim($tag)) ?></span>
+                <?php
+                    endif;
+                endforeach;
+                ?>
+            </div>
+            <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <img src="./images/profile.png" alt="Instructor" class="w-8 h-8 rounded-full">
+                        <div>
+                            <div class="text-sm font-medium text-gray-900 dark:text-white"><?= htmlspecialchars($course['Teacher']) ?></div>
+                            <div class="text-xs text-gray-500 dark:text-gray-400">Instructor</div>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-sm font-medium text-gray-900 dark:text-white"><?= htmlspecialchars($course['price']) ?></div>
+                        <div class="text-xs text-gray-500 dark:text-gray-400">Price</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php endforeach; ?>
+</div>
+        
     </main>
+    
 
-    <!-- Footer -->
     <footer class="bg-white border-t border-gray-200 mt-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div class="text-center">
@@ -85,4 +132,5 @@
         </div>
     </footer>
 </body>
+
 </html>
