@@ -37,7 +37,7 @@
             </button>
             
             <button class="w-full py-3 px-4 rounded-xl font-medium text-white bg-home hover:opacity-90 transition-opacity">
-                <a href="home.php">Return Home</a>
+                <a href="http://<?= $_SERVER['HTTP_HOST'] ?>/index.php?action=home">Return Home</a>
             </button>
         </div>
     </div>

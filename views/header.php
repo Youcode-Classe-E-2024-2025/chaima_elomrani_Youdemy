@@ -9,7 +9,7 @@
                     <li><a href="?view=home" class="hover:text-primary transition">Home</a></li>
                     <li><a href="?view=catalogue" class="hover:text-primary transition">Courses</a></li>
                     <li><a href="?view=aboutus" class="hover:text-primary transition">aboutus</a></li>
-                    <li><a href="?view=Help" class="hover:text-primary transition">Help</a></li>
+                    <li><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/index.php?action=catalogue" class="hover:text-primary transition">Courses</a></li>
                 </ul>
             </nav>
             <div class="hidden md:flex space-x-4">

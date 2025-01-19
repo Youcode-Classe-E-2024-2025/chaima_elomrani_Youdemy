@@ -141,7 +141,7 @@ $users = $users->displayUsers();
                                             <?php } ?>
 
 
-                                            <form method="POST" action="http://localhost/index.php?action=deleteUser">
+                                            <form method="POST" action="http://<?= $_SERVER['HTTP_HOST'] ?>/index.php?action=deleteUser">
                                                 <input type="hidden" name="id" value="<?= $user['id'] ?>">
                                                 <button class="text-red-500 hover:text-red-700">Delete</button>
                                             </form>
