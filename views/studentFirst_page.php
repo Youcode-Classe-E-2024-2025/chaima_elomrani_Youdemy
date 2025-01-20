@@ -64,11 +64,52 @@ $courses = $cours->displayCourse();
             darkMode: 'class', // Enable dark mode
         }
     </script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4F46E5',
+                        secondary: '#10B981',
+                        tertiary: '#F59E0B',
+                        background: '#F3F4F6',
+                        surface: '#FFFFFF',
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
 
 </head>
 
 <body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
-    <?php require_once('header.php') ?>
+    <header class="bg-white py-4 shadow-md fixed w-full z-50 transition-all duration-300 ease-in-out" id="header"
+        x-data="{ scrolled: false }" @scroll.window="scrolled = (window.pageYOffset > 20)">
+        <div class="container mx-auto px-4 flex justify-start gap-[30%] items-center">
+            <a href="#" class="text-2xl font-bold">
+                <span class="gradient-text">Youdemy</span>
+            </a>
+            <nav class="hidden md:block" :class="{ 'py-2': scrolled, 'py-4': !scrolled }">
+                <ul class="flex space-x-6">
+                    <li><a href="#" class="hover:text-primary transition">Home</a></li>
+                    <li><a href="#courses" class="hover:text-primary transition">All Courses</a></li>
+                    <li><a href="#features" class="hover:text-primary transition">My Courses</a></li>
+                    <li><a href="#community" class="hover:text-primary transition">Profile</a></li>
+                </ul>
+            </nav>
+
+
+
+        </div>
+        <form method="POST" action="http://localhost/index.php?action=logout">
+            <input type="hidden" name="log" value="">
+            <button
+                class="bg-primary-500 hover:bg-primary-600 text-white py-2 px-4 rounded-lg transition duration-200">Logout</button>
+        </form>
+    </header>
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="mb-8">
@@ -82,7 +123,7 @@ $courses = $cours->displayCourse();
                 <div
                     class="group bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-all duration-200 flex flex-col">
                     <div class="relative">
-                        <img src="<?= htmlspecialchars($course['image_path']) ?>"
+                        <img src="<?= htmlspecialchars(string: $course['image_path']) ?>"
                             alt="<?= htmlspecialchars($course['title']) ?> thumbnail"
                             class="w-full h-48 object-cover rounded-t-xl">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-t-xl"></div>
@@ -100,7 +141,8 @@ $courses = $cours->displayCourse();
                     <div class="p-6 flex-grow flex flex-col">
                         <div class="flex items-start justify-between mb-4">
                             <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                <?= htmlspecialchars($course['title']) ?></h3>
+                                <?= htmlspecialchars($course['title']) ?>
+                            </h3>
                             <div class="relative group">
                                 <button class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">
                                     <i class="fas fa-ellipsis-v text-gray-500 dark:text-gray-400"></i>
@@ -108,7 +150,8 @@ $courses = $cours->displayCourse();
                             </div>
                         </div>
                         <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                            <?= htmlspecialchars($course['description'] ?? 'No description available.') ?></p>
+                            <?= htmlspecialchars($course['description'] ?? 'No description available.') ?>
+                        </p>
                         <div class="flex flex-wrap gap-2 mb-4">
                             <span
                                 class="px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full"><?= htmlspecialchars($course['category']) ?></span>
@@ -131,13 +174,15 @@ $courses = $cours->displayCourse();
                                         <img src="./images/profile.png" alt="Instructor" class="w-8 h-8 rounded-full">
                                         <div>
                                             <div class="text-sm font-medium text-gray-900 dark:text-white">
-                                                <?= htmlspecialchars($course['Teacher']) ?></div>
+                                                <?= htmlspecialchars($course['Teacher']) ?>
+                                            </div>
                                             <div class="text-xs text-gray-500 dark:text-gray-400">Instructor</div>
                                         </div>
                                     </div>
                                     <div class="text-right">
                                         <div class="text-sm font-medium text-gray-900 dark:text-white">
-                                            <?= htmlspecialchars($course['price']) ?></div>
+                                            <?= htmlspecialchars($course['price']) ?>
+                                        </div>
                                         <div class="text-xs text-gray-500 dark:text-gray-400">Price</div>
                                     </div>
                                 </div>

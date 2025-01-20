@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../models/Courses.php';
-$cours = new Courses();
-$courses = $cours->displayCourse();
+$visitor= new Courses();
+$visitors = $visitor->visitorCourses();
 ?>
 
 <!DOCTYPE html>
@@ -57,15 +57,15 @@ $courses = $cours->displayCourse();
 
      
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="courseGrid">
-    <?php foreach ($courses as $course): ?>
+    <?php foreach ($visitors as $visitor): ?>
     <div class="group bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-all duration-200">
         <div class="relative">
-            <img src="<?= htmlspecialchars($course['image_path']) ?>" alt="<?= htmlspecialchars($course['title']) ?> thumbnail" class="w-full h-48 object-cover rounded-t-xl">
+            <img src="<?= htmlspecialchars($visitor['image_path']) ?>" alt="<?= htmlspecialchars($visitor['title']) ?> thumbnail" class="w-full h-48 object-cover rounded-t-xl">
             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-t-xl"></div>
             <div class="absolute bottom-4 left-4 right-4">
                 <div class="flex items-center gap-2">
                     <span class="px-2 py-1 text-xs font-medium bg-green-500/20 text-green-500 rounded-full">Active</span>
-                    <?php if (isset($course['featured']) && $course['featured']): ?>
+                    <?php if (isset($visitor['featured']) && $visitor['featured']): ?>
                     <span class="px-2 py-1 text-xs font-medium bg-blue-500/20 text-blue-500 rounded-full">Featured</span>
                     <?php endif; ?>
                 </div>
@@ -73,7 +73,7 @@ $courses = $cours->displayCourse();
         </div>
         <div class="p-6">
             <div class="flex items-start justify-between">
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white"><?= htmlspecialchars($course['title']) ?></h3>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white"><?= htmlspecialchars($visitor['title']) ?></h3>
                 <div class="relative group">
                     <button class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">
                         <i class="fas fa-ellipsis-v text-gray-500 dark:text-gray-400"></i>
@@ -81,11 +81,11 @@ $courses = $cours->displayCourse();
               
                 </div>
             </div>
-            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400"><?= htmlspecialchars($course['description'] ?? 'No description available.') ?></p>
+            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400"><?= htmlspecialchars($visitor['description'] ?? 'No description available.') ?></p>
             <div class="mt-4 flex flex-wrap gap-2">
-                <span class="px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full"><?= htmlspecialchars($course['category']) ?></span>
+                <span class="px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full"><?= htmlspecialchars($visitor['category']) ?></span>
                 <?php
-                $tags = explode(',', $course['tags'] ?? '');
+                $tags = explode(',', $visitor['tags'] ?? '');
                 foreach ($tags as $tag):
                     if (trim($tag) !== ''):
                 ?>
@@ -100,12 +100,12 @@ $courses = $cours->displayCourse();
                     <div class="flex items-center gap-2">
                         <img src="./images/profile.png" alt="Instructor" class="w-8 h-8 rounded-full">
                         <div>
-                            <div class="text-sm font-medium text-gray-900 dark:text-white"><?= htmlspecialchars($course['Teacher']) ?></div>
+                            <div class="text-sm font-medium text-gray-900 dark:text-white"><?= htmlspecialchars($visitor['Teacher']) ?></div>
                             <div class="text-xs text-gray-500 dark:text-gray-400">Instructor</div>
                         </div>
                     </div>
                     <div class="text-right">
-                        <div class="text-sm font-medium text-gray-900 dark:text-white"><?= htmlspecialchars($course['price']) ?></div>
+                        <div class="text-sm font-medium text-gray-900 dark:text-white"><?= htmlspecialchars($visitor['price']) ?></div>
                         <div class="text-xs text-gray-500 dark:text-gray-400">Price</div>
                     </div>
                 </div>

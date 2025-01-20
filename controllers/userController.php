@@ -1,7 +1,10 @@
 <?php
-session_start();
+// session_start();
 require_once __DIR__ . '/../models/user.php';
 require_once __DIR__ . '/../config/connexion.php';
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 
 class UserController
@@ -41,16 +44,20 @@ class UserController
                 $loginResult = $this->usermodel->login($email, $password);
                 if ($loginResult) {
                     // require_once "./views/catalogue.php";
-                    session_start();
                     $_SESSION["user_id"] = $loginResult["id"];
                     $_SESSION["user_role"] = $loginResult["role"];
                     $_SESSION["user_status"] = $loginResult["status"];
 
                     if ($loginResult["status"] === 'suspended') {
                         header('Location: ./views/pended_page.php');
-                    } else {
-                        header('Location:  index.php?action=student');
+                    }elseif($loginResult['role'] === 'Student'){
+                        header('Location: index.php?action=student');
+
+                    }else{
+                        header('Location: index.php?action=teacher');
+
                     }
+
                     exit();
                 } else {
                     require_once "views/404.php";

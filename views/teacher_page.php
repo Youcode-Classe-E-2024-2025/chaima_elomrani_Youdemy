@@ -1,6 +1,16 @@
+<?php
+require_once __DIR__ . '/../models/Courses.php';
+$cours = new Courses();
+$courses = $cours->displayCourse();
+// dd($courses);
+
+require_once __DIR__ . '/../models/Category.php';
+$categori = new Category();
+$categories = $categori->displayCategory(); 
+
+?>
 <!DOCTYPE html>
 <html lang="en">
-<!-- Existing head content remains unchanged -->
 
 <head>
 
@@ -208,12 +218,15 @@
                     <div class="flex flex-wrap gap-4">
                         <div class="relative">
                             <select id="categoryFilter"
+                            <?php 
+                                foreach($categories as $category){
+                                ?>
                                 class="appearance-none pl-4 pr-10 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-clair-500 dark:focus:ring-clair-400">
                                 <option value="">All Categories</option>
-                                <option value="development">Development</option>
-                                <option value="design">Design</option>
-                                <option value="business">Business</option>
-                                <option value="marketing">Marketing</option>
+                                <option value="development"><?= $category['name']?></option>
+                                <?php 
+                                }
+                                ?>
                             </select>
                             <i
                                 class="fas fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
@@ -229,115 +242,90 @@
                             <i
                                 class="fas fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
                         </div>
-                        <div class="relative">
-                            <select id="statusFilter"
-                                class="appearance-none pl-4 pr-10 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-clair-500 dark:focus:ring-clair-400">
-                                <option value="">All Status</option>
-                                <option value="active">Active</option>
-                                <option value="draft">Draft</option>
-                                <option value="archived">Archived</option>
-                            </select>
-                            <i
-                                class="fas fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
-                        </div>
+                     
                     </div>
                 </div>
             </div>
 
             <!-- Course Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="courseGrid">
-                <!-- Course Card Template -->
-                <template id="courseTemplate">
-                    <div
-                        class="group bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-all duration-200">
-                        <div class="relative">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-qhnIKtsDhhm0ke27amtdLpfFbik8zK.png"
-                                alt="Course thumbnail" class="w-full h-48 object-cover rounded-t-xl">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-t-xl">
-                            </div>
-                            <div class="absolute bottom-4 left-4 right-4">
-                                <div class="flex items-center gap-2">
-                                    <span
-                                        class="px-2 py-1 text-xs font-medium bg-green-500/20 text-green-500 rounded-full">Active</span>
+            <?php foreach ($courses as $course): ?>
+                <div
+                    class="group bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-all duration-200 flex flex-col">
+                    <div class="relative">
+                        <img src="<?= htmlspecialchars(string: $course['image_path']) ?>"
+                            alt="<?= htmlspecialchars($course['title']) ?> thumbnail"
+                            class="w-full h-48 object-cover rounded-t-xl">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-t-xl"></div>
+                        <div class="absolute bottom-4 left-4 right-4">
+                            <div class="flex items-center gap-2">
+                                <span
+                                    class="px-2 py-1 text-xs font-medium bg-green-500/20 text-green-500 rounded-full">Active</span>
+                                <?php if (isset($course['featured']) && $course['featured']): ?>
                                     <span
                                         class="px-2 py-1 text-xs font-medium bg-blue-500/20 text-blue-500 rounded-full">Featured</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex items-start justify-between">
-                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Advanced Web Development
-                                </h3>
-                                <div class="relative group">
-                                    <button class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">
-                                        <i class="fas fa-ellipsis-v text-gray-500 dark:text-gray-400"></i>
-                                    </button>
-                                    <div
-                                        class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 hidden group-hover:block">
-                                        <ul class="py-2">
-                                            <li>
-                                                <a href="#"
-                                                    class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
-                                                    <i class="fas fa-edit w-4 mr-3"></i>
-                                                    Edit Course
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#"
-                                                    class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
-                                                    <i class="fas fa-chart-bar w-4 mr-3"></i>
-                                                    View Analytics
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#"
-                                                    class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
-                                                    <i class="fas fa-archive w-4 mr-3"></i>
-                                                    Archive
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#"
-                                                    class="flex items-center px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-700">
-                                                    <i class="fas fa-trash-alt w-4 mr-3"></i>
-                                                    Delete
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Master modern web technologies and
-                                frameworks with hands-on projects and real-world examples.</p>
-                            <div class="mt-4 flex flex-wrap gap-2">
-                                <span
-                                    class="px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full">React</span>
-                                <span
-                                    class="px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full">Node.js</span>
-                                <span
-                                    class="px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full">TypeScript</span>
-                            </div>
-                            <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center gap-2">
-                                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-BF3QTKFplhMeTNqly5rbVUIPEwM18c.png"
-                                            alt="Instructor" class="w-8 h-8 rounded-full">
-                                        <div>
-                                            <div class="text-sm font-medium text-gray-900 dark:text-white">Sarah Parker
-                                            </div>
-                                            <div class="text-xs text-gray-500 dark:text-gray-400">Lead Instructor</div>
-                                        </div>
-                                    </div>
-                                    <div class="text-right">
-                                        <div class="text-sm font-medium text-gray-900 dark:text-white">234</div>
-                                        <div class="text-xs text-gray-500 dark:text-gray-400">Students</div>
-                                    </div>
-                                </div>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
-                </template>
-            </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <div class="flex items-start justify-between mb-4">
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                <?= htmlspecialchars($course['title']) ?>
+                            </h3>
+                            <div class="relative group">
+                                <button class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">
+                                    <i class="fas fa-ellipsis-v text-gray-500 dark:text-gray-400"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                            <?= htmlspecialchars($course['description'] ?? 'No description available.') ?>
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span
+                                class="px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full"><?= htmlspecialchars($course['category']) ?></span>
+                            <?php
+                            $tags = explode(',', $course['tags'] ?? '');
+                            foreach ($tags as $tag):
+                                if (trim($tag) !== ''):
+                                    ?>
+                                    <span
+                                        class="px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full"><?= htmlspecialchars(trim($tag)) ?></span>
+                                    <?php
+                                endif;
+                            endforeach;
+                            ?>
+                        </div>
+                        <div class="mt-auto">
+                            <div class="pt-4 border-t border-gray-200 dark:border-gray-700">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center gap-2">
+                                        <img src="./images/profile.png" alt="Instructor" class="w-8 h-8 rounded-full">
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-900 dark:text-white">
+                                                <?= htmlspecialchars($course['Teacher']) ?>
+                                            </div>
+                                            <div class="text-xs text-gray-500 dark:text-gray-400">Instructor</div>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-sm font-medium text-gray-900 dark:text-white">
+                                            <?= htmlspecialchars($course['price']) ?>
+                                        </div>
+                                        <div class="text-xs text-gray-500 dark:text-gray-400">Price</div>
+                                    </div>
+                                </div>
+                                <button
+                                    class="w-[50%] flex justify-center  justify-self-center px-2 py-2 bg-primary hover:bg-primary-dark text-white font-medium rounded-lg transition-colors ">
+                                    Enroll Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
 
             <!-- Loading State -->
             <div id="loadingState" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -464,29 +452,7 @@
                 }, 3000);
             }
 
-            // Course Data
-            const courses = [
-                {
-                    title: "Advanced Web Development",
-                    description: "Master modern web technologies and frameworks with hands-on projects and real-world examples.",
-                    instructor: "Sarah Parker",
-                    students: 234,
-                    tags: ["React", "Node.js", "TypeScript"],
-                    status: "active",
-                    featured: true
-                },
-                {
-                    title: "UI/UX Design Masterclass",
-                    description: "Learn to create beautiful and functional interfaces with modern design principles.",
-                    instructor: "Michael Chen",
-                    students: 189,
-                    tags: ["Design", "Figma", "UX"],
-                    status: "active",
-                    featured: false
-                },
-                // Add more courses as needed
-            ];
-
+          
             // Render Courses
             function renderCourses(courses) {
                 const grid = document.getElementById('courseGrid');

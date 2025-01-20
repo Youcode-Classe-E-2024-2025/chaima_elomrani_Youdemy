@@ -32,6 +32,10 @@ switch ($action){
     case 'student' :
         require_once "views/studentFirst_page.php";
         break;
+
+    case 'teacher' :
+        require_once "views/teacher_page.php";
+        break;   
         
     case 'SignupForm' : 
         require_once "views/signup.php"; 

@@ -119,12 +119,28 @@ class Usermodel
         $verifyUser = $stmt->fetch(PDO::FETCH_ASSOC);   // fetching the data and stock in a a variable called verifyuser
 
         if ($verifyUser && password_verify($password, $verifyUser['password'])) {
-            // verifying the data of the user
+            // session_start();
+            $_SESSION['user_id'] = $verifyUser['id']; // Ensure 'id' is the correct key from the database result
+            $_SESSION['user_name'] = $verifyUser['name'];
+            $_SESSION['user_role'] = $verifyUser['role'];
             return $verifyUser;
+        
         } else {
             return null;
         }
     }
+
+    public function getTeacherCourses($teacherId) {
+    try {
+        $query = "SELECT * FROM courses WHERE teacher_id = :teacher_id";
+        $stmt = $this->connexion->prepare($query);
+        $stmt->bindParam(':teacher_id', $teacherId);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        throw new Exception("Error fetching teacher courses: " . $e->getMessage());
+    }
+}
 
 
     public function displayUsers()

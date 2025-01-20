@@ -2,6 +2,7 @@
 require_once  __DIR__ .'/../models/Courses.php';
 
 
+
 class CoursesController{
     
     private $CoursesController;
@@ -14,10 +15,24 @@ class CoursesController{
 
 
     public function DisplayCourse(){
+        
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: index.php?action=loginForm');
+        exit();
+    }
+
+        // $teacherId = $_SESSION['user_id'];
         $courses = $this->CoursesController->displayCourse();
         require_once __DIR__ . "/../views/course.php";
     }
 
+
+
+    public function  VisitorCourses(){
+        $visitor = $this->CoursesController->visitorCourses();
+        require_once "index.php?action=catalogue";
+
+    }
 
 
     public function DeleteCourse($id)
