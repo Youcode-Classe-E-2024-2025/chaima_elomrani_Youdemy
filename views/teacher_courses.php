@@ -5,8 +5,8 @@ $courses = $cours->displayCourse();
 // dd($courses);
 
 require_once __DIR__ . '/../models/Category.php';
-$categori = new Category();
-$categories = $categori->displayCategory();
+$category = new Category();
+$categories = $category->displayCategory();
 
 
 require_once __DIR__ . '/../models/Tag.php';
@@ -126,21 +126,22 @@ $tags = $taf->displaytags();
                             YOUDEMY
                         </h1>
                         <nav class="hidden md:block">
-                            <ul class="flex space-x-4 gap-12 w-full ">
-                                <li>
-                                    <a href="#"
-                                        class="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-clair-600 dark:hover:text-clair-400 rounded-md">Home</a>
-                                </li>
-                        
-                                <li>
-                                    <a href="#"
-                                        class="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-clair-600 dark:hover:text-clair-400 rounded-md">My Courses</a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                        class="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-clair-600 dark:hover:text-clair-400 rounded-md">Profile</a>
-                                </li>
-                            </ul>
+                        <ul class="flex space-x-4 gap-12 w-full ">
+                               
+                               <li>
+                                   <a href="index.php?action=teacher"
+                                       class="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-clair-600 dark:hover:text-clair-400 rounded-md">My
+                                       Courses</a>
+                               </li>
+                               <li>
+                                   <a href="index.php?action=profile"
+                                       class="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-clair-600 dark:hover:text-clair-400 rounded-md">Profile</a>
+                               </li>
+                               <li>
+                                   <a href="index.php?action=statistic"
+                                       class="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-clair-600 dark:hover:text-clair-400 rounded-md">Statistics</a>
+                               </li>
+                           </ul>
                         </nav>
                     </div>
                     <div class="flex items-center gap-4">
@@ -155,57 +156,6 @@ $tags = $taf->displaytags();
         </header>
 
         <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <!-- Stats Overview -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div
-                    class="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 p-6">
-                    <div class="flex items-center">
-                        <div class="p-3 rounded-lg bg-clair-100 dark:bg-clair-900">
-                            <i class="fas fa-book text-clair-600 dark:text-clair-400"></i>
-                        </div>
-                        <div class="ml-4">
-                            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Courses</h3>
-                            <div class="mt-1 text-2xl font-semibold text-gray-900 dark:text-white">24</div>
-                        </div>
-                        <div class="ml-auto text-green-500 dark:text-green-400">
-                            <span class="text-sm font-medium">+12%</span>
-                            <i class="fas fa-arrow-up ml-1"></i>
-                        </div>
-                    </div>
-                </div>
-                <div
-                    class="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 p-6">
-                    <div class="flex items-center">
-                        <div class="p-3 rounded-lg bg-purple-100 dark:bg-purple-900">
-                            <i class="fas fa-users text-purple-600 dark:text-purple-400"></i>
-                        </div>
-                        <div class="ml-4">
-                            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Active Students</h3>
-                            <div class="mt-1 text-2xl font-semibold text-gray-900 dark:text-white">1,234</div>
-                        </div>
-                        <div class="ml-auto text-green-500 dark:text-green-400">
-                            <span class="text-sm font-medium">+8%</span>
-                            <i class="fas fa-arrow-up ml-1"></i>
-                        </div>
-                    </div>
-                </div>
-                <div
-                    class="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 p-6">
-                    <div class="flex items-center">
-                        <div class="p-3 rounded-lg bg-amber-100 dark:bg-amber-900">
-                            <i class="fas fa-star text-amber-600 dark:text-amber-400"></i>
-                        </div>
-                        <div class="ml-4">
-                            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Avg. Rating</h3>
-                            <div class="mt-1 text-2xl font-semibold text-gray-900 dark:text-white">4.8</div>
-                        </div>
-                        <div class="ml-auto text-green-500 dark:text-green-400">
-                            <span class="text-sm font-medium">+2%</span>
-                            <i class="fas fa-arrow-up ml-1"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <!-- Search and Filters -->
             <div
@@ -225,7 +175,7 @@ $tags = $taf->displaytags();
                                 foreach ($categories as $category) {
                                     ?>
                                     <option value="development"><?= $category['name'] ?></option>
-                                <?php
+                                    <?php
                                 }
                                 ?>
                             </select>
@@ -236,14 +186,7 @@ $tags = $taf->displaytags();
                             <select id="sortFilter"
                                 class="appearance-none pl-4 pr-10 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-clair-500 dark:focus:ring-clair-400">
                                 <option value="newest">All Tags</option>
-                                <?php
-                                foreach ($tags as $tag) {
-                                    ?>
 
-                                    <option value="oldest"><?= $tag['title'] ?></option>
-                                    <?php
-                                }
-                                ?>
                             </select>
                             <i
                                 class="fas fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
@@ -263,7 +206,7 @@ $tags = $taf->displaytags();
                                 alt="<?= htmlspecialchars($course['title']) ?> thumbnail"
                                 class="w-full h-48 object-cover rounded-t-xl">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-t-xl"></div>
-                            
+
                             <div class="absolute bottom-4 left-4 right-4">
                                 <div class="flex items-center gap-2">
                                     <span
@@ -281,38 +224,43 @@ $tags = $taf->displaytags();
                                     <?= htmlspecialchars($course['title']) ?>
                                 </h3>
                                 <div class="relative group">
-                            <button class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">
-                                <i class="fas fa-ellipsis-v text-gray-500 dark:text-gray-400"></i>
-                            </button>
-                            <div class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 hidden group-hover:block">
-                                <ul class="py-2">
-                                    <li>
-                                        <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
-                                            <i class="fas fa-edit w-4 mr-3"></i>
-                                            Edit Course
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
-                                            <i class="fas fa-chart-bar w-4 mr-3"></i>
-                                            View Analytics
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
-                                            <i class="fas fa-archive w-4 mr-3"></i>
-                                            Archive
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="flex items-center px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-700">
-                                            <i class="fas fa-trash-alt w-4 mr-3"></i>
-                                            Delete
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                                    <button class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">
+                                        <i class="fas fa-ellipsis-v text-gray-500 dark:text-gray-400"></i>
+                                    </button>
+                                    <div
+                                        class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 hidden group-hover:block">
+                                        <ul class="py-2">
+                                            <li>
+                                                <a href="#"
+                                                    class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                                    <i class="fas fa-edit w-4 mr-3"></i>
+                                                    Edit Course
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#"
+                                                    class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                                    <i class="fas fa-chart-bar w-4 mr-3"></i>
+                                                    View Analytics
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#"
+                                                    class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                                    <i class="fas fa-archive w-4 mr-3"></i>
+                                                    Archive
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#"
+                                                    class="flex items-center px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                                    <i class="fas fa-trash-alt w-4 mr-3"></i>
+                                                    Delete
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                             <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
                                 <?= htmlspecialchars($course['description'] ?? 'No description available.') ?>
@@ -332,29 +280,17 @@ $tags = $taf->displaytags();
                                 endforeach;
                                 ?>
                             </div>
-                            <div class="mt-auto">
-                                <div class="pt-4 border-t border-gray-200 dark:border-gray-700">
-                                    <div class="flex items-center justify-between mb-4">
-                                        <div class="flex items-center gap-2">
-                                            <img src="./images/profile.png" alt="Instructor" class="w-8 h-8 rounded-full">
-                                            <div>
-                                                <div class="text-sm font-medium text-gray-900 dark:text-white">
-                                                    <?= htmlspecialchars($course['Teacher']) ?>
-                                                </div>
-                                                <div class="text-xs text-gray-500 dark:text-gray-400">Instructor</div>
-                                            </div>
-                                        </div>
-                                        <div class="text-right">    
-                                            <div class="text-sm font-medium text-gray-900 dark:text-white">
+                            <div class="">
+                                <div class=" border-t border-gray-200">
+                                    <div class="flex items-center justify-between ">
+                                       
+                                        <div class="text-center w-full">
+                                            <div class="text-2xl font-medium text-black dark:text-white">
                                                 <?= htmlspecialchars($course['price']) ?>
                                             </div>
-                                            <div class="text-xs text-gray-500 dark:text-gray-400">Price</div>
                                         </div>
                                     </div>
-                                    <button
-                                        class="w-[50%] flex justify-center  justify-self-center px-2 py-2 bg-primary hover:bg-primary-dark text-white font-medium rounded-lg transition-colors ">
-                                        Enroll Now
-                                    </button>
+                                   
                                 </div>
                             </div>
                         </div>
@@ -413,28 +349,31 @@ $tags = $taf->displaytags();
                                 class="markdown-editor mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-clair-500 focus:ring focus:ring-clair-500 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"></textarea>
                         </div>
                         <div class="mb-4 flex space-x-4">
-                            <div class="w-1/2">
+                            <div class="w-full">
                                 <label for="courseCategory"
-                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">Category</label>
+                                    class="block text-md font-medium text-gray-700 ">Category</label>
                                 <select id="courseCategory" name="category" required
-                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-clair-500 focus:ring focus:ring-clair-500 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                    class="mt-1 block w-full py-2 rounded-[5px] border-gray-300 shadow-sm focus:border-clair-500 focus:ring focus:ring-clair-500 focus:ring-opacity-50 ">
                                     <option value="">Select a category</option>
-                                    <option value="development">Development</option>
-                                    <option value="design">Design</option>
-                                    <option value="business">Business</option>
-                                    <option value="marketing">Marketing</option>
+                                    <?php 
+                                    foreach($categories as $category){
+                                    ?>
+                                    <option value="development"><?=htmlspecialchars($category['name']) ?></option>
+                                    <?php
+                                  }
+                                    ?>
                                 </select>
                             </div>
-                            <div class="w-1/2">
+                            <div class="w-full">
                                 <label for="courseTags"
                                     class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tags</label>
                                 <select id="courseTags" name="tags" multiple
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-clair-500 focus:ring focus:ring-clair-500 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                                    <option value="javascript">JavaScript</option>
-                                    <option value="react">React</option>
-                                    <option value="node">Node.js</option>
-                                    <option value="python">Python</option>
-                                    <option value="ui-ux">UI/UX</option>
+                                    
+
+                                        <option value="oldest">ghvjbkn,lm;</option>
+                                    
+
                                 </select>
                             </div>
                         </div>
@@ -482,64 +421,19 @@ $tags = $taf->displaytags();
 
         <script>
             document.addEventListener('DOMContentLoaded', (event) => {
-                const tagSelect = document.getElementById('courseTags');
-                const mediaTypeRadios = document.querySelectorAll('input[name="mediaType"]');
-                const imageUrlInput = document.getElementById('imageUrlInput');
-                const videoUrlInput = document.getElementById('videoUrlInput');
-
-                // Initialize tag multiselect
-                new TomSelect(tagSelect, {
-                    plugins: ['remove_button'],
-                    persist: false,
-                    createOnBlur: true,
-                    create: true
-                });
-
-                // Handle media type selection
-                mediaTypeRadios.forEach((radio) => {
-                    radio.addEventListener('change', (e) => {
-                        if (e.target.value === 'image') {
-                            imageUrlInput.classList.remove('hidden');
-                            videoUrlInput.classList.add('hidden');
-                        } else {
-                            imageUrlInput.classList.add('hidden');
-                            videoUrlInput.classList.remove('hidden');
-                        }
-                    });
-                });
-
-                // Form submission handler
+             
                 document.getElementById('addCourseForm').addEventListener('submit', (e) => {
                     e.preventDefault();
-                    // Add your form submission logic here
                     console.log('Form submitted');
                 });
 
-                // Cancel button handler
                 document.getElementById('cancelAddCourse').addEventListener('click', () => {
                     document.getElementById('addCourseModal').classList.add('hidden');
                 });
             });
-        </script>
+      
 
-        <script>
-
-            function renderCourses(courses) {
-                const grid = document.getElementById('courseGrid');
-                const template = document.getElementById('courseTemplate');
-
-                grid.innerHTML = '';
-
-                courses.forEach(course => {
-                    const clone = template.content.cloneNode(true);
-
-                    clone.querySelector('h3').textContent = course.title;
-                    clone.querySelector('p').textContent = course.description;
-
-                    grid.appendChild(clone);
-                });
-            }
-
+            
             document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('loadingState').classList.remove('hidden');
                 document.getElementById('courseGrid').classList.add('hidden');

@@ -20,41 +20,48 @@ $courseController = new CoursesController();
 // $router->action();
 // $router->view();
 
-switch ($action){
-    case 'home' :
-        require_once "views/home.php"; 
+switch ($action) {
+    case 'home':
+        require_once "views/home.php";
         break;
 
-    case 'catalogue' :
-        require_once "views/catalogue.php"  ;
+    case 'catalogue':
+        require_once "views/catalogue.php";
         break;
-    
-    case 'student' :
+
+    case 'student':
         require_once "views/studentFirst_page.php";
         break;
 
-    case 'teacher' :
-        require_once "views/teacher_page.php";
-        break;   
-        
-    case 'SignupForm' : 
-        require_once "views/signup.php"; 
+    case 'teacher':
+        require_once "views/teacher_courses.php";
         break;
+
+    case 'statistic' :
+        require_once 'views/teacher_statistics.php' ;
+        break;
+
+    case 'SignupForm':
+        require_once "views/signup.php";
+        break;
+
     case "SignUp":
         $userController->register();
-    break;
-    case "loginForm" : 
-        require_once "views/login.php"; 
         break;
-    case "login" : 
+
+    case "loginForm":
+        require_once "views/login.php";
+        break;
+
+    case "login":
         $userController->loginCheck();
         break;
 
-    case "deleteTag" :
+    case "deleteTag":
         $id = $_POST['id'];
         $tagController->DeleteTag($id);
         break;
-     
+
     case "addtag":
         $name = $_POST['name'];
         $tagController->Addtag($name);
@@ -62,41 +69,41 @@ switch ($action){
     // case "diplaytags" : 
     //     $tagController->DisplayTag();
     //     break;
-     
-    case "deleteCategory" :
+
+    case "deleteCategory":
         $id = $_POST['id'];
         $categoryController->DeleteCategory($id);
         break;
 
-    case "addCategory" :
-        $categoryController->addcategory() ;
-        break; 
-       
-    case "deleteUser" :
+    case "addCategory":
+        $categoryController->addcategory();
+        break;
+
+    case "deleteUser":
         $id = $_POST['id'];
         $userController->DeleteUser($id);
         break;
-    
-    case "aproveUser" :
+
+    case "aproveUser":
         $id = $_POST['id'];
         $userController->AproveUser($id);
         break;
 
-    case "SuspendUser" :
+    case "SuspendUser":
         $id = $_POST['id'];
         $userController->suspendUser($id);
         break;
 
 
-    case "logout" :
+    case "logout":
         $logout = $_POST['log'];
         $userController->logout();
-        break;    
+        break;
 
-    case "deleteCourse" :
+    case "deleteCourse":
         $id = $_POST['id'];
         $courseController->DeleteCourse($id);
-        break; 
+        break;
 
 }
 

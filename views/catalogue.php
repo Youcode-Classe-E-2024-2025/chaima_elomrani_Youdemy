@@ -97,16 +97,9 @@ $visitors = $visitor->visitorCourses();
             </div>
             <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
                 <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-2">
-                        <img src="./images/profile.png" alt="Instructor" class="w-8 h-8 rounded-full">
-                        <div>
-                            <div class="text-sm font-medium text-gray-900 dark:text-white"><?= htmlspecialchars($visitor['Teacher']) ?></div>
-                            <div class="text-xs text-gray-500 dark:text-gray-400">Instructor</div>
-                        </div>
-                    </div>
-                    <div class="text-right">
-                        <div class="text-sm font-medium text-gray-900 dark:text-white"><?= htmlspecialchars($visitor['price']) ?></div>
-                        <div class="text-xs text-gray-500 dark:text-gray-400">Price</div>
+                  
+                    <div class="text-center w-full">
+                        <div class="text-lg  font-medium text-gray-900 "><?= htmlspecialchars($visitor['price']) ?></div>
                     </div>
                 </div>
             </div>
