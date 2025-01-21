@@ -85,17 +85,17 @@ $tags = $taf->displaytags();
             --tags-focus-border-color: #4299e1;
             width: 100%;
             max-width: 100%;
+            color: #000000; 
         }
 
-        .tagify__tag {
-            background-color: #edf2f7;
-            color: #2d3748;
+        .tagify__dropdown {
+            color: #000000 !important; 
         }
 
-        .dark .tagify__tag {
-            background-color: #2d3748;
-            color: #edf2f7;
+        .tagify__dropdown__item {
+            color: #000000 !important;
         }
+       
     </style>
 
 </head>
@@ -268,9 +268,9 @@ $tags = $taf->displaytags();
                             <div class="flex flex-wrap gap-2 mb-4">
                                 <span
                                     class="px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full"><?= htmlspecialchars($course['category']) ?></span>
-                                <?php
-                                $tags = explode(',', $course['tags'] ?? '');
-                                foreach ($tags as $tag):
+                                    <?php
+                                $tagsToWorkOn = explode(',', $course['tags'] ?? '');
+                                foreach ($tagsToWorkOn as $tag):
                                     if (trim($tag) !== ''):
                                         ?>
                                         <span
@@ -333,17 +333,17 @@ $tags = $taf->displaytags();
             <div
                 class="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white dark:bg-gray-800">
                 <div class="mt-3 text-center">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Add New Course</h3>
+                    <h3 class="text-lg leading-6 font-medium text-black">Add New Course</h3>
                     <form id="addCourseForm" class="mt-2 text-left">
                         <div class="mb-4">
                             <label for="courseTitle"
-                                class="block text-sm font-medium text-gray-700 dark:text-gray-300">Course Title</label>
+                                class="block text-sm font-medium ">Course Title</label>
                             <input type="text" id="courseTitle" name="title" required
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-clair-500 focus:ring focus:ring-clair-500 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-clair-500 focus:ring focus:ring-clair-500 focus:ring-opacity-50">
                         </div>
                         <div class="mb-4">
                             <label for="courseDescription"
-                                class="block text-sm font-medium text-gray-700 dark:text-gray-300">Course Description
+                                class="block text-sm font-medium text-black ">Course Description
                                 (Markdown supported)</label>
                             <textarea id="courseDescription" name="description" rows="6"
                                 class="markdown-editor mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-clair-500 focus:ring focus:ring-clair-500 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"></textarea>
@@ -351,30 +351,31 @@ $tags = $taf->displaytags();
                         <div class="mb-4 flex space-x-4">
                             <div class="w-full">
                                 <label for="courseCategory"
-                                    class="block text-md font-medium text-gray-700 ">Category</label>
+                                    class="block text-md font-medium text-gray-700">Category</label>
                                 <select id="courseCategory" name="category" required
-                                    class="mt-1 block w-full py-2 rounded-[5px] border-gray-300 shadow-sm focus:border-clair-500 focus:ring focus:ring-clair-500 focus:ring-opacity-50 ">
+                                    class="mt-1 block w-full py-2 rounded-[5px] border-gray-300 shadow-sm focus:border-clair-500 focus:ring focus:ring-clair-500 focus:ring-opacity-50">
                                     <option value="">Select a category</option>
-                                    <?php 
-                                    foreach($categories as $category){
-                                    ?>
-                                    <option value="development"><?=htmlspecialchars($category['name']) ?></option>
-                                    <?php
-                                  }
-                                    ?>
+                                    <?php foreach ($categories as $category): ?>
+                                        <option value="<?= htmlspecialchars($category['id']) ?>"><?= htmlspecialchars($category['name']) ?></option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
                             <div class="w-full">
                                 <label for="courseTags"
-                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tags</label>
-                                <select id="courseTags" name="tags" multiple
-                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-clair-500 focus:ring focus:ring-clair-500 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                                    
-
-                                        <option value="oldest">ghvjbkn,lm;</option>
-                                    
+                                    class="block text-sm font-medium text-black">Tags</label>
+                                <select 
+                                    id="courseTags" 
+                                    name="tags[]" 
+                                    multiple
+                                    class="mt-1 block w-full rounded-md border-gray-300 focus:border-clair-500 focus:ring focus:ring-clair-500 focus:ring-opacity-50"
+                                    >
+                               
+                                    <?php foreach ($tags as $tag): ?>
+                                        <option value="<?= $tag['id']?>"> <?= $tag['title'] ?></option>
+                                    <?php endforeach; ?>
 
                                 </select>
+
                             </div>
                         </div>
                         <div class="mb-4">
