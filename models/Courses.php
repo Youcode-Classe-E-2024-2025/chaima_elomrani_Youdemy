@@ -42,8 +42,8 @@ class Courses
     {
         $stmt = $this->pdo->prepare("SELECT * FROM course");
         $stmt->execute();
-        $visitor=$stmt->fetchAll(PDO::FETCH_ASSOC);
-        return  $visitor;
+        $visitor = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $visitor;
     }
 
 
@@ -55,27 +55,38 @@ class Courses
         $stmt->execute(["id" => $id]);
 
     }
-   
 
-    public function addCourse(){
 
+    public function addCourse()
+    {
         $name = $_POST['name'];
         $description = $_POST['description'];
         $category = $_POST['category'];
         $tags = $_POST['tags'];
         $teacher = $_SESSION['user_id'];
+        $price = $_POST['price'];
 
-        $sql = "INSERT INTO course (name, description, category, Teacher) VALUES (:name, :description, :category, :teacher)";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(['name' => $name, 'description' => $description, 'category' => $category, 'teacher' => $teacher]);
-        $sqli= "INSERT INTO tag_to_course (tag, course) VALUES (:tag, :course)";
-        $stmt = $this->pdo->prepare($sqli);  
-        foreach ($tags as $tag) {
-            $stmt->execute(['tag' => $tag, 'course' => $this->pdo->lastInsertId()]);
+        try {
+            $this->pdo->beginTransaction();
+
+            $sql = "INSERT INTO course (title, description, category, Teacher,price) VALUES (:name, :description, :category, :teacher , :price)";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute(['name' => $name, 'description' => $description, 'category' => $category, 'teacher' => $teacher , 'price' => $price]);
+            $courseId = $this->pdo->lastInsertId();
+
+            $sql = "INSERT INTO tag_to_course (tag_id, course_id) VALUES (:tag, :course)";
+            $stmt = $this->pdo->prepare($sql);
+            foreach ($tags as $tag) {
+                $stmt->execute(['tag' => $tag, 'course' => $courseId]);
+            }
+
+
+            $this->pdo->commit();
+        } catch (PDOException $e) {
+            $this->pdo->rollBack();
+            throw $e;
         }
-      
     }
-
 
 
 

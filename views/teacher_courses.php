@@ -276,7 +276,7 @@ $tags = $taf->displaytags();
                                        
                                         <div class="text-center w-full">
                                             <div class="text-2xl font-medium text-black dark:text-white">
-                                                <?= htmlspecialchars($course['price']) ?>
+                                                <?= htmlspecialchars($course['price']  ?? '') ?>
                                             </div>
                                         </div>
                                     </div>
@@ -324,7 +324,7 @@ $tags = $taf->displaytags();
                 class="relative top-20 mx-auto p-5 border-black w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white ">
                 <div class="mt-3 text-center">
                     <h3 class="text-lg leading-6 font-medium text-black">Add New Course</h3>
-                    <form id="addCourseForm" class="mt-2 text-left" action="index.php?action=addCourse" method="POST" >
+                    <form id="addCourseForm" class="mt-2 text-left" action="http://<?= $_SERVER['HTTP_HOST'] ?>/index.php?action=addCourse" method="POST" >
                         <div class="mb-4">
                             <label for="courseTitle"
                                 class="block text-sm font-medium ">Course Title</label>
@@ -368,6 +368,10 @@ $tags = $taf->displaytags();
 
                             </div>
                         </div>
+
+                        <label  class="block text-sm font-medium text-black" for="price">Price</label>
+                        <input type="text" placeholder="Enter Price" class="mt-1 block w-full py-2 mb-[20px] rounded-md border-black shadow-sm focus:border-clair-500 focus:ring focus:ring-clair-500 focus:ring-opacity-50" name="price">
+
                         <div class="mb-4">
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Media Type</label>
                             <div class="mt-2">
@@ -412,30 +416,30 @@ $tags = $taf->displaytags();
 
         <script>
            
-           document.addEventListener('DOMContentLoaded', (event) => {
+        //    document.addEventListener('DOMContentLoaded', (event) => {
              
-             document.getElementById('addCourseForm').addEventListener('submit', (e) => {
-                 e.preventDefault();
-                 console.log('Form submitted');
-             });
+        //      document.getElementById('addCourseForm').addEventListener('submit', (e) => {
+        //          e.preventDefault();
+        //          console.log('Form submitted');
+        //      });
 
-             document.getElementById('cancelAddCourse').addEventListener('click', () => {
-                 document.getElementById('addCourseModal').classList.add('hidden');
-             });
-         });
+        //      document.getElementById('cancelAddCourse').addEventListener('click', () => {
+        //          document.getElementById('addCourseModal').classList.add('hidden');
+        //      });
+        //  });
    
 
          
-         document.addEventListener('DOMContentLoaded', () => {
-             document.getElementById('loadingState').classList.remove('hidden');
-             document.getElementById('courseGrid').classList.add('hidden');
+        //  document.addEventListener('DOMContentLoaded', () => {
+        //      document.getElementById('loadingState').classList.remove('hidden');
+        //      document.getElementById('courseGrid').classList.add('hidden');
 
-             setTimeout(() => {
-                 document.getElementById('loadingState').classList.add('hidden');
-                 document.getElementById('courseGrid').classList.remove('hidden');
-                 renderCourses(courses);
-             }, 1500);
-         });
+        //      setTimeout(() => {
+        //          document.getElementById('loadingState').classList.add('hidden');
+        //          document.getElementById('courseGrid').classList.remove('hidden');
+        //          renderCourses(courses);
+        //      }, 1500);
+        //  });
 
 
 
