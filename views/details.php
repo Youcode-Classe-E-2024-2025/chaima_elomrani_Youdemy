@@ -157,7 +157,7 @@
         </div>
     </main>
 
-    <!-- Script for Accordion -->
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const accordionButtons = document.querySelectorAll('.border button');

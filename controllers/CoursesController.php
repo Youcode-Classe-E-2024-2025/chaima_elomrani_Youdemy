@@ -47,22 +47,6 @@ class CoursesController{
     header('Location: ./views/teacher_courses.php');
 }
 
-public function UpdateCourse() {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $courseId = $_POST['course_id'];
-        $title = $_POST['title'];
-        $description = $_POST['description'];
-        $category = $_POST['category'];
-        $tags = $_POST['tags'];
-
-        try {
-            $this->CoursesModel->updateCourse($courseId, $title, $description, $category, $tags);
-            echo json_encode(['success' => true, 'message' => 'Course updated successfully!']);
-        } catch (Exception $e) {
-            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
-        }
-    }
-}
 
 
     

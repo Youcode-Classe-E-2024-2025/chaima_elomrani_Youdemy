@@ -229,15 +229,7 @@ $tags = $taf->displaytags();
                                         class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 hidden group-hover:block">
                                         <ul class="py-2">
                                             <li>
-                                                <form action="index.php?action=updateCourse" method="POST"></form>
-                                                <input type="text" name="course_id"
-                                                    value="<?= htmlspecialchars($course['id']) ?>" hidden>
-                                                <button id="updatebtn" data-course-id="<?= $course['id'] ?>"
-                                                    data-course-name="<?= htmlspecialchars($course['title']) ?>"
-                                                    data-course-description="<?= htmlspecialchars($course['description']) ?>"
-                                                    data-course-category="<?= $course['category'] ?>"
-                                                    data-course-tags='<?= json_encode($course['tags']) ?>'
-                                                    class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                                <button class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
                                                     <i class="fas fa-edit w-4 mr-3"></i>
                                                     Edit Course
                                                 </button>
@@ -257,13 +249,11 @@ $tags = $taf->displaytags();
                                                 </a>
                                             </li>
                                             <li>
-                                                <form action="index.php?action=deleteCourse&id=<?= $course['id'] ?>"
-                                                    method="post">
-                                                    <input type="hidden" name="id" value="<?= $course['id'] ?>">
-                                                    <button
-                                                        class="flex items-center px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                                <form action="index.php?action=deleteCourse&id=<?= $course['id'] ?>" method="post">
+                                                <input type="hidden" name="id" value="<?=$course['id']?>">
+                                                    <button class="flex items-center px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-700">
                                                         <i class="fas fa-trash-alt w-4 mr-3"></i>
-
+                                                       
                                                         Delete
                                                     </button>
                                                 </form>
@@ -357,8 +347,7 @@ $tags = $taf->displaytags();
                                     <option value="">Select a category</option>
                                     <?php foreach ($categories as $category): ?>
                                         <option value="<?= htmlspecialchars($category['id']) ?>">
-                                            <?= htmlspecialchars($category['name']) ?>
-                                        </option>
+                                            <?= htmlspecialchars($category['name']) ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -412,61 +401,6 @@ $tags = $taf->displaytags();
 
 
 
-        <!-- ****************** edit form ****************** -->
-        <!-- Edit Course Form Modal -->
-      <!-- Update Course Form Modal -->
-<div id="updateCourseModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
-    <div class="relative top-20 mx-auto p-5 border-black w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
-        <div class="mt-3 text-center">
-            <h3 class="text-lg leading-6 font-medium text-black">Update Course</h3>
-            <form id="updateCourseForm" class="mt-2 text-left" action="index.php?action=updateCourse" method="POST">
-                <input type="hidden" name="course_id" id="updateCourseId">
-                <div class="mb-4">
-                    <label for="updateCourseTitle" class="block text-sm font-medium">Course Title</label>
-                    <input type="text" id="updateCourseTitle" name="title" required
-                        class="mt-1 block w-full rounded-md border-black shadow-sm focus:border-clair-500 focus:ring focus:ring-clair-500 focus:ring-opacity-50">
-                </div>
-                <div class="mb-4">
-                    <label for="updateCourseDescription" class="block text-sm font-medium text-black">Course Description</label>
-                    <textarea id="updateCourseDescription" name="description" rows="6"
-                        class="markdown-editor mt-1 block w-full rounded-md border-black shadow-sm focus:border-clair-500 focus:ring focus:ring-clair-500 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"></textarea>
-                </div>
-                <div class="mb-4 flex space-x-4">
-                    <div class="w-full">
-                        <label for="updateCourseCategory" class="block text-md font-medium text-gray-700">Category</label>
-                        <select id="updateCourseCategory" name="category" required
-                            class="mt-1 block w-full py-2 rounded-[5px] border-black shadow-sm focus:border-clair-500 focus:ring focus:ring-clair-500 focus:ring-opacity-50">
-                            <option value="">Select a category</option>
-                            <?php foreach ($categories as $category): ?>
-                                <option value="<?= htmlspecialchars($category['id']) ?>"><?= htmlspecialchars($category['name']) ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                    <div class="w-full">
-                        <label for="updateCourseTags" class="block text-sm font-medium text-black">Tags</label>
-                        <select id="updateCourseTags" name="tags[]" multiple
-                            class="mt-1 block w-full rounded-md border-black focus:border-clair-500 focus:ring focus:ring-clair-500 focus:ring-opacity-50">
-                            <?php foreach ($tags as $tag): ?>
-                                <option value="<?= $tag['id'] ?>"><?= $tag['title'] ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                </div>
-                <div class="mt-5 sm:mt-6 flex justify-end space-x-2">
-                    <button type="button" id="cancelupdateCourse"
-                        class="inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-clair-500 sm:text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:hover:bg-gray-600">
-                        Cancel
-                    </button>
-                    <button type="submit"
-                        class="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-clair-600 text-base font-medium text-white hover:bg-clair-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-clair-500 sm:text-sm">
-                        Update Course
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
 
         <script>
 
@@ -486,54 +420,6 @@ $tags = $taf->displaytags();
                 cancelAddCourse.addEventListener('click', () => {
                     addCourseModal.classList.add('hidden');
                 });
-            });
-
-
-            document.addEventListener('DOMContentLoaded', function () {
-                // Event delegation for the "Edit" button
-                document.addEventListener('click', function (event) {
-                    if (event.target && event.target.id === 'updatebtn') {
-                        const courseId = event.target.getAttribute('data-course-id');
-                        const courseName = event.target.getAttribute('data-course-name');
-                        const courseDescription = event.target.getAttribute('data-course-description');
-                        const courseCategory = event.target.getAttribute('data-course-category');
-                        const courseTags = JSON.parse(event.target.getAttribute('data-course-tags'));
-
-                        // Populate the update modal with course data
-                        document.getElementById('updateCourseId').value = courseId;
-                        document.getElementById('updateCourseTitle').value = courseName;
-                        document.getElementById('updateCourseDescription').value = courseDescription;
-                        document.getElementById('updateCourseCategory').value = courseCategory;
-
-                        // Set selected tags
-                        const tagSelect = document.getElementById('updateCourseTags');
-                        Array.from(tagSelect.options).forEach(option => {
-                            option.selected = courseTags.includes(parseInt(option.value));
-                        });
-
-                        // Show the update modal
-                        document.getElementById('updateCourseModal').classList.remove('hidden');
-                    }
-                });
-
-                // Close the update modal
-                document.getElementById('cancelupdateCourse').addEventListener('click', () => {
-                    document.getElementById('updateCourseModal').classList.add('hidden');
-                });
-            });
-            // updatebtn.addEventListener('click', function () {
-            //     const updateCourseForm = document.getElementById('updateCourseForm');
-            //     updateCourseForm.style.display = 'block';
-            //     const courseId = updatebtn.getAttribute('data-course-id');
-            //     const courseName = updatebtn.getAttribute('data-course-name');
-            //     const courseDescription = updatebtn.getAttribute('data-course-description');
-            //     const coursePrice = updatebtn.getAttribute('data-course-price');
-            //     const courseImage = updatebtn.getAttribute('data-course-image');
-            //     const courseVideo = updatebtn.getAttribute('data-course-video');
-            // });
-
-            updatebtn.addEventListener('click', function () {
-                updateCourseForm.style.display = 'block';
             });
         </script>
     </body>
