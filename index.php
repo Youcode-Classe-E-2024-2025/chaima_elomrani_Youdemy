@@ -105,5 +105,9 @@ switch ($action) {
         $courseController->DeleteCourse($id);
         break;
 
+    case "addCourse" : 
+        $courseController->AddCourse();
+        break; 
+
 }
 

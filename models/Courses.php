@@ -55,7 +55,26 @@ class Courses
         $stmt->execute(["id" => $id]);
 
     }
+   
 
+    public function addCourse(){
+
+        $name = $_POST['name'];
+        $description = $_POST['description'];
+        $category = $_POST['category'];
+        $tags = $_POST['tags'];
+        $teacher = $_SESSION['user_id'];
+
+        $sql = "INSERT INTO course (name, description, category, Teacher) VALUES (:name, :description, :category, :teacher)";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['name' => $name, 'description' => $description, 'category' => $category, 'teacher' => $teacher]);
+        $sqli= "INSERT INTO tag_to_course (tag, course) VALUES (:tag, :course)";
+        $stmt = $this->pdo->prepare($sqli);  
+        foreach ($tags as $tag) {
+            $stmt->execute(['tag' => $tag, 'course' => $this->pdo->lastInsertId()]);
+        }
+      
+    }
 
 
 

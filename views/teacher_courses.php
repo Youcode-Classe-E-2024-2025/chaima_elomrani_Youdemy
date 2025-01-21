@@ -238,7 +238,7 @@ $tags = $taf->displaytags();
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#"
+                                                <a href="index.php?action=statistic"
                                                     class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
                                                     <i class="fas fa-chart-bar w-4 mr-3"></i>
                                                     View Analytics
@@ -268,17 +268,7 @@ $tags = $taf->displaytags();
                             <div class="flex flex-wrap gap-2 mb-4">
                                 <span
                                     class="px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full"><?= htmlspecialchars($course['category']) ?></span>
-                                    <?php
-                                $tagsToWorkOn = explode(',', $course['tags'] ?? '');
-                                foreach ($tagsToWorkOn as $tag):
-                                    if (trim($tag) !== ''):
-                                        ?>
-                                        <span
-                                            class="px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full"><?= htmlspecialchars(trim($tag)) ?></span>
-                                        <?php
-                                    endif;
-                                endforeach;
-                                ?>
+                               
                             </div>
                             <div class="">
                                 <div class=" border-t border-gray-200">
@@ -331,29 +321,29 @@ $tags = $taf->displaytags();
         <!-- Add Course Form Modal -->
         <div id="addCourseModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
             <div
-                class="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white dark:bg-gray-800">
+                class="relative top-20 mx-auto p-5 border-black w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white ">
                 <div class="mt-3 text-center">
                     <h3 class="text-lg leading-6 font-medium text-black">Add New Course</h3>
-                    <form id="addCourseForm" class="mt-2 text-left">
+                    <form id="addCourseForm" class="mt-2 text-left" action="index.php?action=addCourse" method="POST" >
                         <div class="mb-4">
                             <label for="courseTitle"
                                 class="block text-sm font-medium ">Course Title</label>
-                            <input type="text" id="courseTitle" name="title" required
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-clair-500 focus:ring focus:ring-clair-500 focus:ring-opacity-50">
+                            <input type="text" id="courseTitle" name="name" required
+                                class="mt-1 block w-full rounded-md border-black shadow-sm focus:border-clair-500 focus:ring focus:ring-clair-500 focus:ring-opacity-50">
                         </div>
                         <div class="mb-4">
                             <label for="courseDescription"
                                 class="block text-sm font-medium text-black ">Course Description
                                 (Markdown supported)</label>
                             <textarea id="courseDescription" name="description" rows="6"
-                                class="markdown-editor mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-clair-500 focus:ring focus:ring-clair-500 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"></textarea>
+                                class="markdown-editor mt-1 block w-full rounded-md border-black shadow-sm focus:border-clair-500 focus:ring focus:ring-clair-500 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"></textarea>
                         </div>
                         <div class="mb-4 flex space-x-4">
                             <div class="w-full">
                                 <label for="courseCategory"
                                     class="block text-md font-medium text-gray-700">Category</label>
                                 <select id="courseCategory" name="category" required
-                                    class="mt-1 block w-full py-2 rounded-[5px] border-gray-300 shadow-sm focus:border-clair-500 focus:ring focus:ring-clair-500 focus:ring-opacity-50">
+                                    class="mt-1 block w-full py-2 rounded-[5px] border-black shadow-sm focus:border-clair-500 focus:ring focus:ring-clair-500 focus:ring-opacity-50">
                                     <option value="">Select a category</option>
                                     <?php foreach ($categories as $category): ?>
                                         <option value="<?= htmlspecialchars($category['id']) ?>"><?= htmlspecialchars($category['name']) ?></option>
@@ -367,7 +357,7 @@ $tags = $taf->displaytags();
                                     id="courseTags" 
                                     name="tags[]" 
                                     multiple
-                                    class="mt-1 block w-full rounded-md border-gray-300 focus:border-clair-500 focus:ring focus:ring-clair-500 focus:ring-opacity-50"
+                                    class="mt-1 block w-full rounded-md border-black focus:border-clair-500 focus:ring focus:ring-clair-500 focus:ring-opacity-50"
                                     >
                                
                                     <?php foreach ($tags as $tag): ?>
@@ -421,50 +411,51 @@ $tags = $taf->displaytags();
         </div>
 
         <script>
-            document.addEventListener('DOMContentLoaded', (event) => {
+           
+           document.addEventListener('DOMContentLoaded', (event) => {
              
-                document.getElementById('addCourseForm').addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    console.log('Form submitted');
-                });
+             document.getElementById('addCourseForm').addEventListener('submit', (e) => {
+                 e.preventDefault();
+                 console.log('Form submitted');
+             });
 
-                document.getElementById('cancelAddCourse').addEventListener('click', () => {
-                    document.getElementById('addCourseModal').classList.add('hidden');
-                });
-            });
-      
+             document.getElementById('cancelAddCourse').addEventListener('click', () => {
+                 document.getElementById('addCourseModal').classList.add('hidden');
+             });
+         });
+   
 
-            
-            document.addEventListener('DOMContentLoaded', () => {
-                document.getElementById('loadingState').classList.remove('hidden');
-                document.getElementById('courseGrid').classList.add('hidden');
+         
+         document.addEventListener('DOMContentLoaded', () => {
+             document.getElementById('loadingState').classList.remove('hidden');
+             document.getElementById('courseGrid').classList.add('hidden');
 
-                setTimeout(() => {
-                    document.getElementById('loadingState').classList.add('hidden');
-                    document.getElementById('courseGrid').classList.remove('hidden');
-                    renderCourses(courses);
-                }, 1500);
-            });
-
-
-
-            document.addEventListener('DOMContentLoaded', function () {
-                const addCourseBtn = document.getElementById('addCourseBtn');
-                const addCourseModal = document.getElementById('addCourseModal');
-                const cancelAddCourse = document.getElementById('cancelAddCourse');
-                const addCourseForm = document.getElementById('addCourseForm');
-
-                const simplemde = new SimpleMDE({ element: document.getElementById("courseDescription") });
+             setTimeout(() => {
+                 document.getElementById('loadingState').classList.add('hidden');
+                 document.getElementById('courseGrid').classList.remove('hidden');
+                 renderCourses(courses);
+             }, 1500);
+         });
 
 
-                addCourseBtn.addEventListener('click', () => {
-                    addCourseModal.classList.remove('hidden');
-                });
 
-                cancelAddCourse.addEventListener('click', () => {
-                    addCourseModal.classList.add('hidden');
-                });
-            });
+         document.addEventListener('DOMContentLoaded', function () {
+             const addCourseBtn = document.getElementById('addCourseBtn');
+             const addCourseModal = document.getElementById('addCourseModal');
+             const cancelAddCourse = document.getElementById('cancelAddCourse');
+             const addCourseForm = document.getElementById('addCourseForm');
+
+             const simplemde = new SimpleMDE({ element: document.getElementById("courseDescription") });
+
+
+             addCourseBtn.addEventListener('click', () => {
+                 addCourseModal.classList.remove('hidden');
+             });
+
+             cancelAddCourse.addEventListener('click', () => {
+                 addCourseModal.classList.add('hidden');
+             });
+         });
         </script>
     </body>
 

@@ -42,7 +42,10 @@ class CoursesController{
     }
 
 
-
+   public function AddCourse(){
+    $this->CoursesController->addCourse();
+    header('Location: ./views/teacher_courses.php');
+}
 
 
 
