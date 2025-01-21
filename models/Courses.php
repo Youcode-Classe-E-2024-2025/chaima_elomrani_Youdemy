@@ -65,13 +65,15 @@ class Courses
         $tags = $_POST['tags'];
         $teacher = $_SESSION['user_id'];
         $price = $_POST['price'];
+        $video = $_POST['video'];
+        $image = $_POST['image'];
 
         try {
             $this->pdo->beginTransaction();
 
-            $sql = "INSERT INTO course (title, description, category, Teacher,price) VALUES (:name, :description, :category, :teacher , :price)";
+            $sql = "INSERT INTO course (title, description, category, Teacher,price, image_path , video_path) VALUES (:name, :description, :category, :teacher , :price, :image, :video)";
             $stmt = $this->pdo->prepare($sql);
-            $stmt->execute(['name' => $name, 'description' => $description, 'category' => $category, 'teacher' => $teacher , 'price' => $price]);
+            $stmt->execute(['name' => $name, 'description' => $description, 'category' => $category, 'teacher' => $teacher , 'price' => $price, 'image' => $image , 'video' => $video]);
             $courseId = $this->pdo->lastInsertId();
 
             $sql = "INSERT INTO tag_to_course (tag_id, course_id) VALUES (:tag, :course)";
@@ -85,6 +87,36 @@ class Courses
         } catch (PDOException $e) {
             $this->pdo->rollBack();
             throw $e;
+        }
+    }
+
+    public function updateCourse($courseId, $title, $description, $category, $tags) {
+        try {
+            $this->pdo->beginTransaction();
+    
+            $sql = "UPDATE course SET title = :title, description = :description, category = :category WHERE id = :id";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([
+                'title' => $title,
+                'description' => $description,
+                'category' => $category,
+                'id' => $courseId
+            ]);
+    
+            $sql = "DELETE FROM tag_to_course WHERE course_id = :course_id";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute(['course_id' => $courseId]);
+    
+            $sql = "INSERT INTO tag_to_course (tag_id, course_id) VALUES (:tag_id, :course_id)";
+            $stmt = $this->pdo->prepare($sql);
+            foreach ($tags as $tagId) {
+                $stmt->execute(['tag_id' => $tagId, 'course_id' => $courseId]);
+            }
+    
+            $this->pdo->commit();
+        } catch (PDOException $e) {
+            $this->pdo->rollBack();
+            throw new Exception("Database error: " . $e->getMessage());
         }
     }
 

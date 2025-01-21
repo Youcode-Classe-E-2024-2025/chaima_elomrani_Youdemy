@@ -205,7 +205,6 @@ $tags = $taf->displaytags();
                                 alt="<?= htmlspecialchars($course['title']) ?> thumbnail"
                                 class="w-full h-48 object-cover rounded-t-xl">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-t-xl"></div>
-
                             <div class="absolute bottom-4 left-4 right-4">
                                 <div class="flex items-center gap-2">
                                     <span
@@ -230,11 +229,12 @@ $tags = $taf->displaytags();
                                         class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 hidden group-hover:block">
                                         <ul class="py-2">
                                             <li>
-                                                <a href="#"
-                                                    class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                                <form action="index.php?action=updateCourse" method="POST"></form>
+                                                <input type="text" name="course_id" value="<?= htmlspecialchars($course['id']) ?>" hidden>
+                                                <button class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
                                                     <i class="fas fa-edit w-4 mr-3"></i>
                                                     Edit Course
-                                                </a>
+                                                </button>
                                             </li>
                                             <li>
                                                 <a href="index.php?action=statistic"
@@ -372,6 +372,105 @@ $tags = $taf->displaytags();
                             class="mt-1 block w-full py-2 mb-[20px] rounded-md border-black shadow-sm focus:border-clair-500 focus:ring focus:ring-clair-500 focus:ring-opacity-50"
                             name="price">
 
+                        <div id="imageUrlInput" class="mb-4 ">
+                            <label for="courseImage"
+                                class="block text-sm py-4font-medium text-gray-700 dark:text-gray-300">Course Image
+                                URL</label>
+                            <input type="url" id="courseImage" name="image"
+                                class="mt-1 py-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-clair-500 focus:ring focus:ring-clair-500 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        </div>
+                        <div id="videoUrlInput" class="mb-4 ">
+                            <label for="courseVideo"
+                                class="block text-sm font-medium text-gray-700 dark:text-gray-300">Course Video
+                                URL</label>
+                            <input type="url" id="courseVideo" name="video"
+                                class="mt-1 py-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-clair-500 focus:ring focus:ring-clair-500 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        </div>
+                        <div class="mt-5 sm:mt-6 flex justify-end space-x-2">
+                            <button type="button" id="cancelAddCourse"
+                                class="inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-clair-500 sm:text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:hover:bg-gray-600">
+                                Cancel
+                            </button>
+                            <button type="submit"
+                                class="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-clair-600 text-base font-medium text-white hover:bg-clair-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-clair-500 sm:text-sm">
+                                Add Course
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- ****************** edit form ****************** -->
+         <!-- Edit Course Form Modal -->
+         <!-- <div id="addCourseModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
+            <div
+                class="relative top-20 mx-auto p-5 border-black w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white ">
+                <div class="mt-3 text-center">
+                    <h3 class="text-lg leading-6 font-medium text-black">Add New Course</h3>
+                    <form id="addCourseForm" class="mt-2 text-left"
+                        action="http://<?= $_SERVER['HTTP_HOST'] ?>/index.php?action=addCourse" method="POST">
+                        <div class="mb-4">
+                            <label for="courseTitle" class="block text-sm font-medium ">Course Title</label>
+                            <input type="text" id="courseTitle" name="name" required
+                                class="mt-1 block w-full rounded-md border-black shadow-sm focus:border-clair-500 focus:ring focus:ring-clair-500 focus:ring-opacity-50">
+                        </div>
+                        <div class="mb-4">
+                            <label for="courseDescription" class="block text-sm font-medium text-black ">Course
+                                Description
+                                (Markdown supported)</label>
+                            <textarea id="courseDescription" name="description" rows="6"
+                                class="markdown-editor mt-1 block w-full rounded-md border-black shadow-sm focus:border-clair-500 focus:ring focus:ring-clair-500 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"></textarea>
+                        </div>
+                        <div class="mb-4 flex space-x-4">
+                            <div class="w-full">
+                                <label for="courseCategory"
+                                    class="block text-md font-medium text-gray-700">Category</label>
+                                <select id="courseCategory" name="category" required
+                                    class="mt-1 block w-full py-2 rounded-[5px] border-black shadow-sm focus:border-clair-500 focus:ring focus:ring-clair-500 focus:ring-opacity-50">
+                                    <option value="">Select a category</option>
+                                    <?php foreach ($categories as $category): ?>
+                                        <option value="<?= htmlspecialchars($category['id']) ?>">
+                                            <?= htmlspecialchars($category['name']) ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="w-full">
+                                <label for="courseTags" class="block text-sm font-medium text-black">Tags</label>
+                                <select id="courseTags" name="tags[]" multiple
+                                    class="mt-1 block w-full rounded-md border-black focus:border-clair-500 focus:ring focus:ring-clair-500 focus:ring-opacity-50">
+
+                                    <?php foreach ($tags as $tag): ?>
+                                        <option value="<?= $tag['id'] ?>"> <?= $tag['title'] ?></option>
+                                    <?php endforeach; ?>
+
+                                </select>
+
+                            </div>
+                        </div>
+
+                        <label class="block text-sm font-medium text-black" for="price">Price</label>
+                        <input type="text" placeholder="Enter Price"
+                            class="mt-1 block w-full py-2 mb-[20px] rounded-md border-black shadow-sm focus:border-clair-500 focus:ring focus:ring-clair-500 focus:ring-opacity-50"
+                            name="price">
+
                         <div class="mb-4">
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Media Type</label>
                             <div class="mt-2">
@@ -412,36 +511,10 @@ $tags = $taf->displaytags();
                     </form>
                 </div>
             </div>
-        </div>
+        </div> -->
+
 
         <script>
-
-            //    document.addEventListener('DOMContentLoaded', (event) => {
-
-            //      document.getElementById('addCourseForm').addEventListener('submit', (e) => {
-            //          e.preventDefault();
-            //          console.log('Form submitted');
-            //      });
-
-            //      document.getElementById('cancelAddCourse').addEventListener('click', () => {
-            //          document.getElementById('addCourseModal').classList.add('hidden');
-            //      });
-            //  });
-
-
-
-            //  document.addEventListener('DOMContentLoaded', () => {
-            //      document.getElementById('loadingState').classList.remove('hidden');
-            //      document.getElementById('courseGrid').classList.add('hidden');
-
-            //      setTimeout(() => {
-            //          document.getElementById('loadingState').classList.add('hidden');
-            //          document.getElementById('courseGrid').classList.remove('hidden');
-            //          renderCourses(courses);
-            //      }, 1500);
-            //  });
-
-
 
             document.addEventListener('DOMContentLoaded', function () {
                 const addCourseBtn = document.getElementById('addCourseBtn');

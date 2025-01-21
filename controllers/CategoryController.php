@@ -33,4 +33,6 @@ class CategoryController
             require_once('views/category.php');
         }
     }
+
+    
 }

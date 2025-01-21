@@ -5,11 +5,11 @@ require_once  __DIR__ .'/../models/Courses.php';
 
 class CoursesController{
     
-    private $CoursesController;
+    private $CoursesModel;
 
 
     public function __construct(){
-        $this->CoursesController= new Courses();
+        $this->CoursesModel= new Courses();
     }
 
 
@@ -22,14 +22,14 @@ class CoursesController{
     }
 
         // $teacherId = $_SESSION['user_id'];
-        $courses = $this->CoursesController->displayCourse();
+        $courses = $this->CoursesModel->displayCourse();
         require_once __DIR__ . "/../views/course.php";
     }
 
 
 
     public function  VisitorCourses(){
-        $visitor = $this->CoursesController->visitorCourses();
+        $visitor = $this->CoursesModel->visitorCourses();
         require_once "index.php?action=catalogue";
 
     }
@@ -37,17 +37,32 @@ class CoursesController{
 
     public function DeleteCourse($id)
     {
-        $this->CoursesController->deleteCourse($id);
+        $this->CoursesModel->deleteCourse($id);
         header("location: index.php?action=teacher");
     }
 
 
    public function AddCourse(){
-    $this->CoursesController->addCourse();
+    $this->CoursesModel->addCourse();
     header('Location: ./views/teacher_courses.php');
 }
 
+public function UpdateCourse() {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $courseId = $_POST['course_id'];
+        $title = $_POST['title'];
+        $description = $_POST['description'];
+        $category = $_POST['category'];
+        $tags = $_POST['tags'];
 
+        try {
+            $this->CoursesModel->updateCourse($courseId, $title, $description, $category, $tags);
+            echo json_encode(['success' => true, 'message' => 'Course updated successfully!']);
+        } catch (Exception $e) {
+            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+}
 
 
     

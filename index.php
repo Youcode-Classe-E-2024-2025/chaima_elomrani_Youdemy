@@ -109,5 +109,10 @@ switch ($action) {
         $courseController->AddCourse();
         break; 
 
+    case "updateCourse" :
+        $courseController->updateCourse();   
+        break;
+
+
 }
 
