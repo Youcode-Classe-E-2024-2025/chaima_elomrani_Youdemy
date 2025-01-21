@@ -38,7 +38,7 @@ class CoursesController{
     public function DeleteCourse($id)
     {
         $this->CoursesController->deleteCourse($id);
-        header("location: views/tag.php");
+        header("location: index.php?action=teacher");
     }
 
 
