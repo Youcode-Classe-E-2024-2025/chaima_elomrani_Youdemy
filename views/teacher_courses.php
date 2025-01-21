@@ -5,7 +5,7 @@ require_once __DIR__ . '/../models/Tag.php';
 
 
 
-// $courseId = $_GET['id'];
+$courseId = $_GET['id'];
 
 $cours = new Courses();
 $courses = $cours->displayCourse();
@@ -17,7 +17,7 @@ $categories = $category->displayCategory();
 
 $taf = new Tag();
 $tags = $taf->displaytags();
-
+ 
 ?>
 <!DOCTYPE html>
 <html lang="en">

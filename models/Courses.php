@@ -73,7 +73,7 @@ class Courses
 
             $sql = "INSERT INTO course (title, description, category, Teacher,price, image_path , video_path) VALUES (:name, :description, :category, :teacher , :price, :image, :video)";
             $stmt = $this->pdo->prepare($sql);
-            $stmt->execute(['name' => $name, 'description' => $description, 'category' => $category, 'teacher' => $teacher , 'price' => $price, 'image' => $image , 'video' => $video]);
+            $stmt->execute(['name' => $name, 'description' => $description, 'category' => $category, 'teacher' => $teacher, 'price' => $price, 'image' => $image, 'video' => $video]);
             $courseId = $this->pdo->lastInsertId();
 
             $sql = "INSERT INTO tag_to_course (tag_id, course_id) VALUES (:tag, :course)";
@@ -92,12 +92,11 @@ class Courses
 
 
 
-    public function updateCourse($courseId, $title, $description, $category, $tags, $price, $image, $video) {
+    public function updateCourse($courseId, $title, $description, $category, $tags, $price, $image, $video)
+    {
         try {
-            // Start a transaction
             $this->pdo->beginTransaction();
-    
-            // Update the course details
+
             $sql = "UPDATE course SET title = :title, description = :description, category = :category, price = :price, image_path = :image, video_path = :video WHERE id = :id";
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute([
@@ -109,22 +108,24 @@ class Courses
                 'video' => $video,
                 'id' => $courseId
             ]);
-    
+
             $sql = "DELETE FROM tag_to_course WHERE course_id = :course_id";
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute(['course_id' => $courseId]);
-    
+
             $sql = "INSERT INTO tag_to_course (tag_id, course_id) VALUES (:tag_id, :course_id)";
             $stmt = $this->pdo->prepare($sql);
             foreach ($tags as $tagId) {
                 $stmt->execute(['tag_id' => $tagId, 'course_id' => $courseId]);
             }
-    
+
             $this->pdo->commit();
         } catch (PDOException $e) {
             $this->pdo->rollBack();
             throw new Exception("Database error: " . $e->getMessage());
         }
     }
+
+    
 
 }
