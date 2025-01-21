@@ -47,12 +47,14 @@ class UserController
                     $_SESSION["user_id"] = $loginResult["id"];
                     $_SESSION["user_role"] = $loginResult["role"];
                     $_SESSION["user_status"] = $loginResult["status"];
-
                     if ($loginResult["status"] === 'suspended') {
                         header('Location: ./views/pended_page.php');
                     }elseif($loginResult['role'] === 'Student'){
                         header('Location: index.php?action=student');
 
+                    }elseif($loginResult['role'] === 'ADMIN'){
+                        header('Location: views/users.php');
+                    
                     }else{
                         header('Location: index.php?action=teacher');
 
