@@ -1,15 +1,20 @@
 <?php
 require_once __DIR__ . '/../models/Courses.php';
+require_once __DIR__ . '/../models/Category.php';
+require_once __DIR__ . '/../models/Tag.php';
+
+
+
+// $courseId = $_GET['id'];
+
 $cours = new Courses();
 $courses = $cours->displayCourse();
-// dd($courses);
 
-require_once __DIR__ . '/../models/Category.php';
+
 $category = new Category();
 $categories = $category->displayCategory();
 
 
-require_once __DIR__ . '/../models/Tag.php';
 $taf = new Tag();
 $tags = $taf->displaytags();
 
@@ -137,7 +142,7 @@ $tags = $taf->displaytags();
                                         class="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-clair-600 dark:hover:text-clair-400 rounded-md">Profile</a>
                                 </li>
                                 <li>
-                                    <a href="index.php?action=statistic"
+                                    <a href="http://<?=$_SERVER['HTTP_HOST']?>/index.php?action=statistic"
                                         class="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-clair-600 dark:hover:text-clair-400 rounded-md">Statistics</a>
                                 </li>
                             </ul>
@@ -229,10 +234,11 @@ $tags = $taf->displaytags();
                                         class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 hidden group-hover:block">
                                         <ul class="py-2">
                                             <li>
-                                                <button class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                                <a href="http://localhost/views/update_course.php?course_id=<?= $course['id'] ?>"
+                                                    class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
                                                     <i class="fas fa-edit w-4 mr-3"></i>
                                                     Edit Course
-                                                </button>
+                                                </a>
                                             </li>
                                             <li>
                                                 <a href="index.php?action=statistic"
@@ -249,11 +255,13 @@ $tags = $taf->displaytags();
                                                 </a>
                                             </li>
                                             <li>
-                                                <form action="index.php?action=deleteCourse&id=<?= $course['id'] ?>" method="post">
-                                                <input type="hidden" name="id" value="<?=$course['id']?>">
-                                                    <button class="flex items-center px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                                <form action="index.php?action=deleteCourse&id=<?= $course['id'] ?>"
+                                                    method="post">
+                                                    <input type="hidden" name="id" value="<?= $course['id'] ?>">
+                                                    <button
+                                                        class="flex items-center px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-700">
                                                         <i class="fas fa-trash-alt w-4 mr-3"></i>
-                                                       
+
                                                         Delete
                                                     </button>
                                                 </form>
@@ -347,7 +355,8 @@ $tags = $taf->displaytags();
                                     <option value="">Select a category</option>
                                     <?php foreach ($categories as $category): ?>
                                         <option value="<?= htmlspecialchars($category['id']) ?>">
-                                            <?= htmlspecialchars($category['name']) ?></option>
+                                            <?= htmlspecialchars($category['name']) ?>
+                                        </option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
