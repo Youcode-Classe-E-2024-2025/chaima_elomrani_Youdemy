@@ -15,7 +15,7 @@
       <div class="relative h-64 overflow-hidden">
         <img src="../images/js.jpg" alt="Course Image" class="w-full h-full object-cover">
         <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <h1 class="text-4xl font-bold text-white">JS full course</h1>
+          <h1 class="text-4xl font-bold text-white">JS full</h1>
         </div>
       </div>
 
@@ -33,7 +33,7 @@
         <div class="mb-8">
           <h2 class="text-2xl font-bold text-gray-800 mb-4">Course Video</h2>
           <div class="aspect-w-16 aspect-h-9">
-            <iframe class="w-[60%] flex mb-[10%] justify-self-center h-full rounded-lg shadow-md" src="https://www.youtube.com/watch?v=c-I5S_zTwAc" title="Course Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe class="w-[60%] flex mb-[10%] justify-self-center h-full rounded-lg shadow-md" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Course Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
         </div>
 
