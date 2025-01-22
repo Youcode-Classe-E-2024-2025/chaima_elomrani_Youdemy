@@ -1,14 +1,23 @@
 <?php
-// session_start();
 require_once __DIR__ . '/../models/Courses.php';
 require_once __DIR__ . '/../models/inscriptions.php';
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php'); 
+    exit();
+}
+
+$user_id = $_SESSION['user_id']; 
 
 $cours = new Courses();
 $courses = $cours->displayCourse();
 
-
 $inscription = new Inscriptions();
 $inscriptions = $inscription->getInscriptions();
+
+$total_students = $inscription->totalInscription($user_id);
+
+require_once __DIR__ . '/../views/teacher_statistics.php';
 ?>
 
 <!DOCTYPE html>
@@ -68,20 +77,18 @@ $inscriptions = $inscription->getInscriptions();
     <h1 class="text-3xl font-bold text-gray-800 mb-8">Course Statistics Dashboard</h1>
     
     <!-- Overview Cards -->
-    <div class="grid grid-cols-2  gap-6 mb-8">
-        <div class="bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-xl font-semibold text-gray-700 mb-2">Total Courses</h2>
-            <p class="text-3xl font-bold text-blue-600">12</p>
-            <p class="text-sm text-gray-500 mt-2">↑ 2 from last month</p>
-        </div>
-        <div class="bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-xl font-semibold text-gray-700 mb-2">Total Students</h2>
-            <p class="text-3xl font-bold text-green-600">1,234</p>
-            <p class="text-sm text-gray-500 mt-2">↑ 56 from last month</p>
-        </div>
-     
-        
+    <div class="grid grid-cols-2 gap-6 mb-8">
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-semibold text-gray-700 mb-2">Total Courses</h2>
+        <p class="text-3xl font-bold text-blue-600">12</p>
+        <p class="text-sm text-gray-500 mt-2">↑ 2 from last month</p>
     </div>
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-semibold text-gray-700 mb-2">Total Students</h2>
+        <p class="text-3xl font-bold text-green-600"><?= $total_students ?></p>
+        <p class="text-sm text-gray-500 mt-2">↑ 56 from last month</p>
+    </div>
+</div>
 
     <!-- Charts -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">

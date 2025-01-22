@@ -13,10 +13,7 @@ class Inscription{
         }
     
     
-        // public function DisplayInscription(){
-        //      $this->inscriptionModel->displayinscriptions();
-        //     require_once "./views/teacher_statistics.php";
-        // }
+       
     
     
         public function GetUsersByCourse($course_id){
@@ -29,5 +26,22 @@ class Inscription{
             require_once './views/studentFirst_page.php';
         }
 
+         
+        public function TotalInscription() {
+            if (!isset($_SESSION['user_id'])) {
+                header('Location: login.php'); 
+                exit();
+            }
+        
+            $user_id = $_SESSION['user_id']; 
+        
+            $inscriptionModel = new Inscriptions();
+            $total_students = $inscriptionModel->totalInscription($user_id);
+        
+           
+            require_once './views/teacher_statistics.php';
+        }
+
+        
 
 }
