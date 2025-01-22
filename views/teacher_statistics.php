@@ -68,7 +68,7 @@ $inscriptions = $inscription->getInscriptions();
     <h1 class="text-3xl font-bold text-gray-800 mb-8">Course Statistics Dashboard</h1>
     
     <!-- Overview Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="grid grid-cols-2  gap-6 mb-8">
         <div class="bg-white rounded-lg shadow-md p-6">
             <h2 class="text-xl font-semibold text-gray-700 mb-2">Total Courses</h2>
             <p class="text-3xl font-bold text-blue-600">12</p>
@@ -79,16 +79,8 @@ $inscriptions = $inscription->getInscriptions();
             <p class="text-3xl font-bold text-green-600">1,234</p>
             <p class="text-sm text-gray-500 mt-2">↑ 56 from last month</p>
         </div>
-        <div class="bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-xl font-semibold text-gray-700 mb-2">Pending Approvals</h2>
-            <p class="text-3xl font-bold text-yellow-600">18</p>
-            <p class="text-sm text-gray-500 mt-2">↓ 3 from yesterday</p>
-        </div>
-        <div class="bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-xl font-semibold text-gray-700 mb-2">Average Rating</h2>
-            <p class="text-3xl font-bold text-purple-600">4.8</p>
-            <p class="text-sm text-gray-500 mt-2">↑ 0.2 from last month</p>
-        </div>
+     
+        
     </div>
 
     <!-- Charts -->

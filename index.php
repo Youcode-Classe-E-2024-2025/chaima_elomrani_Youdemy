@@ -130,6 +130,10 @@ switch ($action) {
         $inscriptionController->GetUsersByCourse($course_id);
         break;
 
+
+    case "enrollCourse" :
+        require_once './views/studentFirst_page.php' ;
+        break;   
         
 
         

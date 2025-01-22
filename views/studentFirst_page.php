@@ -4,15 +4,16 @@ require_once __DIR__ . '/../models/Courses.php';
 $cours = new Courses();
 $courses = $cours->displayCourse();
 
+$student_id = $_SESSION['user_id'] ?? null;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enroll'])) {
     $course_id = $_POST['course_id'];
     $student_id = $_POST['student_id'];
-    
 
     $_SESSION['enrolled_courses'][$course_id] = true;
     $_SESSION['enrollment_success'] = true;
 
-    header('Location: ' . $_SERVER['PHP_SELF']);
+    header('Location: index.php?action=enrollCourse');
     exit();
 }
 
@@ -27,8 +28,8 @@ $enrolled_courses = $_SESSION['enrolled_courses'] ?? [];
     <title>Advanced Course Management</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> 
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -47,7 +48,7 @@ $enrolled_courses = $_SESSION['enrolled_courses'] ?? [];
                     },
                 },
             },
-            darkMode: 'class', 
+            darkMode: 'class',
         }
     </script>
 </head>
@@ -70,24 +71,21 @@ $enrolled_courses = $_SESSION['enrolled_courses'] ?? [];
 
             <form method="POST" action="http://localhost/index.php?action=logout">
                 <input type="hidden" name="log" value="">
-                <button class="bg-primary-  text-black  px-4 rounded-lg ">Logout</button>
+                <button class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors">Logout</button>
             </form>
-
         </div>
-
     </header>
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="mb-8 ">
+        <div class="mb-8">
             <input type="text" placeholder="Search courses..."
-                class="w-full mt-12  px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary">
+                class="w-full mt-12 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary">
         </div>
 
         <!-- Course Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="courseGrid">
             <?php foreach ($courses as $course): ?>
-                <div
-                    class="group bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-all duration-200 flex flex-col">
+                <div class="group bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-all duration-200 flex flex-col">
                     <div class="relative">
                         <img src="<?= htmlspecialchars($course['image_path']) ?>"
                             alt="<?= htmlspecialchars($course['title']) ?> thumbnail"
@@ -95,11 +93,9 @@ $enrolled_courses = $_SESSION['enrolled_courses'] ?? [];
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-t-xl"></div>
                         <div class="absolute bottom-4 left-4 right-4">
                             <div class="flex items-center gap-2">
-                                <span
-                                    class="px-2 py-1 text-xs font-medium bg-green-500/20 text-green-500 rounded-full">Active</span>
+                                <span class="px-2 py-1 text-xs font-medium bg-green-500/20 text-green-500 rounded-full">Active</span>
                                 <?php if (isset($course['featured']) && $course['featured']): ?>
-                                    <span
-                                        class="px-2 py-1 text-xs font-medium bg-blue-500/20 text-blue-500 rounded-full">Featured</span>
+                                    <span class="px-2 py-1 text-xs font-medium bg-blue-500/20 text-blue-500 rounded-full">Featured</span>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -119,12 +115,13 @@ $enrolled_courses = $_SESSION['enrolled_courses'] ?? [];
                             <?= htmlspecialchars($course['description'] ?? 'No description available.') ?>
                         </p>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span
-                                class="px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full"><?= htmlspecialchars($course['category_name']) ?></span>
+                            <span class="px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full">
+                                <?= htmlspecialchars($course['category_name']) ?>
+                            </span>
                         </div>
                         <div class="mt-auto">
-                            <div class="pt-4 border-t border-gray-200 dark:border-gray-700  w-full">
-                                <div class="flex items-center justify-between ">
+                            <div class="pt-4 border-t border-gray-200 dark:border-gray-700 w-full">
+                                <div class="flex items-center justify-between">
                                     <div class="text-center w-full">
                                         <div class="text-2xl mb-4 font-medium text-black dark:text-white">
                                             <?= htmlspecialchars($course['price'] ?? '') ?>
@@ -132,8 +129,7 @@ $enrolled_courses = $_SESSION['enrolled_courses'] ?? [];
                                     </div>
                                 </div>
                                 <?php if (isset($enrolled_courses[$course['id']])): ?>
-                                    <button
-                                        class="w-[50%] flex justify-center justify-self-center px-2 py-2 bg-secondary hover:bg-secondary-dark text-white font-medium rounded-lg transition-colors"
+                                    <button class="w-[50%] flex justify-center justify-self-center px-2 py-2 bg-secondary hover:bg-secondary-dark text-white font-medium rounded-lg transition-colors"
                                         onclick="Swal.fire({
                                             title: 'Not Approved Yet',
                                             text: 'You are not approved by the teacher yet.',
@@ -143,7 +139,7 @@ $enrolled_courses = $_SESSION['enrolled_courses'] ?? [];
                                         See Course Details
                                     </button>
                                 <?php else: ?>
-                                    <form action="index.php?action=enrolledCourse" method="POST">
+                                    <form method="POST" action="index.php?action=enrollCourse">
                                         <input type="hidden" name="course_id" value="<?= htmlspecialchars($course['id']) ?>">
                                         <input type="hidden" name="student_id" value="<?= htmlspecialchars($student_id) ?>">
                                         <button type="submit" name="enroll"
@@ -154,17 +150,6 @@ $enrolled_courses = $_SESSION['enrolled_courses'] ?? [];
                                 <?php endif; ?>
                             </div>
                         </div>
-                        <?php if (isset($_SESSION['enrollment_success']) && $_SESSION['enrollment_success']): ?>
-                            <script>
-                                Swal.fire({
-                                    title: 'Enrollment Successful',
-                                    text: 'You have successfully enrolled in the course.',
-                                    icon: 'success',
-                                    confirmButtonText: 'OK'
-                                });
-                            </script>
-                            <?php unset($_SESSION['enrollment_success']); ?>
-                        <?php endif; ?>
                     </div>
                 </div>
             <?php endforeach; ?>
@@ -184,6 +169,18 @@ $enrolled_courses = $_SESSION['enrolled_courses'] ?? [];
             </div>
         </div>
     </footer>
+
+    <?php if (isset($_SESSION['enrollment_success']) && $_SESSION['enrollment_success']): ?>
+        <script>
+            Swal.fire({
+                title: 'Enrollment Successful',
+                text: 'You have successfully enrolled in the course.',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        </script>
+        <?php unset($_SESSION['enrollment_success']); ?>
+    <?php endif; ?>
 </body>
 
 </html>
