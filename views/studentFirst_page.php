@@ -101,20 +101,19 @@ $courses = $cours->displayCourse();
                 </ul>
             </nav>
 
-
+            <form method="POST" action="http://localhost/index.php?action=logout">
+                <input type="hidden" name="log" value="">
+                <button class="bg-primary-  text-black  px-4 rounded-lg ">Logout</button>
+            </form>
 
         </div>
-        <form method="POST" action="http://localhost/index.php?action=logout">
-            <input type="hidden" name="log" value="">
-            <button
-                class="bg-primary-500 hover:bg-primary-600 text-white py-2 px-4 rounded-lg transition duration-200">Logout</button>
-        </form>
+
     </header>
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="mb-8">
+        <div class="mb-8 ">
             <input type="text" placeholder="Search courses..."
-                class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary">
+                class="w-full mt-12  px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary">
         </div>
 
         <!-- Course Grid -->
@@ -155,35 +154,16 @@ $courses = $cours->displayCourse();
                         <div class="flex flex-wrap gap-2 mb-4">
                             <span
                                 class="px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full"><?= htmlspecialchars($course['category']) ?></span>
-                            <?php
-                            $tags = explode(',', $course['tags'] ?? '');
-                            foreach ($tags as $tag):
-                                if (trim($tag) !== ''):
-                                    ?>
-                                    <span
-                                        class="px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full"><?= htmlspecialchars(trim($tag)) ?></span>
-                                    <?php
-                                endif;
-                            endforeach;
-                            ?>
+
                         </div>
                         <div class="mt-auto">
-                            <div class="pt-4 border-t border-gray-200 dark:border-gray-700">
-                                <div class="flex items-center justify-between mb-4">
-                                    <div class="flex items-center gap-2">
-                                        <img src="./images/profile.png" alt="Instructor" class="w-8 h-8 rounded-full">
-                                        <div>
-                                            <div class="text-sm font-medium text-gray-900 dark:text-white">
-                                                <?= htmlspecialchars($course['Teacher']) ?>
-                                            </div>
-                                            <div class="text-xs text-gray-500 dark:text-gray-400">Instructor</div>
+                            <div class="pt-4 border-t border-gray-200 dark:border-gray-700  w-full">
+                                <div class="flex items-center justify-between ">
+
+                                    <div class="text-center w-full">
+                                        <div class="text-2xl mb-4 font-medium text-black dark:text-white">
+                                            <?= htmlspecialchars($course['price'] ?? '') ?>
                                         </div>
-                                    </div>
-                                    <div class="text-right">
-                                        <div class="text-sm font-medium text-gray-900 dark:text-white">
-                                            <?= htmlspecialchars($course['price']) ?>
-                                        </div>
-                                        <div class="text-xs text-gray-500 dark:text-gray-400">Price</div>
                                     </div>
                                 </div>
                                 <button

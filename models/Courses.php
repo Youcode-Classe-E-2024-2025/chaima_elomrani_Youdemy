@@ -92,40 +92,39 @@ class Courses
 
 
 
-    public function updateCourse($courseId, $title, $description, $category, $tags, $price, $image, $video)
-    {
-        try {
-            $this->pdo->beginTransaction();
-
-            $sql = "UPDATE course SET title = :title, description = :description, category = :category, price = :price, image_path = :image, video_path = :video WHERE id = :id";
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([
-                'title' => $title,
-                'description' => $description,
-                'category' => $category,
-                'price' => $price,
-                'image' => $image,
-                'video' => $video,
-                'id' => $courseId
-            ]);
-
-            $sql = "DELETE FROM tag_to_course WHERE course_id = :course_id";
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute(['course_id' => $courseId]);
-
-            $sql = "INSERT INTO tag_to_course (tag_id, course_id) VALUES (:tag_id, :course_id)";
-            $stmt = $this->pdo->prepare($sql);
-            foreach ($tags as $tagId) {
-                $stmt->execute(['tag_id' => $tagId, 'course_id' => $courseId]);
-            }
-
-            $this->pdo->commit();
-        } catch (PDOException $e) {
-            $this->pdo->rollBack();
-            throw new Exception("Database error: " . $e->getMessage());
-        }
-    }
-
+    // public function updateCourse($courseId, $title, $description, $category, $tags, $price, $image, $video) {
+    //     try {
+    //         $this->pdo->beginTransaction();
+    
+    //         $sql = "UPDATE course SET title = :title, description = :description, category = :category, price = :price, image_path = :image, video_path = :video WHERE id = :id";
+    //         $stmt = $this->pdo->prepare($sql);
+    //         $stmt->execute([
+    //             'title' => $title,
+    //             'description' => $description,
+    //             'category' => $category,
+    //             'price' => $price,
+    //             'image' => $image,
+    //             'video' => $video,
+    //             'id' => $courseId
+    //         ]);
+    
+    //         $sql = "DELETE FROM tag_to_course WHERE course_id = :course_id";
+    //         $stmt = $this->pdo->prepare($sql);
+    //         $stmt->execute(['course_id' => $courseId]);
+    
+    //         $sql = "INSERT INTO tag_to_course (tag_id, course_id) VALUES (:tag_id, :course_id)";
+    //         $stmt = $this->pdo->prepare($sql);
+    //         foreach ($tags as $tagId) {
+    //             $stmt->execute(['tag_id' => $tagId, 'course_id' => $courseId]);
+    //         }
+    
+    //         $this->pdo->commit();
+    //         return true;
+    //     } catch (PDOException $e) {
+    //         $this->pdo->rollBack();
+    //         throw new Exception("Database error: " . $e->getMessage());
+    //     }
+    // }
     
 
 }

@@ -48,25 +48,30 @@ class CoursesController{
 }
 
 
-public function updateCourse() {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $courseId = $_POST['course_id'];
-        $title = $_POST['title'];
-        $description = $_POST['description'];
-        $category = $_POST['category'];
-        $tags = $_POST['tags'];
-        $price = $_POST['price'];
-        $image = $_POST['image'];
-        $video = $_POST['video'];
+// public function updateCourse() {
+//     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+//         $courseId = $_POST['course_id'] ?? null;
+//         $title = $_POST['title'] ?? '';
+//         $description = $_POST['description'] ?? '';
+//         $category = $_POST['category'] ?? '';
+//         $tags = $_POST['tags'] ?? [];
+//         $price = $_POST['price'] ?? '';
+//         $image = $_POST['image'] ?? '';
+//         $video = $_POST['video'] ?? '';
 
-        try {
-            $this->CoursesModel->updateCourse($courseId, $title, $description, $category, $tags, $price, $image, $video);
-            echo json_encode(['success' => true, 'message' => 'Course updated successfully!']);
-        } catch (Exception $e) {
-            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
-        }
-    }
-}
+//         if (!$courseId) {
+//             echo json_encode(['success' => false, 'message' => 'Course ID is required.']);
+//             return;
+//         }
+
+//         try {
+//             $this->CoursesModel->updateCourse($courseId, $title, $description, $category, $tags, $price, $image, $video);
+//             echo json_encode(['success' => true, 'message' => 'Course updated successfully!']);
+//         } catch (Exception $e) {
+//             echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+//         }
+//     }
+// }
 
     
 }
