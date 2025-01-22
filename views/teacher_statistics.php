@@ -178,7 +178,7 @@ require_once __DIR__ . '/../views/teacher_statistics.php';
 
                                                                     <?php if ($user['status'] !== 'active') { ?>
                                                                         <form
-                                                                            action="http://<?= $_SERVER['HTTP_HOST'] ?>/index.php?action=aproveUser"
+                                                                            action="http://<?= $_SERVER['HTTP_HOST'] ?>/index.php?action=aproveInscription"
                                                                             method="POST">
                                                                             <input type="hidden" name="id" value="<?= $user['id'] ?>">
                                                                             <button
@@ -188,7 +188,7 @@ require_once __DIR__ . '/../views/teacher_statistics.php';
 
                                                                     <?php if($user['status'] == 'active') { ?>
                                                                         <form
-                                                                            action="http://<?= $_SERVER['HTTP_HOST'] ?>/index.php?action=SuspendUser"
+                                                                            action="http://<?= $_SERVER['HTTP_HOST'] ?>/index.php?action=SuspendInscription"
                                                                             method="POST">
                                                                             <input type="hidden" name="id" value="<?= $user['id'] ?>">
                                                                             <button
@@ -198,7 +198,7 @@ require_once __DIR__ . '/../views/teacher_statistics.php';
 
 
                                                                     <form method="POST"
-                                                                        action="http://<?= $_SERVER['HTTP_HOST'] ?>/index.php?action=deleteUser">
+                                                                        action="http://<?= $_SERVER['HTTP_HOST'] ?>/index.php?action=deleteInscription">
                                                                         <input type="hidden" name="id" value="<?= $user['id'] ?>">
                                                                         <button
                                                                             class="text-red-500 hover:text-red-700">Delete</button>

@@ -148,13 +148,22 @@ $tags = $taf->displaytags();
                             </ul>
                         </nav>
                     </div>
+                    <div class="flex flex-row gap-12 w-[50%]">
                     <div class="flex items-center gap-4">
                         <button id="addCourseBtn"
-                            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-clair-600 hover:bg-clair-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-clair-500 transition-colors duration-200">
-                            <i class="fas fa-plus mr-2"></i>
+                            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-md text-white bg-gradient-to-r from-clair-600 to-clair-500 hover:from-clair-700 hover:to-clair-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-clair-500 transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95">
+                            <i class="fas fa-plus mr-2 text-white"></i>
                             Add New Course
                         </button>
                     </div>
+                    <form method="POST" action="http://localhost/index.php?action=logout">
+                            <input type="hidden" name="log" value="">
+                            <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200">
+                                <i class="fas fa-sign-out-alt mr-2"></i>
+                                Logout
+                            </button>
+                        </form>
+                        </div>
                 </div>
             </div>
         </header>

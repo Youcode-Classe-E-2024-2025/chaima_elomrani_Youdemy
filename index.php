@@ -139,5 +139,8 @@ switch ($action) {
         require_once './views/teacher_statistics.php';
         break;
         
+
+
+        
 }
 

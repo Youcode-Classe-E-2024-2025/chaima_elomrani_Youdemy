@@ -42,6 +42,8 @@ class Inscription{
             require_once './views/teacher_statistics.php';
         }
 
+
+        
         
 
 }
