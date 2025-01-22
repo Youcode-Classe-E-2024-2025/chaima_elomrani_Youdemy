@@ -1,17 +1,17 @@
-<?php 
+<?php
+// session_start();
 require_once __DIR__ . '/../models/Courses.php';
+require_once __DIR__ . '/../models/inscriptions.php';
+
 
 $cours = new Courses();
 $courses = $cours->displayCourse();
 
-$student_id = $_POST['student_id'];
-    $course_id = $_POST['course_id'];
 
-    
-
-dd($student_id , $course_id);
-
+$inscription = new Inscriptions();
+$inscriptions = $inscription->getInscriptions(); 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,11 +21,6 @@ dd($student_id , $course_id);
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-    </style>
 </head>
 <body class="bg-gray-100 min-h-screen">
 
@@ -68,44 +63,30 @@ dd($student_id , $course_id);
 <div class="container mx-auto px-4 py-8">
     <h1 class="text-3xl font-bold text-gray-800 mb-8">Course Statistics Dashboard</h1>
     
-    <!-- Overview Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div class="bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-xl font-semibold text-gray-700 mb-2">Total Courses</h2>
-            <p class="text-3xl font-bold text-blue-600">12</p>
-            <p class="text-sm text-gray-500 mt-2">↑ 2 from last month</p>
-        </div>
-        <div class="bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-xl font-semibold text-gray-700 mb-2">Total Students</h2>
-            <p class="text-3xl font-bold text-green-600">1,234</p>
-            <p class="text-sm text-gray-500 mt-2">↑ 56 from last month</p>
-        </div>
-        <div class="bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-xl font-semibold text-gray-700 mb-2">Pending Approvals</h2>
-            <p class="text-3xl font-bold text-yellow-600">18</p>
-            <p class="text-sm text-gray-500 mt-2">↓ 3 from yesterday</p>
-        </div>
-        <div class="bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-xl font-semibold text-gray-700 mb-2">Average Rating</h2>
-            <p class="text-3xl font-bold text-purple-600">4.8</p>
-            <p class="text-sm text-gray-500 mt-2">↑ 0.2 from last month</p>
-        </div>
-    </div>
-
-    <!-- Charts -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-        <div class="bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-xl font-semibold text-gray-700 mb-4">Course Popularity</h2>
-            <canvas id="coursePopularityChart"></canvas>
-        </div>
-        <div class="bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-xl font-semibold text-gray-700 mb-4">Student Growth</h2>
-            <canvas id="studentGrowthChart"></canvas>
-        </div>
-    </div>
-
     <!-- Course Inscriptions Table -->
     <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-xl font-semibold text-gray-700 mb-4">Course Inscriptions</h2>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr>
+                        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Course Name</th>
+                        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Student ID</th>
+                        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($inscriptions as $inscription): ?>
+                        <tr>
+                            <td class="py-4 px-6 border-b border-grey-light"><?= htmlspecialchars($inscription['course_title']) ?></td>
+                            <td class="py-4 px-6 border-b border-grey-light"><?= htmlspecialchars($inscription['student_id']) ?></td>
+                            <td class="py-4 px-6 border-b border-grey-light">
+                                <details>
+                                    <summary class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer">
+                                        Manage
+                                    </summary>
+                                    <div class="bg-white rounded-lg shadow-md p-6">
+                                    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
         <h2 class="text-xl font-semibold text-gray-700 mb-4">Course Inscriptions</h2>
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">
@@ -201,63 +182,16 @@ dd($student_id , $course_id);
             </table>
         </div>
     </div>
+                                    </div>
+                                </details>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
-<script>
-    // Chart.js configurations
-    const coursePopularityChart = new Chart(document.getElementById('coursePopularityChart'), {
-        type: 'bar',
-        data: {
-            labels: ['Web Dev', 'JavaScript', 'UI/UX', 'Python', 'Data Science'],
-            datasets: [{
-                label: 'Number of Students',
-                data: [256, 189, 312, 176, 98],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.6)',
-                    'rgba(54, 162, 235, 0.6)',
-                    'rgba(255, 206, 86, 0.6)',
-                    'rgba(75, 192, 192, 0.6)',
-                    'rgba(153, 102, 255, 0.6)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-
-    const studentGrowthChart = new Chart(document.getElementById('studentGrowthChart'), {
-        type: 'line',
-        data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-            datasets: [{
-                label: 'Total Students',
-                data: [800, 950, 1100, 1178, 1220, 1234],
-                fill: false,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-</script>
 </body>
 </html>

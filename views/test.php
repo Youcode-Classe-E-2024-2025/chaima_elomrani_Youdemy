@@ -1,189 +1,192 @@
 <?php
 session_start();
-require_once __DIR__ . '/../models/Courses.php';
+// require_once __DIR__ . '/../models/Courses.php';
+require_once __DIR__ . '/../models/inscriptions.php';
 
-$cours = new Courses();
-$courses = $cours->displayCourse();
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enroll'])) {
-    $course_id = $_POST['course_id'];
-    $student_id = $_POST['student_id'];
-
-    $_SESSION['enrolled_courses'][$course_id] = true;
-    $_SESSION['enrollment_success'] = true;
-
-    header('Location: ' . $_SERVER['PHP_SELF']);
-    exit();
-}
-
-$enrolled_courses = $_SESSION['enrolled_courses'] ?? [];
+$inscription = new Inscriptions();
+$inscriptions = $inscription->getInscriptions(); // Supposons que cette méthode récupère les inscriptions
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Course Management</title>
+    <title>Course Statistics Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> <!-- Alpine.js -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#4F46E5',
-                        'primary-dark': '#4338CA',
-                        'primary-light': '#6366F1',
-                        secondary: '#10B981',
-                        tertiary: '#F59E0B',
-                        background: '#F3F4F6',
-                        surface: '#FFFFFF',
-                    },
-                    fontFamily: {
-                        sans: ['Poppins', 'sans-serif'],
-                    },
-                },
-            },
-            darkMode: 'class', // Enable dark mode
-        }
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+<body class="bg-gray-100 min-h-screen">
 
-<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
-    <header class="bg-white py-4 shadow-md fixed w-full z-50 transition-all duration-300 ease-in-out" id="header"
-        x-data="{ scrolled: false }" @scroll.window="scrolled = (window.pageYOffset > 20)">
-        <div class="container mx-auto px-4 flex justify-start gap-[30%] items-center">
-            <a href="#" class="text-2xl font-bold">
-                <span class="gradient-text">Youdemy</span>
-            </a>
-            <nav class="hidden md:block" :class="{ 'py-2': scrolled, 'py-4': !scrolled }">
-                <ul class="flex space-x-6">
-                    <li><a href="#" class="hover:text-primary transition">Home</a></li>
-                    <li><a href="#courses" class="hover:text-primary transition">All Courses</a></li>
-                    <li><a href="#features" class="hover:text-primary transition">My Courses</a></li>
-                    <li><a href="#community" class="hover:text-primary transition">Profile</a></li>
-                </ul>
-            </nav>
-
-            <form method="POST" action="http://localhost/index.php?action=logout">
-                <input type="hidden" name="log" value="">
-                <button class="bg-primary-  text-black  px-4 rounded-lg ">Logout</button>
-            </form>
-
-        </div>
-
-    </header>
-
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="mb-8 ">
-            <input type="text" placeholder="Search courses..."
-                class="w-full mt-12  px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary">
-        </div>
-
-        <!-- Course Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="courseGrid">
-            <?php foreach ($courses as $course): ?>
-                <div
-                    class="group bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-all duration-200 flex flex-col">
-                    <div class="relative">
-                        <img src="<?= htmlspecialchars($course['image_path']) ?>"
-                            alt="<?= htmlspecialchars($course['title']) ?> thumbnail"
-                            class="w-full h-48 object-cover rounded-t-xl">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-t-xl"></div>
-                        <div class="absolute bottom-4 left-4 right-4">
-                            <div class="flex items-center gap-2">
-                                <span
-                                    class="px-2 py-1 text-xs font-medium bg-green-500/20 text-green-500 rounded-full">Active</span>
-                                <?php if (isset($course['featured']) && $course['featured']): ?>
-                                    <span
-                                        class="px-2 py-1 text-xs font-medium bg-blue-500/20 text-blue-500 rounded-full">Featured</span>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-6 flex-grow flex flex-col">
-                        <div class="flex items-start justify-between mb-4">
-                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                <?= htmlspecialchars($course['title']) ?>
-                            </h3>
-                            <div class="relative group">
-                                <button class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">
-                                    <i class="fas fa-ellipsis-v text-gray-500 dark:text-gray-400"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                            <?= htmlspecialchars($course['description'] ?? 'No description available.') ?>
-                        </p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span
-                                class="px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full"><?= htmlspecialchars($course['category_name']) ?></span>
-                        </div>
-                        <div class="mt-auto">
-                            <div class="pt-4 border-t border-gray-200 dark:border-gray-700  w-full">
-                                <div class="flex items-center justify-between ">
-                                    <div class="text-center w-full">
-                                        <div class="text-2xl mb-4 font-medium text-black dark:text-white">
-                                            <?= htmlspecialchars($course['price'] ?? '') ?>
-                                        </div>
-                                    </div>
-                                </div>
-                                <?php if (isset($enrolled_courses[$course['id']])): ?>
-                                    <button
-                                        class="w-[50%] flex justify-center justify-self-center px-2 py-2 bg-secondary hover:bg-secondary-dark text-white font-medium rounded-lg transition-colors"
-                                        onclick="Swal.fire({
-                                            title: 'Not Approved Yet',
-                                            text: 'You are not approved by the teacher yet.',
-                                            icon: 'warning',
-                                            confirmButtonText: 'OK'
-                                        })">
-                                        See Course Details
-                                    </button>
-                                <?php else: ?>
-                                    <form action="" method="POST">
-                                        <input type="hidden" name="course_id" value="<?= htmlspecialchars($course['id']) ?>">
-                                        <input type="hidden" name="student_id" value="<?= htmlspecialchars($student_id) ?>">
-                                        <button type="submit" name="enroll"
-                                            class="w-[50%] flex justify-center justify-self-center px-2 py-2 bg-primary hover:bg-primary-dark text-white font-medium rounded-lg transition-colors">
-                                            Enroll Now
-                                        </button>
-                                    </form>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                        <?php if (isset($_SESSION['enrollment_success']) && $_SESSION['enrollment_success']): ?>
-                            <script>
-                                Swal.fire({
-                                    title: 'Enrollment Successful',
-                                    text: 'You have successfully enrolled in the course.',
-                                    icon: 'success',
-                                    confirmButtonText: 'OK'
-                                });
-                            </script>
-                            <?php unset($_SESSION['enrollment_success']); ?>
-                        <?php endif; ?>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    </main>
-
-    <footer class="bg-white border-t border-gray-200 mt-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div class="text-center">
-                <p class="text-gray-500">© 2025 Youdemy. All rights reserved.</p>
-                <div class="flex justify-center space-x-6 mt-4">
-                    <a href="#" class="text-gray-400 hover:text-gray-500">About us</a>
-                    <a href="#" class="text-gray-400 hover:text-gray-500">Trust</a>
-                    <a href="#" class="text-gray-400 hover:text-gray-500">Usage privacy</a>
-                    <a href="#" class="text-gray-400 hover:text-gray-500">Contact</a>
-                </div>
+<header class="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <div class="flex w-full justify-start gap-[25%]">
+                <h1 class="text-2xl font-bold bg-gradient-to-r text-black bg-clip-text">
+                    YOUDEMY
+                </h1>
+                <nav class="hidden md:block">
+                    <ul class="flex space-x-4 gap-12 w-full ">
+                        <li>
+                            <a href="index.php?action=teacher"
+                                class="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-clair-600 dark:hover:text-clair-400 rounded-md">My
+                                Courses</a>
+                        </li>
+                        <li>
+                            <a href="index.php?action=profile"
+                                class="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-clair-600 dark:hover:text-clair-400 rounded-md">Profile</a>
+                        </li>
+                        <li>
+                            <a href="index.php?action=statistic"
+                                class="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-clair-600 dark:hover:text-clair-400 rounded-md">Statistics</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="flex items-center gap-4">
+                <button id="addCourseBtn"
+                    class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-clair-600 hover:bg-clair-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-clair-500 transition-colors duration-200">
+                    <i class="fas fa-plus mr-2"></i>
+                    Add New Course
+                </button>
             </div>
         </div>
-    </footer>
-</body>
+    </div>
+</header>
 
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold text-gray-800 mb-8">Course Statistics Dashboard</h1>
+    
+    <!-- Course Inscriptions Table -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-xl font-semibold text-gray-700 mb-4">Course Inscriptions</h2>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr>
+                        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Course Name</th>
+                        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Student ID</th>
+                        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($inscriptions as $inscription): ?>
+                        <tr>
+                            <td class="py-4 px-6 border-b border-grey-light"><?= htmlspecialchars($inscription['course_title']) ?></td>
+                            <td class="py-4 px-6 border-b border-grey-light"><?= htmlspecialchars($inscription['user_id']) ?></td>
+                            <td class="py-4 px-6 border-b border-grey-light">
+                                <details>
+                                    <summary class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer">
+                                        Manage
+                                    </summary>
+                                    <div class="bg-white rounded-lg shadow-md p-6">
+                                    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-xl font-semibold text-gray-700 mb-4">Course Inscriptions</h2>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr>
+                        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Course Name</th>
+                        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Total Inscriptions</th>
+                        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Pending Approvals</th>
+                        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($courses as $course){ ?>
+                    <tr>
+                        <td class="py-4 px-6 border-b border-grey-light"><?= htmlspecialchars($course['title'])?></td>
+                        <td class="py-4 px-6 border-b border-grey-light">256</td>
+                        <td class="py-4 px-6 border-b border-grey-light">5</td>
+                        <td class="py-4 px-6 border-b border-grey-light">
+                            <details>
+                                <summary class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer">
+                                    Manage
+                                </summary>
+                                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-semibold text-gray-800">User List</h2>
+
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-3 px-4 text-left">ID</th>
+                                    <th class="py-3 px-4 text-left">Name</th>
+                                    <th class="py-3 px-4 text-left">Email</th>
+                                    <th class="py-3 px-4 text-left">Role</th>
+                                    <th class="py-3 px-4 text-left">Status</th>
+                                    <th class="py-3 px-4 text-left">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <?php
+                                foreach ($users as $user) {
+                                    ?>
+                                    <tr>
+                                        <td class="py-3 px-4"><?= $user['id'] ?></td>
+                                        <td class="py-3 px-4"><?= $user['name'] ?></td>
+                                        <td class="py-3 px-4"><?= $user['email'] ?></td>
+                                        <td class="py-3 px-4"><?= $user['role'] ?></td>
+                                        <td class="py-3 px-4"><span
+                                                class="bg-green-100 text-green-800 py-1 px-2 rounded-full text-sm"><?= $user['status'] ?></span>
+                                        </td>
+                                        <!-- <td class="py-3 px-[50px] gap-[10px] flex flex-row">    -->
+                                        <td
+                                            class="px-4 py-4 whitespace-nowrap text-sm font-medium px-[50px] gap-[20px] flex flex-row">
+
+
+                                            <?php if ($user['status'] !== 'active') { ?>
+                                                <form action="http://<?= $_SERVER['HTTP_HOST'] ?>/index.php?action=aproveUser"
+                                                    method="POST">
+                                                    <input type="hidden" name="id" value="<?= $user['id'] ?>">
+                                                    <button class="text-green-500 hover:text-green-700">Approve</button>
+                                                </form>
+                                            <?php } ?>
+
+                                            <?php if ($user['status'] == 'active') { ?>
+                                                <form action="http://<?= $_SERVER['HTTP_HOST'] ?>/index.php?action=SuspendUser"
+                                                    method="POST">
+                                                    <input type="hidden" name="id" value="<?= $user['id'] ?>">
+                                                    <button class="text-orange-500 hover:text-orange-700">Suspend</button>
+                                                </form>
+                                            <?php } ?>
+
+
+                                            <form method="POST" action="http://<?= $_SERVER['HTTP_HOST'] ?>/index.php?action=deleteUser">
+                                                <input type="hidden" name="id" value="<?= $user['id'] ?>">
+                                                <button class="text-red-500 hover:text-red-700">Delete</button>
+                                            </form>
+
+                                        </td>
+                                    </tr>
+
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                            </details>
+                        </td>
+                    </tr>
+                  <?php } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+                                    </div>
+                                </details>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
 </html>

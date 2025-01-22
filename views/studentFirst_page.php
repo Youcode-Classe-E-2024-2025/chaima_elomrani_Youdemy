@@ -7,6 +7,7 @@ $courses = $cours->displayCourse();
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enroll'])) {
     $course_id = $_POST['course_id'];
     $student_id = $_POST['student_id'];
+    
 
     $_SESSION['enrolled_courses'][$course_id] = true;
     $_SESSION['enrollment_success'] = true;
@@ -142,7 +143,7 @@ $enrolled_courses = $_SESSION['enrolled_courses'] ?? [];
                                         See Course Details
                                     </button>
                                 <?php else: ?>
-                                    <form action="" method="POST">
+                                    <form action="index.php?action=enrolledCourse" method="POST">
                                         <input type="hidden" name="course_id" value="<?= htmlspecialchars($course['id']) ?>">
                                         <input type="hidden" name="student_id" value="<?= htmlspecialchars($student_id) ?>">
                                         <button type="submit" name="enroll"
