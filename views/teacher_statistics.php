@@ -1,3 +1,17 @@
+<?php 
+require_once __DIR__ . '/../models/Courses.php';
+
+$cours = new Courses();
+$courses = $cours->displayCourse();
+
+$student_id = $_POST['student_id'];
+    $course_id = $_POST['course_id'];
+
+    
+
+dd($student_id , $course_id);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -104,8 +118,9 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <?php foreach ($courses as $course){ ?>
                     <tr>
-                        <td class="py-4 px-6 border-b border-grey-light">Introduction to Web Development</td>
+                        <td class="py-4 px-6 border-b border-grey-light"><?= htmlspecialchars($course['title'])?></td>
                         <td class="py-4 px-6 border-b border-grey-light">256</td>
                         <td class="py-4 px-6 border-b border-grey-light">5</td>
                         <td class="py-4 px-6 border-b border-grey-light">
@@ -113,47 +128,75 @@
                                 <summary class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer">
                                     Manage
                                 </summary>
-                                <div class="mt-4">
-                                    <table class="w-full text-left border-collapse">
-                                        <thead>
-                                            <tr>
-                                                <th class="py-2 px-3 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Student Name</th>
-                                                <th class="py-2 px-3 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Status</th>
-                                                <th class="py-2 px-3 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="py-2 px-3 border-b border-grey-light">John Doe</td>
-                                                <td class="py-2 px-3 border-b border-grey-light">Pending</td>
-                                                <td class="py-2 px-3 border-b border-grey-light">
-                                                    <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded mr-2">
-                                                        Approve
-                                                    </button>
-                                                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">
-                                                        Delete
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="py-2 px-3 border-b border-grey-light">Jane Smith</td>
-                                                <td class="py-2 px-3 border-b border-grey-light">Approved</td>
-                                                <td class="py-2 px-3 border-b border-grey-light">
-                                                    <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded mr-2">
-                                                        Approve
-                                                    </button>
-                                                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">
-                                                        Delete
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-semibold text-gray-800">User List</h2>
+
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-3 px-4 text-left">ID</th>
+                                    <th class="py-3 px-4 text-left">Name</th>
+                                    <th class="py-3 px-4 text-left">Email</th>
+                                    <th class="py-3 px-4 text-left">Role</th>
+                                    <th class="py-3 px-4 text-left">Status</th>
+                                    <th class="py-3 px-4 text-left">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <?php
+                                foreach ($users as $user) {
+                                    ?>
+                                    <tr>
+                                        <td class="py-3 px-4"><?= $user['id'] ?></td>
+                                        <td class="py-3 px-4"><?= $user['name'] ?></td>
+                                        <td class="py-3 px-4"><?= $user['email'] ?></td>
+                                        <td class="py-3 px-4"><?= $user['role'] ?></td>
+                                        <td class="py-3 px-4"><span
+                                                class="bg-green-100 text-green-800 py-1 px-2 rounded-full text-sm"><?= $user['status'] ?></span>
+                                        </td>
+                                        <!-- <td class="py-3 px-[50px] gap-[10px] flex flex-row">    -->
+                                        <td
+                                            class="px-4 py-4 whitespace-nowrap text-sm font-medium px-[50px] gap-[20px] flex flex-row">
+
+
+                                            <?php if ($user['status'] !== 'active') { ?>
+                                                <form action="http://<?= $_SERVER['HTTP_HOST'] ?>/index.php?action=aproveUser"
+                                                    method="POST">
+                                                    <input type="hidden" name="id" value="<?= $user['id'] ?>">
+                                                    <button class="text-green-500 hover:text-green-700">Approve</button>
+                                                </form>
+                                            <?php } ?>
+
+                                            <?php if ($user['status'] == 'active') { ?>
+                                                <form action="http://<?= $_SERVER['HTTP_HOST'] ?>/index.php?action=SuspendUser"
+                                                    method="POST">
+                                                    <input type="hidden" name="id" value="<?= $user['id'] ?>">
+                                                    <button class="text-orange-500 hover:text-orange-700">Suspend</button>
+                                                </form>
+                                            <?php } ?>
+
+
+                                            <form method="POST" action="http://<?= $_SERVER['HTTP_HOST'] ?>/index.php?action=deleteUser">
+                                                <input type="hidden" name="id" value="<?= $user['id'] ?>">
+                                                <button class="text-red-500 hover:text-red-700">Delete</button>
+                                            </form>
+
+                                        </td>
+                                    </tr>
+
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
                             </details>
                         </td>
                     </tr>
-                    <!-- Repeat for other courses -->
+                  <?php } ?>
                 </tbody>
             </table>
         </div>

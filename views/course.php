@@ -1,7 +1,9 @@
-<?php 
-require_once __DIR__ . '/../models/Courses.php';
-$cours = new Courses();
-$courses = $cours->displayCourse();
+<?php
+require_once __DIR__ . '/../controllers/CoursesController.php';
+$controller = new CoursesController();
+$keyword = isset($_GET['search']) ? $_GET['search'] : '';
+
+$courses = $controller->searchCourse();
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +20,19 @@ $courses = $cours->displayCourse();
             theme: {
                 extend: {
                     colors: {
-                        primary: { "50": "#eff6ff", "100": "#dbeafe", "200": "#bfdbfe", "300": "#93c5fd", "400": "#60a5fa", "500": "#3b82f6", "600": "#2563eb", "700": "#1d4ed8", "800": "#1e40af", "900": "#1e3a8a", "950": "#172554" }
+                        primary: {
+                            "50": "#eff6ff",
+                            "100": "#dbeafe",
+                            "200": "#bfdbfe",
+                            "300": "#93c5fd",
+                            "400": "#60a5fa",
+                            "500": "#3b82f6",
+                            "600": "#2563eb",
+                            "700": "#1d4ed8",
+                            "800": "#1e40af",
+                            "900": "#1e3a8a",
+                            "950": "#172554"
+                        }
                     }
                 }
             }
@@ -78,10 +92,23 @@ $courses = $cours->displayCourse();
                 </ul>
             </div>
         </div>
-        <div class="ml-64 flex-1">
+        <div class="ml-64 flex-1 ">
             <header class="bg-white shadow-md py-4 px-6 flex justify-between items-center">
                 <h1 class="text-2xl font-semibold text-gray-800">Manage Courses</h1>
                 <div class="flex items-center space-x-4">
+                    <form action="?action=search" method="GET" class="flex items-center space-x-2">
+                        <div class="relative flex-grow">
+                            <input type="search" name="search" 
+                                placeholder="Search courses..." 
+                                value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>" 
+                                class="w-full pl-10 pr-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-200 transition duration-200"
+                            >
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-search text-gray-400"></i>
+                            </div>
+                        </div>
+                       
+                    </form>
                     <span class="text-gray-600">Welcome, Admin</span>
                     <button
                         class="bg-primary-500 hover:bg-primary-600 text-white py-2 px-4 rounded-lg transition duration-200">
@@ -113,30 +140,30 @@ $courses = $cours->displayCourse();
                             </thead>
                             <tbody class="divide-y divide-gray-200">
                                 <?php
-                                foreach($courses as $course){
+                                foreach ($courses as $course) {
                                 ?>
-                                <tr>
-                                    <td class="py-3 px-4"><?=$course['id'] ?></td>
-                                    <td class="py-3 px-4"><?=$course['title'] ?></td>
-                                    <td class="py-3 px-4"><?=$course['description']?></td>
-                                    <td class="py-3 px-4"><?=$course['Teacher']?></td>
-                                    <td class="py-3 px-4"><?=$course['category']?></td>
-                                    <td class="py-3 px-4"><?=$course['price']?></td>
-                                    <td class="py-3 px-4">
-                                        <button class="text-blue-500 hover:text-blue-700 mr-2">Edit</button>
-                                        <form method="POST" action="http://localhost/index.php?action=deleteCourse">
-                                        <input type="hidden" name="id" value="<?=$course['id']?>">
-                                        <button  class="text-red-500 hover:text-red-700">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td class="py-3 px-4"><?= $course['id'] ?></td>
+                                        <td class="py-3 px-4"><?= $course['title'] ?></td>
+                                        <td class="py-3 px-4"><?= $course['description'] ?></td>
+                                        <td class="py-3 px-4"><?= $course['Teacher'] ?></td>
+                                        <td class="py-3 px-4"><?= $course['category'] ?></td>
+                                        <td class="py-3 px-4"><?= $course['price'] ?></td>
+                                        <td class="py-3 px-4">
+                                            <button class="text-blue-500 hover:text-blue-700 mr-2">Edit</button>
+                                            <form method="POST" action="http://localhost/index.php?action=deleteCourse">
+                                                <input type="hidden" name="id" value="<?= $course['id'] ?>">
+                                                <button class="text-red-500 hover:text-red-700">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
                                 <?php
                                 }
                                 ?>
                             </tbody>
                         </table>
                     </div>
-                 
+
                 </div>
             </main>
         </div>
@@ -147,7 +174,19 @@ $courses = $cours->displayCourse();
             theme: {
                 extend: {
                     colors: {
-                        primary: { "50": "#eff6ff", "100": "#dbeafe", "200": "#bfdbfe", "300": "#93c5fd", "400": "#60a5fa", "500": "#3b82f6", "600": "#2563eb", "700": "#1d4ed8", "800": "#1e40af", "900": "#1e3a8a", "950": "#172554" }
+                        primary: {
+                            "50": "#eff6ff",
+                            "100": "#dbeafe",
+                            "200": "#bfdbfe",
+                            "300": "#93c5fd",
+                            "400": "#60a5fa",
+                            "500": "#3b82f6",
+                            "600": "#2563eb",
+                            "700": "#1d4ed8",
+                            "800": "#1e40af",
+                            "900": "#1e3a8a",
+                            "950": "#172554"
+                        }
                     }
                 }
             }
@@ -155,9 +194,9 @@ $courses = $cours->displayCourse();
     </script>
     </head>
     <div id="courseForm" class=" bg-black w-full absolute top-0 opacity-75 z-50 flex items-center justify-center min-h-screen">
-        <div  class="bg-white rounded-lg shadow-lg p-6 w-96 ">
+        <div class="bg-white rounded-lg shadow-lg p-6 w-96 ">
             <h2 class="text-2xl font-semibold text-black mb-6">Add Course</h2>
-            <form  class="space-y-4">
+            <form class="space-y-4">
                 <div>
                     <label for="courseTitle" class="block text-sm font-medium text-black">Course Title</label>
                     <input type="text" id="courseTitle" name="courseTitle" required
@@ -210,20 +249,20 @@ $courses = $cours->displayCourse();
     </div>
 
 
-  <script>
-    const addbtn = document.getElementById('addbtn');
-    const cancelbtn = document.getElementById('cancelbtn');
-    const courseForm = document.getElementById('courseForm');
-    
-    courseForm.style.display="none"
-    addbtn.addEventListener('click',()=>{
-        courseForm.style.display="block"
-    });
+    <script>
+        const addbtn = document.getElementById('addbtn');
+        const cancelbtn = document.getElementById('cancelbtn');
+        const courseForm = document.getElementById('courseForm');
 
-    cancelbtn.addEventListener('click',()=>{
-        courseForm.style.display='none';
-    });
-  </script>
+        courseForm.style.display = "none"
+        addbtn.addEventListener('click', () => {
+            courseForm.style.display = "block"
+        });
+
+        cancelbtn.addEventListener('click', () => {
+            courseForm.style.display = 'none';
+        });
+    </script>
 
 
 </body>

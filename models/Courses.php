@@ -94,6 +94,19 @@ class Courses
 
 
 
+    public function searchCourse($searchTerm)
+    {
+        $query = "SELECT * FROM course WHERE title LIKE :searchTerm1 OR description LIKE :searchTerm2";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute([
+            'searchTerm1' => '%' . $searchTerm . '%',
+            'searchTerm2' => '%' . $searchTerm . '%'
+        ]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+
 
 
     // public function updateCourse($courseId, $title, $description, $category, $tags, $price, $image, $video) {

@@ -48,6 +48,18 @@ class CoursesController{
 }
 
 
+public function searchCourse()
+{
+    $keyword = isset($_GET['search']) ? $_GET['search'] : '';
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    $limit = 9;
+
+    $resultat = empty($keyword) ? $this->CoursesModel->displayCourse() : $this->CoursesModel->searchCourse($keyword);
+
+    return $resultat;
+}
+
+
 // public function updateCourse() {
 //     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 //         $courseId = $_POST['course_id'] ?? null;

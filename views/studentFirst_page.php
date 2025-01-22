@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../models/Courses.php';
 $cours = new Courses();
 $courses = $cours->displayCourse();
+
 ?>
 
 <!DOCTYPE html>
@@ -13,36 +14,8 @@ $courses = $cours->displayCourse();
     <title>Advanced Course Management</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#4F46E5',
-                        secondary: '#6366F1',
-                    }
-                }
-            }
-        }
-    </script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#4F46E5',
-                        secondary: '#10B981',
-                        tertiary: '#F59E0B',
-                        background: '#F3F4F6',
-                        surface: '#FFFFFF',
-                    },
-                    fontFamily: {
-                        sans: ['Poppins', 'sans-serif'],
-                    },
-                },
-            },
-        }
-    </script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> <!-- Alpine.js -->
     <script>
         tailwind.config = {
             theme: {
@@ -64,25 +37,6 @@ $courses = $cours->displayCourse();
             darkMode: 'class', // Enable dark mode
         }
     </script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#4F46E5',
-                        secondary: '#10B981',
-                        tertiary: '#F59E0B',
-                        background: '#F3F4F6',
-                        surface: '#FFFFFF',
-                    },
-                    fontFamily: {
-                        sans: ['Poppins', 'sans-serif'],
-                    },
-                },
-            },
-        }
-    </script>
-
 </head>
 
 <body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
@@ -120,9 +74,10 @@ $courses = $cours->displayCourse();
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="courseGrid">
             <?php foreach ($courses as $course): ?>
                 <div
-                    class="group bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-all duration-200 flex flex-col">
+                    class="group bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-all duration-200 flex flex-col"
+                    x-data="{ enrolled: false }">
                     <div class="relative">
-                        <img src="<?= htmlspecialchars(string: $course['image_path']) ?>"
+                        <img src="<?= htmlspecialchars($course['image_path']) ?>"
                             alt="<?= htmlspecialchars($course['title']) ?> thumbnail"
                             class="w-full h-48 object-cover rounded-t-xl">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-t-xl"></div>
@@ -154,22 +109,41 @@ $courses = $cours->displayCourse();
                         <div class="flex flex-wrap gap-2 mb-4">
                             <span
                                 class="px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full"><?= htmlspecialchars($course['category_name']) ?></span>
-
                         </div>
                         <div class="mt-auto">
                             <div class="pt-4 border-t border-gray-200 dark:border-gray-700  w-full">
                                 <div class="flex items-center justify-between ">
-
                                     <div class="text-center w-full">
                                         <div class="text-2xl mb-4 font-medium text-black dark:text-white">
                                             <?= htmlspecialchars($course['price'] ?? '') ?>
                                         </div>
                                     </div>
                                 </div>
-                                <button
-                                    class="w-[50%] flex justify-center  justify-self-center px-2 py-2 bg-primary hover:bg-primary-dark text-white font-medium rounded-lg transition-colors ">
-                                    Enroll Now
-                                </button>
+                                <template x-if="!enrolled">
+                                    <form action="index.php?action=enrolledCourse" method="POST">
+                                    <input type="hidden" name="course_id" value="<?= htmlspecialchars($course['course_id']) ?>">
+                                        <input type="hidden" name="student_id" value="<?= htmlspecialchars($student_id) ?>">
+                                    <button type="submit"
+                                        class="w-[50%] flex justify-center justify-self-center px-2 py-2 bg-primary hover:bg-primary-dark text-white font-medium rounded-lg transition-colors"
+                                        @click="enrolled = true">
+                                        Enroll Now
+                                    </button>
+                                    </form>
+                                   
+                                </template>
+                                
+                                <template x-if="enrolled">
+                                    <button
+                                        class="w-[50%] flex justify-center justify-self-center px-2 py-2 bg-secondary hover:bg-secondary-dark text-white font-medium rounded-lg transition-colors"
+                                        @click="Swal.fire({
+                                            title: 'Not Approved Yet',
+                                            text: 'You are not approved by the teacher yet.',
+                                            icon: 'warning',
+                                            confirmButtonText: 'OK'
+                                        })">
+                                        See Course Details
+                                    </button>
+                                </template>
                             </div>
                         </div>
                     </div>
@@ -177,7 +151,6 @@ $courses = $cours->displayCourse();
             <?php endforeach; ?>
         </div>
     </main>
-
 
     <footer class="bg-white border-t border-gray-200 mt-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

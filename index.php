@@ -114,5 +114,8 @@ switch ($action) {
     //     // header('Location: http://localhost/views/update_course.php');
     //     break;
 
+    case "enrolledCourse":
+        require_once "views/teacher_statistics.php";
+        break;
 }
 
