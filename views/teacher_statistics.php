@@ -7,15 +7,20 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
+
 $user_id = $_SESSION['user_id']; 
 
 $cours = new Courses();
 $courses = $cours->displayCourse();
 
+$teacher_id = $_SESSION['user_id']; 
+$coursesModel = new Courses();
+$totalCourses = $coursesModel->countTotalCourses($teacher_id);
+
 $inscription = new Inscriptions();
 $inscriptions = $inscription->getInscriptions();
 
-$total_students = $inscription->totalInscription($user_id);
+$total_students = $inscription->totalInscription($user_id); 
 
 require_once __DIR__ . '/../views/teacher_statistics.php';
 ?>
@@ -80,7 +85,7 @@ require_once __DIR__ . '/../views/teacher_statistics.php';
     <div class="grid grid-cols-2 gap-6 mb-8">
     <div class="bg-white rounded-lg shadow-md p-6">
         <h2 class="text-xl font-semibold text-gray-700 mb-2">Total Courses</h2>
-        <p class="text-3xl font-bold text-blue-600">12</p>
+        <p class="text-3xl font-bold text-blue-600"><?= $totalCourses ?></p>
         <p class="text-sm text-gray-500 mt-2">↑ 2 from last month</p>
     </div>
     <div class="bg-white rounded-lg shadow-md p-6">

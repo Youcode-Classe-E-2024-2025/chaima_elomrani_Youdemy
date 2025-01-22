@@ -163,4 +163,16 @@ class Courses
 
         return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
     }
+
+
+
+    public function countTotalCourses($teacher_id) {
+        $sql = "SELECT COUNT(*) AS total_courses FROM course WHERE Teacher = :teacher_id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':teacher_id', $teacher_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result['total_courses'] ?? 0; 
+    }
 }
