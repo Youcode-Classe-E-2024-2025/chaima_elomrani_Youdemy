@@ -18,20 +18,22 @@ class Courses
     public function displayCourse()
     {
         if (!isset($_SESSION['user_name']) || !isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'Teacher') {
-            // echo($_SESSION['user_id']);
-            // return [];
-            $stmt = $this->pdo->prepare("SELECT * FROM course");
+            $stmt = $this->pdo->prepare(
+                "SELECT course.*, category.name AS category_name 
+                 FROM course 
+                 LEFT JOIN category ON course.category = category.id"
+            );
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
+    
         $teacherId = $_SESSION['user_id'];
-        // echo($_SESSION['user_id']); 
         $stmt = $this->pdo->prepare(
             "SELECT DISTINCT course.*, category.name AS category_name, users.name AS teacher_name
-            FROM course
-            LEFT JOIN category ON course.category = category.name
-            LEFT JOIN users ON course.Teacher = users.id
-            WHERE course.Teacher = :teacherId"
+             FROM course
+             LEFT JOIN category ON course.category = category.id
+             LEFT JOIN users ON course.Teacher = users.id
+             WHERE course.Teacher = :teacherId"
         );
         $stmt->execute(['teacherId' => $teacherId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -92,10 +94,12 @@ class Courses
 
 
 
+
+
     // public function updateCourse($courseId, $title, $description, $category, $tags, $price, $image, $video) {
     //     try {
     //         $this->pdo->beginTransaction();
-    
+
     //         $sql = "UPDATE course SET title = :title, description = :description, category = :category, price = :price, image_path = :image, video_path = :video WHERE id = :id";
     //         $stmt = $this->pdo->prepare($sql);
     //         $stmt->execute([
@@ -107,17 +111,17 @@ class Courses
     //             'video' => $video,
     //             'id' => $courseId
     //         ]);
-    
+
     //         $sql = "DELETE FROM tag_to_course WHERE course_id = :course_id";
     //         $stmt = $this->pdo->prepare($sql);
     //         $stmt->execute(['course_id' => $courseId]);
-    
+
     //         $sql = "INSERT INTO tag_to_course (tag_id, course_id) VALUES (:tag_id, :course_id)";
     //         $stmt = $this->pdo->prepare($sql);
     //         foreach ($tags as $tagId) {
     //             $stmt->execute(['tag_id' => $tagId, 'course_id' => $courseId]);
     //         }
-    
+
     //         $this->pdo->commit();
     //         return true;
     //     } catch (PDOException $e) {
@@ -125,6 +129,6 @@ class Courses
     //         throw new Exception("Database error: " . $e->getMessage());
     //     }
     // }
-    
+
 
 }

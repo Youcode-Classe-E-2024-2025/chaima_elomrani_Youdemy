@@ -109,10 +109,10 @@ switch ($action) {
         $courseController->AddCourse();
         break; 
 
-    case "updateCourse" :
-        $courseController->updateCourse();
-        // header('Location: http://localhost/views/update_course.php');
-        break;
+    // case "updateCourse" :
+    //     $courseController->updateCourse();
+    //     // header('Location: http://localhost/views/update_course.php');
+    //     break;
 
 }
 
