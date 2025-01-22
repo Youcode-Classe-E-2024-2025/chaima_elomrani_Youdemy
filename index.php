@@ -117,5 +117,10 @@ switch ($action) {
     case "enrolledCourse":
         require_once "views/teacher_statistics.php";
         break;
+
+    case "search" :
+        $courseController->searchCourse();
+        // require_once 'views/catalogue.php';
+        break; 
 }
 

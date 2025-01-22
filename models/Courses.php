@@ -94,54 +94,47 @@ class Courses
 
 
 
-    public function searchCourse($searchTerm)
+    public function searchCourse($searchTerm, $page = 1, $limit = 9)
     {
-        $query = "SELECT * FROM course WHERE title LIKE :searchTerm1 OR description LIKE :searchTerm2";
+        // Calculate offset
+        $offset = ($page - 1) * $limit;
+
+        // Prepare search query with more comprehensive search
+        $query = "SELECT c.*, cat.name AS category_name 
+                  FROM course c
+                  LEFT JOIN category cat ON c.category = cat.id
+                  WHERE c.title LIKE :searchTerm1 
+                  OR c.description LIKE :searchTerm2 
+                  OR cat.name LIKE :searchTerm3
+                  LIMIT :limit OFFSET :offset";
+
         $stmt = $this->pdo->prepare($query);
-        $stmt->execute([
-            'searchTerm1' => '%' . $searchTerm . '%',
-            'searchTerm2' => '%' . $searchTerm . '%'
-        ]);
+        $stmt->bindValue(':searchTerm1', '%' . $searchTerm . '%', PDO::PARAM_STR);
+        $stmt->bindValue(':searchTerm2', '%' . $searchTerm . '%', PDO::PARAM_STR);
+        $stmt->bindValue(':searchTerm3', '%' . $searchTerm . '%', PDO::PARAM_STR);
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
+
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function countSearchResults($searchTerm)
+    {
+        // Count total search results for pagination
+        $query = "SELECT COUNT(*) as total 
+                  FROM course c
+                  LEFT JOIN category cat ON c.category = cat.id
+                  WHERE c.title LIKE :searchTerm1 
+                  OR c.description LIKE :searchTerm2 
+                  OR cat.name LIKE :searchTerm3";
 
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindValue(':searchTerm1', '%' . $searchTerm . '%', PDO::PARAM_STR);
+        $stmt->bindValue(':searchTerm2', '%' . $searchTerm . '%', PDO::PARAM_STR);
+        $stmt->bindValue(':searchTerm3', '%' . $searchTerm . '%', PDO::PARAM_STR);
+        $stmt->execute();
 
-
-
-    // public function updateCourse($courseId, $title, $description, $category, $tags, $price, $image, $video) {
-    //     try {
-    //         $this->pdo->beginTransaction();
-
-    //         $sql = "UPDATE course SET title = :title, description = :description, category = :category, price = :price, image_path = :image, video_path = :video WHERE id = :id";
-    //         $stmt = $this->pdo->prepare($sql);
-    //         $stmt->execute([
-    //             'title' => $title,
-    //             'description' => $description,
-    //             'category' => $category,
-    //             'price' => $price,
-    //             'image' => $image,
-    //             'video' => $video,
-    //             'id' => $courseId
-    //         ]);
-
-    //         $sql = "DELETE FROM tag_to_course WHERE course_id = :course_id";
-    //         $stmt = $this->pdo->prepare($sql);
-    //         $stmt->execute(['course_id' => $courseId]);
-
-    //         $sql = "INSERT INTO tag_to_course (tag_id, course_id) VALUES (:tag_id, :course_id)";
-    //         $stmt = $this->pdo->prepare($sql);
-    //         foreach ($tags as $tagId) {
-    //             $stmt->execute(['tag_id' => $tagId, 'course_id' => $courseId]);
-    //         }
-
-    //         $this->pdo->commit();
-    //         return true;
-    //     } catch (PDOException $e) {
-    //         $this->pdo->rollBack();
-    //         throw new Exception("Database error: " . $e->getMessage());
-    //     }
-    // }
-
-
+        return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+    }
 }

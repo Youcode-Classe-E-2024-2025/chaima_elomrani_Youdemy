@@ -57,26 +57,26 @@ $courses = $controller->searchCourse();
     <?php require_once('header.php') ?>
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <div class="flex justify-self-center space-x-4 mb-12 px-12">
-                    <form action="?action=search" method="GET" class="flex items-center space-x-2">
-                        <div class="relative flex-grow">
-                            <input type="search" name="search" 
-                                placeholder="Search courses..." 
-                                value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>" 
-                                class="w-full pl-10 pr-64 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-200 transition duration-200"
-                            >
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i class="fas fa-search text-gray-400"></i>
+        <div class="flex justify-self-center space-x-4 mb-12 px-12">
+                        <form action="index.php?action=search" method="GET" class="flex items-center space-x-2">
+                            <div class="relative flex-grow">
+                                <input type="search" name="search" 
+                                    placeholder="Search courses..." 
+                                    value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>" 
+                                    class="w-full pl-10 pr-64 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-200 transition duration-200"
+                                >
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-search text-gray-400"></i>
+                                </div>
                             </div>
-                        </div>
-                       
-                    </form>
-                    
-                    <button
-                        class="bg-primary-500 hover:bg-primary-600 text-white py-2 px-4 rounded-lg transition duration-200">
-                        Logout
-                    </button>
-                </div>
+                        
+                        </form>
+                        
+                        <button
+                            class="bg-primary-500 hover:bg-primary-600 text-white py-2 px-4 rounded-lg transition duration-200">
+                            Logout
+                        </button>
+                    </div>
 
      
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="courseGrid">
