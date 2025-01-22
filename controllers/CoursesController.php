@@ -5,7 +5,7 @@ require_once  __DIR__ .'/../models/Courses.php';
 
 class CoursesController{
     
-    private $CoursesModel;
+    protected $CoursesModel;
 
 
     public function __construct(){
@@ -14,18 +14,25 @@ class CoursesController{
 
 
 
-    public function DisplayCourse(){
-        
-    if (!isset($_SESSION['user_id'])) {
-        header('Location: index.php?action=loginForm');
-        exit();
-    }
+    public function DisplayCourse()
+    {
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $limit = 10;
+        $offset = ($page - 1) * $limit;
 
-        // $teacherId = $_SESSION['user_id'];
+        $courses = $this->CoursesModel->getCourses($limit, $offset);
+
+        $totalCourses = $this->CoursesModel->getTotalCourses();
+        $totalPages = ceil($totalCourses / $limit);
+
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: index.php?action=loginForm');
+            exit();
+        }
+
         $courses = $this->CoursesModel->displayCourse();
-        require_once __DIR__ . "/../views/course.php";
+        return $courses;
     }
-
 
 
     public function  VisitorCourses(){
@@ -52,11 +59,21 @@ public function searchCourse()
 {
     $keyword = isset($_GET['search']) ? $_GET['search'] : '';
     $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+
     $limit = 9;
+    $offset = ($page - 1) * $limit;
 
-    $resultat = empty($keyword) ? $this->CoursesModel->displayCourse() : $this->CoursesModel->searchCourse($keyword);
+    if (empty($keyword)) {
+        return $this->CoursesModel->getCourses($limit, $offset);
+    } else {
+        return $this->CoursesModel->searchCourse($keyword, $limit, $offset);
+    }
 
-    return $resultat;
+}
+
+
+public function getCoursesModel(){
+    return $this->CoursesModel;
 }
 
 

@@ -1,5 +1,4 @@
 <?php
-// session_start();
 require_once __DIR__ . '/../models/Courses.php';
 
 $cours = new Courses();
@@ -27,8 +26,8 @@ $enrolled_courses = $_SESSION['enrolled_courses'] ?? [];
     <title>Advanced Course Management</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> <!-- Alpine.js -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> 
     <script>
         tailwind.config = {
             theme: {
@@ -47,7 +46,7 @@ $enrolled_courses = $_SESSION['enrolled_courses'] ?? [];
                     },
                 },
             },
-            darkMode: 'class', // Enable dark mode
+            darkMode: 'class', 
         }
     </script>
 </head>

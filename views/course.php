@@ -3,7 +3,11 @@ require_once __DIR__ . '/../controllers/CoursesController.php';
 $controller = new CoursesController();
 $keyword = isset($_GET['search']) ? $_GET['search'] : '';
 
+$limit = 9;
+$totalCourses = $controller->getCoursesModel()->getTotalCourses();
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $courses = $controller->searchCourse();
+$totalPages = ceil($totalCourses / $limit);
 ?>
 
 <!DOCTYPE html>
@@ -247,6 +251,57 @@ $courses = $controller->searchCourse();
             </form>
         </div>
     </div>
+       
+     <!-- ****************** Pagination ***************** -->
+     <div class="flex justify-center mt-6">
+        <nav class="inline-flex rounded-md shadow-sm">
+            <!-- Previous Page Link -->
+            <?php if ($page > 1): ?>
+                <a href="?page=<?= $page - 1 ?><?= $keyword ? '&search=' . urlencode($keyword) : '' ?>"
+                    class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-l-md hover:bg-gray-50">Précédent</a>
+            <?php else: ?>
+                <span class="px-4 py-2 text-sm font-medium text-gray-400 bg-white border border-gray-300 rounded-l-md">Précédent</span>
+            <?php endif; ?>
+
+            <!-- Page Numbers -->
+            <?php
+            $start = max(1, $page - 2);
+            $end = min($totalPages, $page + 2);
+
+            if ($start > 1): ?>
+                <a href="?page=1<?= $keyword ? '&search=' . urlencode($keyword) : '' ?>"
+                    class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300">1</a>
+                <?php if ($start > 2): ?>
+                    <span class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300">...</span>
+                <?php endif;
+            endif;
+
+            for ($i = $start; $i <= $end; $i++): ?>
+                <a href="?page=<?= $i ?><?= $keyword ? '&search=' . urlencode($keyword) : '' ?>"
+                    class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 <?= $i === $page ? 'bg-blue-50' : '' ?>">
+                    <?= $i ?>
+                </a>
+            <?php endfor;
+
+            if ($end < $totalPages): ?>
+                <?php if ($end < $totalPages - 1): ?>
+                    <span class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300">...</span>
+                <?php endif; ?>
+                <a href="?page=<?= $totalPages ?><?= $keyword ? '&search=' . urlencode($keyword) : '' ?>"
+                    class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300"><?= $totalPages ?></a>
+            <?php endif; ?>
+
+            <!-- Next Page Link -->
+            <?php if ($page < $totalPages): ?>
+                <a href="?page=<?= $page + 1 ?><?= $keyword ? '&search=' . urlencode($keyword) : '' ?>"
+                    class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-r-md hover:bg-gray-50">Suivant</a>
+            <?php else: ?>
+                <span class="px-4 py-2 text-sm font-medium text-gray-400 bg-white border border-gray-300 rounded-r-md">Suivant</span>
+            <?php endif; ?>
+        </nav>
+    </div>
+
+
 
 
     <script>

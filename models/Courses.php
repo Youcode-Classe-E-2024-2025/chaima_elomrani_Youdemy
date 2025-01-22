@@ -94,30 +94,56 @@ class Courses
 
 
 
-    public function searchCourse($searchTerm, $page = 1, $limit = 9)
+    public function searchCourse($searchTerm, $limit, $offset)
     {
-        // Calculate offset
-        $offset = ($page - 1) * $limit;
-
-        // Prepare search query with more comprehensive search
-        $query = "SELECT c.*, cat.name AS category_name 
-                  FROM course c
-                  LEFT JOIN category cat ON c.category = cat.id
-                  WHERE c.title LIKE :searchTerm1 
-                  OR c.description LIKE :searchTerm2 
-                  OR cat.name LIKE :searchTerm3
-                  LIMIT :limit OFFSET :offset";
-
+        $query = "SELECT * FROM course WHERE title LIKE :searchTerm1 OR description LIKE :searchTerm2 LIMIT :limit OFFSET :offset";
         $stmt = $this->pdo->prepare($query);
-        $stmt->bindValue(':searchTerm1', '%' . $searchTerm . '%', PDO::PARAM_STR);
-        $stmt->bindValue(':searchTerm2', '%' . $searchTerm . '%', PDO::PARAM_STR);
-        $stmt->bindValue(':searchTerm3', '%' . $searchTerm . '%', PDO::PARAM_STR);
-        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
-        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-        $stmt->execute();
-
+        $stmt->execute([
+            'searchTerm1' => '%' . $searchTerm . '%',
+            'searchTerm2' => '%' . $searchTerm . '%',
+            'limit' => $limit,
+            'offset' => $offset
+        ]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+
+
+
+
+
+    public function getAll()
+    {
+        $sql = "SELECT * FROM course ";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+
+
+
+
+    public function getTotalCourses()
+    {
+        return $this->pdo->query("SELECT COUNT(*) FROM course")->fetchColumn();
+    }
+
+    public function getCourses($limit, $offset)
+    {
+        $sql = "SELECT*FROM course LIMIT :limit OFFSET :offset";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+
+
+
 
     public function countSearchResults($searchTerm)
     {
