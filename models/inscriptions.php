@@ -89,4 +89,13 @@ class Inscriptions
         return $result['total_student'] ?? 0;
     }
 
+
+
+
+    
+
+
+
+
+
 }

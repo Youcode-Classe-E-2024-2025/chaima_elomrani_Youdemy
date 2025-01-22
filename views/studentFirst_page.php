@@ -64,7 +64,7 @@ $enrolled_courses = $_SESSION['enrolled_courses'] ?? [];
                 <ul class="flex space-x-6">
                     <li><a href="#" class="hover:text-primary transition">Home</a></li>
                     <li><a href="#courses" class="hover:text-primary transition">All Courses</a></li>
-                    <li><a href="#features" class="hover:text-primary transition">My Courses</a></li>
+                    <li><a href="./views/student_courses.php" class="hover:text-primary transition">My Courses</a></li>
                     <li><a href="#community" class="hover:text-primary transition">Profile</a></li>
                 </ul>
             </nav>
