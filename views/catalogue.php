@@ -1,7 +1,14 @@
 <?php
 require_once __DIR__ . '/../models/Courses.php';
+require_once __DIR__ . '/../controllers/CoursesController.php';
+
 $visitor= new Courses();
 $visitors = $visitor->visitorCourses();
+
+$controller = new CoursesController();
+$keyword = isset($_GET['search']) ? $_GET['search'] : '';
+
+$courses = $controller->searchCourse();
 ?>
 
 <!DOCTYPE html>
@@ -50,10 +57,26 @@ $visitors = $visitor->visitorCourses();
     <?php require_once('header.php') ?>
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="mb-8">
-            <input type="text" placeholder="Search courses..."
-                class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary">
-        </div>
+    <div class="flex justify-self-center space-x-4 mb-12 px-12">
+                    <form action="?action=search" method="GET" class="flex items-center space-x-2">
+                        <div class="relative flex-grow">
+                            <input type="search" name="search" 
+                                placeholder="Search courses..." 
+                                value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>" 
+                                class="w-full pl-10 pr-64 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-200 transition duration-200"
+                            >
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-search text-gray-400"></i>
+                            </div>
+                        </div>
+                       
+                    </form>
+                    
+                    <button
+                        class="bg-primary-500 hover:bg-primary-600 text-white py-2 px-4 rounded-lg transition duration-200">
+                        Logout
+                    </button>
+                </div>
 
      
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="courseGrid">
@@ -82,19 +105,7 @@ $visitors = $visitor->visitorCourses();
                 </div>
             </div>
             <p class="mt-2 text-sm text-gray-600 dark:text-gray-400"><?= htmlspecialchars($visitor['description'] ?? 'No description available.') ?></p>
-            <div class="mt-4 flex flex-wrap gap-2">
-                <span class="px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full"><?= htmlspecialchars($visitor['category']) ?></span>
-                <?php
-                $tags = explode(',', $visitor['tags'] ?? '');
-                foreach ($tags as $tag):
-                    if (trim($tag) !== ''):
-                ?>
-                <span class="px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full"><?= htmlspecialchars(trim($tag)) ?></span>
-                <?php
-                    endif;
-                endforeach;
-                ?>
-            </div>
+           
             <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
                 <div class="flex items-center justify-between">
                   

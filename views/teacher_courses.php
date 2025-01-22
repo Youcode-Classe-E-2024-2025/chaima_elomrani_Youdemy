@@ -275,8 +275,7 @@ $tags = $taf->displaytags();
                             </p>
                             <div class="flex flex-wrap gap-2 mb-4">
                                 <span
-                                    class="px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 
-                                    text-gray-600 dark:text-gray-400 rounded-full"><?= htmlspecialchars($course['category_name']) ?></span>
+                                    class="px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full"><?= htmlspecialchars($course['category_name']) ?></span>
 
                             </div>
                             <div class="">
