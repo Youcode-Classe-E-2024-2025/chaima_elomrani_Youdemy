@@ -6,6 +6,7 @@ include_once "controllers/CategoryController.php";
 include_once "config/connexion.php";
 include_once "controllers/TagController.php";
 include_once "controllers/CoursesController.php";
+include_once "controllers/inscriptionsController.php";
 // require_once "core/Router.php";
 
 $action = $_GET['action'] ?? 'home';
@@ -16,6 +17,7 @@ $userController = new UserController();
 $tagController = new TagController();
 $categoryController = new CategoryController();
 $courseController = new CoursesController();
+$inscriptionController = new Inscription();
 
 // $router->action();
 // $router->view();
@@ -115,12 +117,21 @@ switch ($action) {
     //     break;
 
     case "enrolledCourse":
-        require_once "views/teacher_statistics.php";
+        $inscriptionController->InsertInscription();
+        // require_once "views/teacher_statistics.php";
         break;
 
     case "search" :
         $courseController->searchCourse();
         // require_once 'views/catalogue.php';
         break; 
+    case "manage" : 
+        $course_id = $_GET["id"];
+        $inscriptionController->GetUsersByCourse($course_id);
+        break;
+
+        
+
+        
 }
 

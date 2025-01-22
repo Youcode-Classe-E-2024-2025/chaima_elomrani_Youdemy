@@ -3,7 +3,6 @@
 require_once __DIR__ . '/../models/Courses.php';
 require_once __DIR__ . '/../models/inscriptions.php';
 
-
 $cours = new Courses();
 $courses = $cours->displayCourse();
 
@@ -134,9 +133,10 @@ $inscriptions = $inscription->getInscriptions();
                                 <td class="py-4 px-6 border-b border-grey-light">5</td>
                                 <td class="py-4 px-6 border-b border-grey-light">
                                     <details>
-                                        <summary
-                                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer">
+                                        <summary><a href="index.php?action=manage&id=<?= $inscription['course_id'] ?>"
+                                          name="manage" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer">
                                             Manage
+                                        </a>
                                         </summary>
                                         <div class="bg-white rounded-lg shadow-md p-6">
                                             <div class="flex justify-between items-center mb-6">
@@ -182,7 +182,7 @@ $inscriptions = $inscription->getInscriptions();
                                                                         </form>
                                                                     <?php } ?>
 
-                                                                    <?php if ($user['status'] == 'active') { ?>
+                                                                    <?php if($user['status'] == 'active') { ?>
                                                                         <form
                                                                             action="http://<?= $_SERVER['HTTP_HOST'] ?>/index.php?action=SuspendUser"
                                                                             method="POST">
@@ -190,7 +190,7 @@ $inscriptions = $inscription->getInscriptions();
                                                                             <button
                                                                                 class="text-orange-500 hover:text-orange-700">Suspend</button>
                                                                         </form>
-                                                                    <?php } ?>
+                                                                    <?php  } ?>
 
 
                                                                     <form method="POST"

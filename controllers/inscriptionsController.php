@@ -1,22 +1,33 @@
 <?php
 require_once('./models/inscriptions.php');
 
+class Inscription{
 
-public function __construct(){
-   
+    
+     private $inscriptionModel;
+    
+      public function __construct()
+        {
+            $this->inscriptionModel = new Inscriptions();
+    
+        }
+    
+    
+        // public function DisplayInscription(){
+        //      $this->inscriptionModel->displayinscriptions();
+        //     require_once "./views/teacher_statistics.php";
+        // }
+    
+    
+        public function GetUsersByCourse($course_id){
+            $users = $this->inscriptionModel->getUsersByCourse($course_id);
+            require_once "./views/teacher_statistics.php";
+        }
 
- private $inscriptionModel;
+        public function InsertInscription(){
+            $this->inscriptionModel->insertInscription();
+            require_once './views/studentFirst_page.php';
+        }
 
-  public function __construct()
-    {
-        $this->inscriptionModel = new Inscriptions();
-
-    }
-
-
-    public function DisplayInscription(){
-        $inscriptions = $this->inscriptionModel->displayinscriptions();
-        require_once "./views/teacher_statistics.php";
-    }
 
 }
